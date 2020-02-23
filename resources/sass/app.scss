@@ -1,0 +1,116 @@
+@import "cxlt-vue2-toastr/dist/css/cxlt-vue2-toastr.css" 
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+.ares {
+    @apply .appearance-none .bg-transparent .border-none .w-full .text-gray-700 .mr-3 .py-1 .px-2 .leading-tight;
+}
+
+.ares:focus {
+    @apply .outline-none;
+}
+.ares-outline {
+    @apply .flex .items-center .border-b .border-b-2 .border-teal-500 .py-2;
+}
+.ares-input {
+    @apply .appearance-none .block .w-full .bg-gray-200 .text-gray-700 .border .border-gray-200 .rounded .py-3 .px-4 .mb-3 .leading-tight;
+}
+.ares-input:input {
+    @apply .outline-none .bg-white .border-gray-500;
+}
+.ares-label {
+    @apply .block .uppercase .tracking-wide .text-gray-700 .text-xs .font-bold .mb-2;
+}
+.component-fade-enter-active,
+.component-fade-leave-active {
+    transition: opacity 0.3s ease;
+}
+.component-fade-enter,
+.component-fade-leave-to {
+    opacity: 0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+.btn-blue {
+    @apply .bg-blue-500 .text-white .font-bold;
+}
+.btn-blue:hover {
+    @apply .bg-blue-700;
+}
+.loader {
+    position: relative;
+    top: calc(50% - 16);
+    left: calc(50% - 16);
+    width: 32x;
+    height: 32px;
+    border-radius: 50%;
+    perspective: 800px;
+}
+
+.inner {
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.inner.one {
+    left: 0%;
+    top: 0%;
+    animation: rotate-one 1s linear infinite;
+    border-bottom: 2px solid white;
+}
+
+.inner.two {
+    right: 0%;
+    top: 0%;
+    animation: rotate-two 1s linear infinite;
+    border-right: 2px solid;
+}
+
+.inner.three {
+    right: 0%;
+    bottom: 0%;
+    animation: rotate-three 1s linear infinite;
+    border-top: 2px solid white;
+}
+
+@keyframes rotate-one {
+    0% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate-two {
+    0% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate-three {
+    0% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+    }
+}

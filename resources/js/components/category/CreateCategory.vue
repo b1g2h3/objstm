@@ -1,0 +1,94 @@
+<template>
+  <div>
+    <div v-if="loading" class="loader">
+      <div class="inner one"></div>
+      <div class="inner two"></div>
+      <div class="inner three"></div>
+    </div>
+
+    <div
+    class="bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-3"
+    >
+      <h3 class="font-bold pl-2">Vytvořit kategorii</h3>
+    </div>
+
+    <div class="flex flex-wrap">
+      <div class="w-full">
+        <div
+              class="bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3"
+        >
+             <form @submit.prevent="createCategory" class="w-full max-w-lg p-5">
+            <div class="flex flex-wrap -mx-3 mb-6">
+              <div class="w-full px-3">
+                <label class="ares-label" for="name">Název kategorie</label>
+                <input
+                  class="ares-input"
+                  id="name"
+                  type="text"
+                  v-bind:class="{ 'border-red-500': errors.name }"
+                  v-model="category.name"
+                />
+                <p v-if="errors.name" class="text-red-500 text-xs italname">{{errors.name[0]}}</p>
+              </div>
+            </div>
+            <div class="flex flex-wrap -mx-3 mb-6">
+              <div class="w-full px-3">
+                <label class="ares-label" for="name">Obrázek kategorie</label>
+                <input type="file" @change="processFile($event)">
+                <p v-if="errors.image" class="text-red-500 text-xs italname">{{errors.image[0]}}</p>
+              </div>
+            </div>
+            <div class="md:flex md:items-center">
+              <div class="md:w-2/3">
+                <button
+                  class="shadow bg-blue-800 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                  type="submit"
+                >Vytvořit kategorii</button>
+              </div>
+              <div class="md:w-2/3"></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "createCategory",
+  props: {
+    id: ""
+  },
+  data() {
+    return {
+      loading: false,
+      category: {},
+      errors: ""
+    };
+  },
+  methods: {
+    createCategory() {
+      this.errors = [];
+      console.log(this.category);
+      this.axios
+        .post(`category`, this.category, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("access_token")
+          }
+        })
+        .then(res => {
+          console.log("true");
+        })
+        .catch(error => {
+          if (error.response.status == 422) {
+            this.errors = error.response.data.errors;
+          }
+        });
+    },
+    processFile(event) {
+      this.category.image = event.target.files[0];
+    }
+  }
+};
+</script>
