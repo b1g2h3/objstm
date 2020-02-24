@@ -4,7 +4,7 @@ import ShowCategory from "./components/category/ShowCategory";
 import createCategory from "./components/category/CreateCategory";
 import editCategory from "./components/category/editCategory";
 import createProduct from "./components/product/createProduct";
-import AddOrder from "./components/order/addOrder2";
+import AddOrder from "./components/order/addOrder";
 import EditOrder from "./components/order/EditOrder";
 import ShowOrder from "./components/order/ShowOrder";
 import IndexOrder from "./components/order/indexOrder";
@@ -32,6 +32,7 @@ export const routes = [
         name: "zbozi",
         path: "/zbozi",
         component: AllCategories,
+        props: true,
         children: [
             {
                 name: "category_show",
@@ -100,6 +101,9 @@ export const routes = [
         name: "settings",
         path: "/nastaveni",
         component: Settings,
+        meta: {
+            requiresAuth: true
+        },
         children: [
             {
                 name: "ChangePassword",
@@ -113,15 +117,15 @@ export const routes = [
             },
             {
                 name: "ChangeInvoice",
-                path: "changeinvoice",
+                path: "zmena-fakturacnich-udaju",
                 component: ChangeInvoice
-            },
-            {
-                name: "invoice",
-                path: "invoice",
-                component: AddInvoice
             }
         ]
+    },
+    {
+        name: "invoice",
+        path: "fakturacni-udaje",
+        component: AddInvoice
     },
     {
         name: "admin",

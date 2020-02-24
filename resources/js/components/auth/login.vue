@@ -2,8 +2,6 @@
   <div>
      <div>
      <div class="max-w-3xl flex   flex-wrap  lg:my-0 p-5">
-    
-	<!--Main Col-->
 	<div id="login" class="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
 	
 
@@ -74,11 +72,10 @@
 	
 	<div class="w-full lg:w-1/5">
 		<div class=" bg-white rounded-none lg:rounded-lg shadow-2xl hidden lg:block text-center">
-             <button
-          class=" w-full  shadow bg-green-800 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded flex"
-        >
-           Registrovat se
-          </button>
+           <router-link
+                  :to="{ name: 'register' }"
+                  class=" w-full  shadow bg-green-800 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded flex"
+                > Registrovat se</router-link>
     </div>
 	</div>
 </div>

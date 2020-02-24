@@ -1,9 +1,19 @@
 <template>
-  <form @submit.prevent="register" class="w-full max-w-lg p-20">
+  <div>
+      <div>
+     <div>
+     <div class="max-w-3xl flex   flex-wrap  lg:my-0 p-5">
+	<div id="login" class="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
+	
+
+		<div class="p-4 md:p-12  text-center lg:text-left">
+				<h1 class="text-3xl font-bold pt-8 lg:pt-0">Zaregistrovat se</h1>
+        	<div class="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-teal-500 opacity-25"></div>
+        <form @submit.prevent="register" class="w-full max-w-lg ">
       <div class="flex flex-wrap -mx-3 mb-6">
       <div class="w-full px-3">
         <label
-          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+           class=" text-base font-bold flex pl-2 justify-start lg:justify-start"
           for="email"
         >E-mail</label>
         <input
@@ -12,6 +22,7 @@
           type="email"
           v-bind:class="{ 'border-red-500': errors.email }"
           v-model="email"
+          autocomplete="username"
         />
         <p v-if="errors.email" class="text-red-500 text-xs italic">{{errors.email[0]}}</p>
       </div>
@@ -19,7 +30,7 @@
       <div class="flex flex-wrap -mx-3 mb-6">
       <div class="w-full px-3">
         <label
-          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+           class=" text-base font-bold flex pl-2 justify-start lg:justify-start"
           for="phone"
         >Telefonní číslo</label>
         <input
@@ -28,6 +39,7 @@
           type="phone"
           v-bind:class="{ 'border-red-500': errors.phone }"
           v-model="phone"
+           autocomplete="phone"
         />
         <p v-if="errors.phone" class="text-red-500 text-xs italic">{{errors.phone[0]}}</p>
       </div>
@@ -35,7 +47,7 @@
     <div class="flex flex-wrap -mx-3 mb-6">
       <div class="w-full px-3">
         <label
-          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+           class=" text-base font-bold flex pl-2 justify-start lg:justify-start"
           for="password"
         >Heslo</label>
         <input
@@ -44,6 +56,7 @@
           type="password"
           v-bind:class="{ 'border-red-500': errors.password }"
           v-model="password"
+           autocomplete="new-password"
         />
         <p v-if="errors.password" class="text-red-500 text-xs italic">{{errors.password[0]}}</p>
       </div>
@@ -51,7 +64,7 @@
        <div class="flex flex-wrap -mx-3 mb-6">
               <div class="w-full px-3">
                 <label
-                  class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                   class=" text-base font-bold flex pl-2 justify-start lg:justify-start"
                   for="password-confirm"
                 >Potvrďte heslo</label>
                 <input
@@ -74,11 +87,29 @@
         <button
           class="shadow bg-blue-800 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
           type="submit"
-        >Přihlásit se</button>
+        >Registrovat se</button>
       </div>
       <div class="md:w-2/3"></div>
     </div>
   </form>
+
+		</div>
+
+	</div>
+	
+	<div class="w-full lg:w-1/5">
+		<div class=" bg-white rounded-none lg:rounded-lg shadow-2xl hidden lg:block text-center">
+           <router-link
+                  :to="{ name:'login' }"
+                  class=" w-full  shadow bg-green-800 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded flex"
+                > Přihlásit se</router-link>
+    </div>
+	</div>
+</div>
+  </div>
+  </div>
+
+  </div>
 </template>
 
 <script>

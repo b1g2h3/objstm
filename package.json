@@ -25,6 +25,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "cxlt-vue2-toastr": "^1.1.1",
         "tailwindcss": "^1.2.0",
         "vue-axios": "^2.1.5",
         "vue-global-var": "^1.0.0",

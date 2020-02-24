@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Resources\Category as CategoryResource;
+use Intervention\Image\Facades\Image;
+//need to add policies
 
 class CategoryController extends Controller
 {
@@ -66,10 +68,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $data = request()->validate($this->rules());
-            
-            
-            
+        //need to add policies
+            $data = request()->validate($this->rules());        
             if(request('imagePath')){
                 $imagePath =  request('imagePath')->store('category', 'public');
                 

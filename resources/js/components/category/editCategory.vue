@@ -1,11 +1,5 @@
 <template>
   <div>
-    <div v-if="loading" class="loader">
-      <div class="inner one"></div>
-      <div class="inner two"></div>
-      <div class="inner three"></div>
-    </div>
-
     <div
     class="bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-3"
     >
@@ -47,10 +41,19 @@
             </div>
             <div class="md:flex md:items-center">
               <div class="md:w-2/3">
-                <button
-                  class="shadow bg-blue-800 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-                  type="submit"
-                >Upravit</button>
+                    <button
+                    class="shadow bg-blue-800 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded flex"
+                    type="submit" :disabled="loading"
+                  >
+                      <div v-if="loading" class="loader">
+                        <div class="inner one"></div>
+                        <div class="inner two"></div>
+                        <div class="inner three"></div>
+                      </div>
+                    <div>
+                      Upravit
+                    </div>
+                    </button>
               </div>
               <div class="md:w-2/3"></div>
             </div>
@@ -70,7 +73,8 @@ export default {
   data() {
     return {
       loading: false,
-      errors: ""
+      errors: "",
+      successMessage: ""
     };
   },
   created() {
@@ -88,21 +92,27 @@ export default {
   methods: {
     editCategory() {
       this.errors = [];
-      console.log(this.category);
-      // this.axios
-      //   .post(`category`, this.category, {
-      //     headers: {
-      //       Authorization: "Bearer " + localStorage.getItem("access_token")
-      //     }
-      //   })
-      //   .then(res => {
-      //     console.log("true");
-      //   })
-      //   .catch(error => {
-      //     if (error.response.status == 422) {
-      //       this.errors = error.response.data.errors;
-      //     }
-      //   });
+      this.errors = [];
+      this.loading = true;
+       this.axios
+        .put(`category/${this.category.id}`, this.category, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("access_token")
+          }
+        })
+           .then(response => {
+          this.loading = false;
+          this.successMessage = "Úspěšně jste upravili kategorii";
+          this.$router.push({
+            name: "zbozi",
+            params: { dataSuccessMessage: this.successMessage }
+          });
+        })
+        .catch(error => {
+          if (error.response.status == 422) {
+            this.errors = error.response.data.errors;
+          }
+        });
     },
     processFile(event) {
       this.category.image = event.target.files[0];

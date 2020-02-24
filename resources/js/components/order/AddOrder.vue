@@ -35,17 +35,21 @@
                 v-if="orders"
                 class="bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3 mt-4"
             >
-                <div class="flex flex-col p-10">
-                    <h3 class="font-bold pl-2">Zvolili jste</h3>
+                <div class="flex flex-col p-4">
+                      <div class="flex  font-bold text-center">
+                          <div class="w-3/6 h-12 text-left pl-2">Název produktu</div>
+                          <div class="w-2/6 h-12 ">Balení</div>
+                          <div class="w-2/6 h-6 ">Množství</div>
+                      </div>
                     <div v-for="product in products" v-bind:key="product.id">
-                        <div v-for="(value, index) in orders.order">
+                        <div v-for="(value, index) in orders.order" v-bind:key=(index)>
                             <div
                                 v-if="index == product.id"
-                                class="flex justify-between"
+                                class="flex text-center"
                             >
-                                <div>{{ product.name }}</div>
-                                <div>{{ product.hmotnost }}</div>
-                                <div>{{ value }}</div>
+                                <div class="w-3/6  text-left pl-2">{{ product.name }}</div>
+                                <div class="w-2/6 h-6">{{ product.hmotnost }}</div>
+                                <div class="w-2/6 h-6 ">{{ value }}</div>
                             </div>
                         </div>
                     </div>
@@ -123,7 +127,6 @@ export default {
   name: "AddOrder",
   data() {
     return {
-      products: [],
       orders: {
         order: null
       },
@@ -152,18 +155,21 @@ export default {
         return product.name.toLowerCase().includes(this.search.toLowerCase());
       });
     },
-      categories() {
+    categories() {
       return this.$store.getters.categories;
+    },
+    products() {
+      return this.$store.getters.products;
     }
   },
   created() {
-    this.fetchProducts();
+    this.$store.dispatch("fetchCategories");
+    this.$store.dispatch("fetchProducts");
     const order = {};
     this.products.forEach(item => {
       order[item[1]] = null;
     });
     this.orders.order = order;
-    this.$store.dispatch('fetchCategories');
   },
   methods: {
     allProduct() {
@@ -175,30 +181,13 @@ export default {
       this.search = "";
       this.all = false;
     },
-    fetchProducts(page_url) {
-      page_url = "api/product";
-      fetch(page_url)
-        .then(res => res.json())
-        .then(res => {
-          this.products = res.data;
-        })
-        .catch(error => console.log(error));
-    },
     addOrder() {
-      this.axios
-        .post(`order`, this.orders, {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("access_token")
-          }
-        })
-        .then(res => {
-          this.$router.push({
-            name: "ShowOrder",
-            params: { id: res.data }
-          });
-        })
-        .catch(error => console.log(error));
-    },
+      this.$store.dispatch("addOrder", this.orders);
+      this.$router.push({
+        name: "ShowOrder",
+        params: { id: this.$store.getters.order.id }
+      });
+    }
   }
 };
 </script>

@@ -17,8 +17,8 @@
             <div class="text-xl text-white pl-2   absolute -mt-10">{{category.name}}</div>
           </router-link>
           </div>
-            <router-link v-if="isAdmin"  :to="{ name: 'editCategory', params: {id: category.id} }" class="inline-block bg-blue-600 hover:bg-blue-800 text-sm font-semibold  w-full text-white p-2 text-center">Upravit</router-link>
-            <a v-if="isAdmin" @click="deleteCategory(category.id)" class="inline-block bg-red-600 hover:bg-red-800 text-sm font-semibold  w-full text-white p-2 text-center">Odstranit</a>
+            <router-link  :to="{ name: 'editCategory', params: {id: category.id} }" class="inline-block bg-blue-600 hover:bg-blue-800 text-sm font-semibold  w-full text-white p-2 text-center">Upravit</router-link>
+            <a  @click="deleteCategory(category.id)" class="inline-block bg-red-600 hover:bg-red-800 text-sm font-semibold  w-full text-white p-2 text-center">Odstranit</a>
         </div>
        </div>
     <transition name enter-active-class="animated fadeIn" leave-active-class="animated fadeIn">
@@ -30,10 +30,16 @@
 <script>
 export default {
   name: "AllCategories",
+  props: {
+    dataSuccessMessage: {
+      type: String
+    }
+  },
   data() {
     return {
       successMessage: "",
-      errors: []
+      errors: [],
+      successMessage: this.dataSuccessMessage,
     };
   },
   created() {

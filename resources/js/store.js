@@ -26,10 +26,10 @@ export const store = new Vuex.Store({
             { name: "Registrovat", route: "register" }
         ],
         loogedInlinks: [
-            { name: "Domů", route: "home" },
             { name: "Zboží", route: "zbozi" },
             { name: "Ke stažení", route: "kestazeni" },
-            { name: "Kontakt", route: "kontakt" }
+            { name: "Kontakt", route: "kontakt" },
+            { name: "Odhlásit", route: "logout" }
         ],
         sidebarlinks: [
             // { name: "Zboží", route: "zbozi" },

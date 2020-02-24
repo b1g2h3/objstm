@@ -25,7 +25,7 @@
                   <th class="w-1/4 px-4 py-2">Číslo produktu</th>
                   <th class="w-1/2 px-4 py-2">Název</th>
                   <th class="w-1/4 px-4 py-2">Balení</th>
-                  <th class="w-1/4 px-4 py-2">Možnost</th>
+                  <!-- <th class="w-1/4 px-4 py-2">Možnost</th> -->
                 </tr>
               </thead>
               <tbody>
@@ -33,7 +33,7 @@
                   <td class="border px-4 py-2">{{product.id}}</td>
                   <td class="border px-4 py-2">{{product.name}}</td>
                   <td class="border px-4 py-2">{{product.hmotnost}}</td>
-                  <td class="border px-4 py-2">Upravit Odstranit</td>
+                  <!-- <td class="border px-4 py-2">Upravit Odstranit</td> -->
                 </tr>
               </tbody>
             </table>

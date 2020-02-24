@@ -70,7 +70,6 @@ export default {
   methods: {
     createCategory() {
       this.errors = [];
-      console.log(this.category);
       this.axios
         .post(`category`, this.category, {
           headers: {
