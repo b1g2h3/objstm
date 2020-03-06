@@ -69,21 +69,22 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         //need to add policies
-            $data = request()->validate($this->rules());        
-            if(request('imagePath')){
-                $imagePath =  request('imagePath')->store('category', 'public');
+        dd(request());
+            // $data = request()->validate($this->rules());        
+            // if(request('image')){
+            //     $imagePath =  request('image')->store('category', 'public');
                 
-                $image = Image::make(public_path("storage/{$imagePath}"))->fit(1000, 1000);
-                $image->save();
+            //     $image = Image::make(public_path("storage/{$imagePath}"))->fit(1000, 1000);
+            //     $image->save();
                 
-                $imageArray = ['imagePath' => $imagePath];
-            }
+            //     $imageArray = ['image' => $imagePath];
+            // }
 
-            $category->update(array_merge(
-                $data, 
-                $imageArray ?? []
-            ));
-            return response('success');
+            // $category->update(array_merge(
+            //     $data, 
+            //     $imageArray ?? []
+            // ));
+            // return response('success');
     }
 
     /**

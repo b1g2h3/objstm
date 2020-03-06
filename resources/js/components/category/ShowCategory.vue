@@ -1,24 +1,18 @@
 <template>
-  <div>
-    <div v-if="loading" class="loader">
-      <div class="inner one"></div>
-      <div class="inner two"></div>
-      <div class="inner three"></div>
-    </div>
-
-    <div
-      class="bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-5"
+   <div class="">
+      <div
+      class="header"
     >
-      <h3 class="font-bold pl-2">{{category.name}}</h3>
+      <h3>{{category.name}}</h3>
     </div>
 
     <div class="flex flex-wrap">
       <div class="w-full">
-        <!--Metric Card-->
         <div
-          class="bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3"
+          class="table"
         >
           <div v-if="category">
+            
             <table class="table-fixed">
               <thead>
                 <tr>
@@ -39,10 +33,9 @@
             </table>
           </div>
         </div>
-        <!--/Metric Card-->
       </div>
     </div>
-  </div>
+   </div>
 </template>
 
 <script>

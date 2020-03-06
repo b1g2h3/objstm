@@ -1,25 +1,25 @@
 <template>
     <div>
         <div
-            class="bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-5"
+            class="header"
         >
-            <h3 class="font-bold pl-2">Objednávka č. {{ order.id }}</h3>
+            <h3>Objednávka č. {{ order.id }}</h3>
         </div>
 
         <div class="flex flex-wrap">
             <div class="w-full">
                 <div
-                    class="bg-blue-100 border-t-4 border-b-4 border-blue-600 rounded-lg shadow-lg m-1 ml-3 mt-4"
+                    class="table"
                 >
                   <userDetails/>
                 </div>
                 <div
-                    class="bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3 mt-4"
+                    class="table mt-3"
                 >
                   <tableOrderList />
                 </div>
                 <div
-                    class="bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3 mt-4"
+                    class="table mt-3"
                 >
                     <div v-if="order.status == 'Rozpracovaná'">
                         <div class="flex flex-wrap">
@@ -89,7 +89,8 @@ export default {
       loading: false,
       description: {
         desc: ""
-      }
+      },
+      successMessage: ""
     };
   },
   created() {

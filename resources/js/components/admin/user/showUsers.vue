@@ -7,17 +7,30 @@
     </div>
 
     <div
-      class="bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-5"
+      class="header"
     >
-      <h3 class="font-bold pl-2">Přehled všech uživatelů</h3>
+      <h3>Přehled všech uživatelů</h3>
     </div>
 
     <div class="flex flex-wrap">
       <div class="w-full">
         <div
-          class="bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3"
+          class="table"
         >
-          {{allUsers}}
+          <div class="flex w-full text-center p-3 justify-between">
+              <div class="font-bold">Název firmy</div>
+              <div class="font-bold pl-3">IC</div>
+              <div class="font-bold pl-3">DIC</div>
+              <div class="font-bold pl-3">Email</div>
+              <div class="font-bold pl-3">Telefon</div>
+          </div>
+          <div class="flex w-full text-center p-3 justify-between" v-bind:key="user.id" v-for="user in allUsers">
+              <div class="text-bold">{{user.invoice.nazev}}</div>
+              <div class="pl-3">{{user.invoice.ic}}</div>
+              <div class="pl-3">{{user.invoice.dic}}</div>
+              <div class="pl-3">{{user.email}}</div>
+              <div class="pl-3">{{user.phone}}</div>
+          </div>
         </div>
       </div>
     </div>

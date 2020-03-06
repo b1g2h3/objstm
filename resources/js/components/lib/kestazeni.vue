@@ -1,5 +1,5 @@
 <template>
-<div class="w-5/6 p-5">
+<div class="w-3/6 pt-6">
   <div class="max-w-sm w-full lg:max-w-full lg:flex pt-5">
   <div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style="background-image: url('https://cdn.nere.cz/assets/attachments18/582943/screen/fotografie-jidla-pro-katalog-fotografie-jidla-pro-katalog_4.jpg?1549830512')" title="Woman holding a mug">
   </div>

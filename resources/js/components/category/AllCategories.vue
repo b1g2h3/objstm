@@ -1,15 +1,20 @@
 <template>
-  <div class="flex ">
-    <div v-if="!['zbozi'].includes($route.name)"  class="flex flex-col bg-blue-800 text-white pt-14 w-1-6 pt-14">
-      <div class="text-center p-2 text-2xl">Kategorie</div>
-        <router-link  class="text-center p-2" v-for="category in categories" v-bind:key="category.id" :to="{ name: 'category_show', params: {id: category.id} }">{{category.name}}</router-link>
+  <div class="flex w-full">
+    <aside v-if="!['zbozi'].includes($route.name)"  class="sidebar">
+      <div class="name">Kategorie</div>
+      <div class="menu">
+            <router-link  
+        class="link"
+         v-for="category in categories" v-bind:key="category.id" :to="{ name: 'category_show', params: {id: category.id} }"
+         >{{category.name}}</router-link>
+      </div>
 
-    </div>
-    <div v-if="['zbozi'].includes($route.name)" class="flex flex-wrap md:w-6/6 p-5">
-        <div v-if="successMessage" class="bg-blue-100 w-full border-t border-b border-blue-500 text-blue-700 px-4 py-3" role="alert">
+    </aside>
+    <div v-if="['zbozi'].includes($route.name)" class="flex flex-wrap mt-5">
+          <div v-if="successMessage" class="bg-blue-100 w-full border-t border-b border-blue-500 text-blue-700 px-4 py-3" >
             <p class="font-bold">{{successMessage}}</p>
           </div>
-          <div v-for="category in categories" v-bind:key="category.id" class="w-full sm:w-1/2 md:w-1/5 mb-4 m-2 pt-14">
+          <div v-for="category in categories" v-bind:key="category.id" class="w-full sm:w-1/2 md:w-1/4 m-2">
           <div class="relative w-30 h-30 ">
           <router-link class="" :to="{ name: 'category_show', params: {id: category.id} }">
             <div class="w-full h-full absolute bg-black opacity-25 hover:opacity-0  cursor-pointer"></div>
@@ -17,11 +22,11 @@
             <div class="text-xl text-white pl-2   absolute -mt-10">{{category.name}}</div>
           </router-link>
           </div>
-            <router-link  :to="{ name: 'editCategory', params: {id: category.id} }" class="inline-block bg-blue-600 hover:bg-blue-800 text-sm font-semibold  w-full text-white p-2 text-center">Upravit</router-link>
-            <a  @click="deleteCategory(category.id)" class="inline-block bg-red-600 hover:bg-red-800 text-sm font-semibold  w-full text-white p-2 text-center">Odstranit</a>
+            <!-- <router-link  :to="{ name: 'editCategory', params: {id: category.id} }" class="inline-block bg-blue-600 hover:bg-blue-800 text-sm font-semibold  w-full text-white p-2 text-center">Upravit</router-link>
+            <a  @click="deleteCategory(category.id)" class="inline-block bg-red-600 hover:bg-red-800 text-sm font-semibold  w-full text-white p-2 text-center">Odstranit</a> -->
         </div>
        </div>
-    <transition name enter-active-class="animated fadeIn" leave-active-class="animated fadeIn">
+    <transition name="component-fade" mode="out-in">
       <router-view />
     </transition>
   </div>
@@ -39,7 +44,7 @@ export default {
     return {
       successMessage: "",
       errors: [],
-      successMessage: this.dataSuccessMessage,
+      successMessage: this.dataSuccessMessage
     };
   },
   created() {

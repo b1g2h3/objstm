@@ -8,6 +8,37 @@
     @apply .appearance-none .bg-transparent .border-none .w-full .text-gray-700 .mr-3 .py-1 .px-2 .leading-tight;
 }
 
+.sidebar {
+    @apply .flex .flex-col .text-black .font-bold;
+}
+.sidebar .name {
+    @apply .text-center .mt-6 .mb-3 .text-xl .bg-davygrayn;
+}
+.sidebar .menu {
+    @apply .flex .flex-col .border-t-4 .border-b-4 .border-junglegreen .rounded-lg .shadow-lg .p-1 .bg-junglegreen;
+}
+
+.table {
+    @apply .border-t-4 .border-b-4 .border-ivory .rounded-lg .shadow-lg  .bg-ivory  .p-3 .ml-3;
+}
+.link {
+    @apply .text-left .text-ivory .bg-junglegreen .p-2 .cursor-pointer;
+}
+.link:hover {
+    @apply .text-gray-200 .bg-darkergreen .font-bold;
+}
+.success {
+    @apply .mt-3 .bg-junglegreen .text-white .font-semibold .py-2 .px-4 .border .border-junglegreen .rounded .ml-10 .w-auto;
+}
+.success:hover {
+    @apply .bg-darkergreen;
+}
+h3 {
+    @apply .font-bold .text-black .pl-2 .text-xl;
+}
+.header {
+    @apply .mt-3 .p-3;
+}
 .ares:focus {
     @apply .outline-none;
 }

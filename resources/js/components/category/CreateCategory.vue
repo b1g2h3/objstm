@@ -7,15 +7,15 @@
     </div>
 
     <div
-    class="bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-3"
+    class="header"
     >
-      <h3 class="font-bold pl-2">Vytvořit kategorii</h3>
+      <h3>Vytvořit kategorii</h3>
     </div>
 
     <div class="flex flex-wrap">
       <div class="w-full">
         <div
-              class="bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3"
+              class="table"
         >
              <form @submit.prevent="createCategory" class="w-full max-w-lg p-5">
             <div class="flex flex-wrap -mx-3 mb-6">
@@ -41,7 +41,7 @@
             <div class="md:flex md:items-center">
               <div class="md:w-2/3">
                 <button
-                  class="shadow bg-blue-800 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                  class="success"
                   type="submit"
                 >Vytvořit kategorii</button>
               </div>

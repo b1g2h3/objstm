@@ -7,18 +7,17 @@
     </div>
 
     <div
-      class="bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-5"
+      class="header"
     >
-      <h3 class="font-bold pl-2">Přehled všech objednávek</h3>
+      <h3>Přehled všech objednávek</h3>
     </div>
 
     <div class="flex flex-wrap">
       <div class="w-full">
         <div
-          class="bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3"
+          class="table"
         >
           {{allOrders}}
-          cc
         </div>
       </div>
     </div>

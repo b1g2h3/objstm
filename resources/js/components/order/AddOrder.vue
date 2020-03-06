@@ -1,39 +1,41 @@
 <template>
     <div class="flex">
-        <div class="h-screen bg-blue-800 text-white">
-            <div class="text-center p-2 text-2xl">Objednávkový systém</div>
+        <aside class="sidebar">
+            <div class="name">Objednávkový systém</div>
+            <div class="menu">
             <input
                 class="pt-2 appearance-none text-black block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
                 type="text"
                 v-model="search"
                 placeholder="Vyhledejte zboží"
             />
-            <div
-                class="text-center pt-2 cursor-pointer"
+             <div
+                class="link"
                 v-on:click="allProduct"
             >
                 Všechny produkty
             </div>
             <div v-for="category in categories" v-bind:key="category.id">
                 <div
-                    class="text-center pt-2 cursor-pointer"
+                    class="link"
                     v-on:click="value(category.id, category.name)"
                 >
                     {{ category.name }}
                 </div>
             </div>
-        </div>
+            </div>
+        </aside>
         <div>
             <div
-                class="bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-5"
+                class="mt-3 p-3"
             >
-                <h3 class="font-bold pl-2">
+                <h3>
                     {{ all ? "Všechny produkty" : categoryName }}
                 </h3>
             </div>
             <div
                 v-if="orders"
-                class="bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3 mt-4"
+                class="bg-ivory border-t-4 border-b-4 border-ivory rounded-lg shadow-lg  ml-3"
             >
                 <div class="flex flex-col p-4">
                       <div class="flex  font-bold text-center">
@@ -57,13 +59,13 @@
             </div>
             <form @submit.prevent="addOrder">
                 <button
-                    class="mt-3 bg-blue-800 hover:bg-blue-900 text-white font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded ml-10 t-2"
+                    class="success"
                     type="submit"
                 >
                     Potvrdit
                 </button>
                 <div
-                    class="bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3 mt-4"
+                    class="table mt-3"
                 >
                     <div class="flex flex-wrap">
                         <table class="table-fixed">

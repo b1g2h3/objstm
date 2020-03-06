@@ -1920,17 +1920,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1959,14 +1948,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2035,7 +2016,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "createProduct",
   props: {
@@ -2067,6 +2047,19 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2265,6 +2258,8 @@ __webpack_require__.r(__webpack_exports__);
         password: this.password
       }).then(function (response) {
         _this.loading = false;
+
+        _this.$store.dispatch("getUser");
 
         _this.$router.push({
           name: "objednat"
@@ -2489,6 +2484,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AllCategories",
   props: {
@@ -2680,13 +2680,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ShowCategory",
   props: {
@@ -2725,6 +2718,30 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2799,6 +2816,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       loading: false,
+      imagePath: "",
       errors: "",
       successMessage: ""
     };
@@ -2820,30 +2838,34 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.errors = [];
-      this.errors = [];
       this.loading = true;
-      this.axios.put("category/".concat(this.category.id), this.category, {
+      var formData = new FormData();
+      formData.append("file", this.imagePath);
+      formData.append("_method", "PUT");
+      this.axios.put("category/".concat(this.category.id), {
+        _method: "PUT",
+        name: this.category.name,
+        imagePath: formData
+      }, _defineProperty({
         headers: {
-          Authorization: "Bearer " + localStorage.getItem("access_token")
+          "Content-Type": "multipart/form-data"
         }
-      }).then(function (response) {
-        _this.loading = false;
-        _this.successMessage = "Úspěšně jste upravili kategorii";
-
-        _this.$router.push({
-          name: "zbozi",
-          params: {
-            dataSuccessMessage: _this.successMessage
-          }
-        });
+      }, "headers", {
+        Authorization: "Bearer " + localStorage.getItem("access_token")
+      })).then(function (response) {
+        _this.loading = false; // this.successMessage = "Úspěšně jste upravili kategorii";
+        // this.$router.push({
+        //   name: "zbozi",
+        //   params: { dataSuccessMessage: this.successMessage }
+        // });
       })["catch"](function (error) {
         if (error.response.status == 422) {
           _this.errors = error.response.data.errors;
         }
       });
     },
-    processFile: function processFile(event) {
-      this.category.image = event.target.files[0];
+    onChangeFileUpload: function onChangeFileUpload() {
+      this.imagePath = this.$refs.file.files[0];
     }
   }
 });
@@ -2859,8 +2881,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -3961,7 +3981,8 @@ __webpack_require__.r(__webpack_exports__);
       loading: false,
       description: {
         desc: ""
-      }
+      },
+      successMessage: ""
     };
   },
   created: function created() {
@@ -4011,6 +4032,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -4856,12 +4879,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AllOrders",
   data: function data() {
@@ -4884,6 +4901,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -9511,6 +9531,18 @@ __webpack_require__.r(__webpack_exports__);
 })));
 //# sourceMappingURL=bootstrap.js.map
 
+
+/***/ }),
+
+/***/ "./node_modules/cxlt-vue2-toastr/dist/js/cxlt-vue2-toastr.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/cxlt-vue2-toastr/dist/js/cxlt-vue2-toastr.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(t,e){ true?module.exports=e():undefined}(this,function(){return function(t){function e(r){if(n[r])return n[r].exports;var o=n[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,e),o.l=!0,o.exports}var n={};return e.m=t,e.c=n,e.i=function(t){return t},e.d=function(t,n,r){e.o(t,n)||Object.defineProperty(t,n,{configurable:!1,enumerable:!0,get:r})},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="/",e(e.s=43)}([function(t,e){var n=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=n)},function(t,e,n){t.exports=!n(8)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,e){var n={}.hasOwnProperty;t.exports=function(t,e){return n.call(t,e)}},function(t,e,n){var r=n(4),o=n(14);t.exports=n(1)?function(t,e,n){return r.f(t,e,o(1,n))}:function(t,e,n){return t[e]=n,t}},function(t,e,n){var r=n(10),o=n(31),i=n(26),s=Object.defineProperty;e.f=n(1)?Object.defineProperty:function(t,e,n){if(r(t),e=i(e,!0),r(n),o)try{return s(t,e,n)}catch(t){}if("get"in n||"set"in n)throw TypeError("Accessors not supported!");return"value"in n&&(t[e]=n.value),t}},function(t,e,n){var r=n(32),o=n(16);t.exports=function(t){return r(o(t))}},function(t,e,n){var r=n(23)("wks"),o=n(15),i=n(0).Symbol,s="function"==typeof i;(t.exports=function(t){return r[t]||(r[t]=s&&i[t]||(s?i:o)("Symbol."+t))}).store=r},function(t,e){var n=t.exports={version:"2.6.9"};"number"==typeof __e&&(__e=n)},function(t,e){t.exports=function(t){try{return!!t()}catch(t){return!0}}},function(t,e){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,e,n){var r=n(9);t.exports=function(t){if(!r(t))throw TypeError(t+" is not an object!");return t}},function(t,e){t.exports=!0},function(t,e,n){var r=n(36),o=n(17);t.exports=Object.keys||function(t){return r(t,o)}},function(t,e){e.f={}.propertyIsEnumerable},function(t,e){t.exports=function(t,e){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:e}}},function(t,e){var n=0,r=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++n+r).toString(36))}},function(t,e){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,e){t.exports="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(",")},function(t,e,n){var r=n(0),o=n(7),i=n(53),s=n(3),u=n(2),c=function(t,e,n){var a,f,l,p=t&c.F,h=t&c.G,d=t&c.S,y=t&c.P,A=t&c.B,g=t&c.W,v=h?o:o[e]||(o[e]={}),m=v.prototype,b=h?r:d?r[e]:(r[e]||{}).prototype;h&&(n=e);for(a in n)(f=!p&&b&&void 0!==b[a])&&u(v,a)||(l=f?b[a]:n[a],v[a]=h&&"function"!=typeof b[a]?n[a]:A&&f?i(l,r):g&&b[a]==l?function(t){var e=function(e,n,r){if(this instanceof t){switch(arguments.length){case 0:return new t;case 1:return new t(e);case 2:return new t(e,n)}return new t(e,n,r)}return t.apply(this,arguments)};return e.prototype=t.prototype,e}(l):y&&"function"==typeof l?i(Function.call,l):l,y&&((v.virtual||(v.virtual={}))[a]=l,t&c.R&&m&&!m[a]&&s(m,a,l)))};c.F=1,c.G=2,c.S=4,c.P=8,c.B=16,c.W=32,c.U=64,c.R=128,t.exports=c},function(t,e){t.exports={}},function(t,e){e.f=Object.getOwnPropertySymbols},function(t,e,n){var r=n(4).f,o=n(2),i=n(6)("toStringTag");t.exports=function(t,e,n){t&&!o(t=n?t:t.prototype,i)&&r(t,i,{configurable:!0,value:e})}},function(t,e,n){var r=n(23)("keys"),o=n(15);t.exports=function(t){return r[t]||(r[t]=o(t))}},function(t,e,n){var r=n(7),o=n(0),i=o["__core-js_shared__"]||(o["__core-js_shared__"]={});(t.exports=function(t,e){return i[t]||(i[t]=void 0!==e?e:{})})("versions",[]).push({version:r.version,mode:n(11)?"pure":"global",copyright:"© 2019 Denis Pushkarev (zloirock.ru)"})},function(t,e){var n=Math.ceil,r=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?r:n)(t)}},function(t,e,n){var r=n(16);t.exports=function(t){return Object(r(t))}},function(t,e,n){var r=n(9);t.exports=function(t,e){if(!r(t))return t;var n,o;if(e&&"function"==typeof(n=t.toString)&&!r(o=n.call(t)))return o;if("function"==typeof(n=t.valueOf)&&!r(o=n.call(t)))return o;if(!e&&"function"==typeof(n=t.toString)&&!r(o=n.call(t)))return o;throw TypeError("Can't convert object to primitive value")}},function(t,e,n){var r=n(0),o=n(7),i=n(11),s=n(28),u=n(4).f;t.exports=function(t){var e=o.Symbol||(o.Symbol=i?{}:r.Symbol||{});"_"==t.charAt(0)||t in e||u(e,t,{value:s.f(t)})}},function(t,e,n){e.f=n(6)},function(t,e){var n={}.toString;t.exports=function(t){return n.call(t).slice(8,-1)}},function(t,e,n){var r=n(9),o=n(0).document,i=r(o)&&r(o.createElement);t.exports=function(t){return i?o.createElement(t):{}}},function(t,e,n){t.exports=!n(1)&&!n(8)(function(){return 7!=Object.defineProperty(n(30)("div"),"a",{get:function(){return 7}}).a})},function(t,e,n){var r=n(29);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return"String"==r(t)?t.split(""):Object(t)}},function(t,e,n){"use strict";var r=n(11),o=n(18),i=n(37),s=n(3),u=n(19),c=n(57),a=n(21),f=n(64),l=n(6)("iterator"),p=!([].keys&&"next"in[].keys()),h=function(){return this};t.exports=function(t,e,n,d,y,A,g){c(n,e,d);var v,m,b,x=function(t){if(!p&&t in O)return O[t];switch(t){case"keys":case"values":return function(){return new n(this,t)}}return function(){return new n(this,t)}},S=e+" Iterator",w="values"==y,C=!1,O=t.prototype,B=O[l]||O["@@iterator"]||y&&O[y],M=B||x(y),E=y?w?x("entries"):M:void 0,I="Array"==e?O.entries||B:B;if(I&&(b=f(I.call(new t)))!==Object.prototype&&b.next&&(a(b,S,!0),r||"function"==typeof b[l]||s(b,l,h)),w&&B&&"values"!==B.name&&(C=!0,M=function(){return B.call(this)}),r&&!g||!p&&!C&&O[l]||s(O,l,M),u[e]=M,u[S]=h,y)if(v={values:w?M:x("values"),keys:A?M:x("keys"),entries:E},g)for(m in v)m in O||i(O,m,v[m]);else o(o.P+o.F*(p||C),e,v);return v}},function(t,e,n){var r=n(10),o=n(61),i=n(17),s=n(22)("IE_PROTO"),u=function(){},c=function(){var t,e=n(30)("iframe"),r=i.length;for(e.style.display="none",n(55).appendChild(e),e.src="javascript:",t=e.contentWindow.document,t.open(),t.write("<script>document.F=Object<\/script>"),t.close(),c=t.F;r--;)delete c.prototype[i[r]];return c()};t.exports=Object.create||function(t,e){var n;return null!==t?(u.prototype=r(t),n=new u,u.prototype=null,n[s]=t):n=c(),void 0===e?n:o(n,e)}},function(t,e,n){var r=n(36),o=n(17).concat("length","prototype");e.f=Object.getOwnPropertyNames||function(t){return r(t,o)}},function(t,e,n){var r=n(2),o=n(5),i=n(52)(!1),s=n(22)("IE_PROTO");t.exports=function(t,e){var n,u=o(t),c=0,a=[];for(n in u)n!=s&&r(u,n)&&a.push(n);for(;e.length>c;)r(u,n=e[c++])&&(~i(a,n)||a.push(n));return a}},function(t,e,n){t.exports=n(3)},function(t,e,n){t.exports={default:n(47),__esModule:!0}},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}e.__esModule=!0;var o=n(46),i=r(o),s=n(45),u=r(s),c="function"==typeof u.default&&"symbol"==typeof i.default?function(t){return typeof t}:function(t){return t&&"function"==typeof u.default&&t.constructor===u.default&&t!==u.default.prototype?"symbol":typeof t};e.default="function"==typeof u.default&&"symbol"===c(i.default)?function(t){return void 0===t?"undefined":c(t)}:function(t){return t&&"function"==typeof u.default&&t.constructor===u.default&&t!==u.default.prototype?"symbol":void 0===t?"undefined":c(t)}},function(t,e){},function(t,e){},function(t,e,n){var r=n(80)(n(44),n(81),null,null);r.options.__file="/Users/chengxulvtu/Documents/github/cxlt-vue2-toastr/src/Toastr.vue",r.esModule&&Object.keys(r.esModule).some(function(t){return"default"!==t&&"__esModule"!==t})&&console.error("named exports are not supported in *.vue files."),r.options.functional&&console.error("[vue-loader] Toastr.vue: functional components are not supported with templates, they should use render functions."),t.exports=r.exports},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=n(39),o=n.n(r),i=n(38),s=n.n(i),u=n(42),c=n.n(u),a=n(41),f=(n.n(a),n(40)),l=(n.n(f),{install:function(t,e){function n(n,r){var o=t.extend(c.a),u=s()(e,n,{type:r}),a=new o({el:document.createElement("div"),propsData:u});return i.push(a),a}function r(t){return"object"!==(void 0===t?"undefined":o()(t))&&"function"!=typeof t&&(t={message:t.toString()}),t}e||(e={});var i=[];t.prototype.$toast={success:function(t){return n(r(t),"success")},info:function(t){return n(r(t),"info")},warn:function(t){return n(r(t),"warning")},error:function(t){return n(r(t),"error")},removeAll:function(){i.forEach(function(t){t.hideToastr()}),i=[]}}}});e.default=l},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default={name:"CxltToastr",data:function(){return{progress:{hideEta:0,percent:0,intervalId:null},show:!1,defaultIcons:{success:n(78),info:n(77),warning:n(79),error:n(76)}}},props:{type:{type:String,default:"success"},position:{type:String,default:"top center"},title:{type:String},message:{type:String},useHtml:{type:Boolean,default:!1},closeButton:{type:Boolean,default:!0},progressBar:{type:Boolean,default:!1},icon:{type:String},timeOut:{default:"1500"},showMethod:{type:String,default:"fadeIn"},hideMethod:{type:String,default:"fadeOut"},showDuration:{default:"1000"},hideDuration:{default:"1000"},delay:{default:"0"},successColor:{type:String},infoColor:{type:String},warningColor:{type:String},errorColor:{type:String},color:{type:String}},beforeMount:function(){var t=document.querySelector(".cxlt-toastr-container.toast-"+this.positionClass);t||(t=document.createElement("div"),t.classList.add("cxlt-toastr-container"),t.classList.add("toast-"+this.positionClass),document.body.appendChild(t)),t.appendChild(this.$el)},mounted:function(){var t=this;setTimeout(function(){return t.showToastr()},this.delay)},computed:{positionClass:function(){return this.position.split(" ").join("-")},enterActiveClass:function(){return"animated "+this.showMethod},leaveActiveClass:function(){return"animated "+this.hideMethod},toastBackgroundColor:function(){return this.color?this.color:"success"===this.type&&this.successColor?this.successColor:"info"===this.type&&this.infoColor?this.infoColor:"warning"===this.type&&this.warningColor?this.warningColor:"error"===this.type&&this.errorColor?this.errorColor:null},iconSrc:function(){return this.icon?this.icon:this.defaultIcons[this.type]}},methods:{showToastr:function(){var t=this;this.show=!0,this.sto=setTimeout(function(){return t.hideToastr()},this.timeOut),this.progressBar&&(this.progress.hideEta=(new Date).getTime()+parseFloat(this.timeOut),this.progress.intervalId=setInterval(function(){return t.refreshProgress()},10))},hideToastr:function(){clearTimeout(this.sto),clearTimeout(this.progress.intervalId),this.show=!1},refreshProgress:function(){this.progress.percent=(this.progress.hideEta-(new Date).getTime())/this.timeOut*100},beforeEnter:function(t){t.style.animationDuration=this.showDuration+"ms"},afterEnter:function(t){this.$el.classList.add("animated"),this.$el.classList.add(this.showMethod)},beforeLeave:function(t){t.style.animationDuration=this.hideDuration+"ms"}}}},function(t,e,n){t.exports={default:n(48),__esModule:!0}},function(t,e,n){t.exports={default:n(49),__esModule:!0}},function(t,e,n){n(69),t.exports=n(7).Object.assign},function(t,e,n){n(72),n(70),n(73),n(74),t.exports=n(7).Symbol},function(t,e,n){n(71),n(75),t.exports=n(28).f("iterator")},function(t,e){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,e){t.exports=function(){}},function(t,e,n){var r=n(5),o=n(67),i=n(66);t.exports=function(t){return function(e,n,s){var u,c=r(e),a=o(c.length),f=i(s,a);if(t&&n!=n){for(;a>f;)if((u=c[f++])!=u)return!0}else for(;a>f;f++)if((t||f in c)&&c[f]===n)return t||f||0;return!t&&-1}}},function(t,e,n){var r=n(50);t.exports=function(t,e,n){if(r(t),void 0===e)return t;switch(n){case 1:return function(n){return t.call(e,n)};case 2:return function(n,r){return t.call(e,n,r)};case 3:return function(n,r,o){return t.call(e,n,r,o)}}return function(){return t.apply(e,arguments)}}},function(t,e,n){var r=n(12),o=n(20),i=n(13);t.exports=function(t){var e=r(t),n=o.f;if(n)for(var s,u=n(t),c=i.f,a=0;u.length>a;)c.call(t,s=u[a++])&&e.push(s);return e}},function(t,e,n){var r=n(0).document;t.exports=r&&r.documentElement},function(t,e,n){var r=n(29);t.exports=Array.isArray||function(t){return"Array"==r(t)}},function(t,e,n){"use strict";var r=n(34),o=n(14),i=n(21),s={};n(3)(s,n(6)("iterator"),function(){return this}),t.exports=function(t,e,n){t.prototype=r(s,{next:o(1,n)}),i(t,e+" Iterator")}},function(t,e){t.exports=function(t,e){return{value:e,done:!!t}}},function(t,e,n){var r=n(15)("meta"),o=n(9),i=n(2),s=n(4).f,u=0,c=Object.isExtensible||function(){return!0},a=!n(8)(function(){return c(Object.preventExtensions({}))}),f=function(t){s(t,r,{value:{i:"O"+ ++u,w:{}}})},l=function(t,e){if(!o(t))return"symbol"==typeof t?t:("string"==typeof t?"S":"P")+t;if(!i(t,r)){if(!c(t))return"F";if(!e)return"E";f(t)}return t[r].i},p=function(t,e){if(!i(t,r)){if(!c(t))return!0;if(!e)return!1;f(t)}return t[r].w},h=function(t){return a&&d.NEED&&c(t)&&!i(t,r)&&f(t),t},d=t.exports={KEY:r,NEED:!1,fastKey:l,getWeak:p,onFreeze:h}},function(t,e,n){"use strict";var r=n(1),o=n(12),i=n(20),s=n(13),u=n(25),c=n(32),a=Object.assign;t.exports=!a||n(8)(function(){var t={},e={},n=Symbol(),r="abcdefghijklmnopqrst";return t[n]=7,r.split("").forEach(function(t){e[t]=t}),7!=a({},t)[n]||Object.keys(a({},e)).join("")!=r})?function(t,e){for(var n=u(t),a=arguments.length,f=1,l=i.f,p=s.f;a>f;)for(var h,d=c(arguments[f++]),y=l?o(d).concat(l(d)):o(d),A=y.length,g=0;A>g;)h=y[g++],r&&!p.call(d,h)||(n[h]=d[h]);return n}:a},function(t,e,n){var r=n(4),o=n(10),i=n(12);t.exports=n(1)?Object.defineProperties:function(t,e){o(t);for(var n,s=i(e),u=s.length,c=0;u>c;)r.f(t,n=s[c++],e[n]);return t}},function(t,e,n){var r=n(13),o=n(14),i=n(5),s=n(26),u=n(2),c=n(31),a=Object.getOwnPropertyDescriptor;e.f=n(1)?a:function(t,e){if(t=i(t),e=s(e,!0),c)try{return a(t,e)}catch(t){}if(u(t,e))return o(!r.f.call(t,e),t[e])}},function(t,e,n){var r=n(5),o=n(35).f,i={}.toString,s="object"==typeof window&&window&&Object.getOwnPropertyNames?Object.getOwnPropertyNames(window):[],u=function(t){try{return o(t)}catch(t){return s.slice()}};t.exports.f=function(t){return s&&"[object Window]"==i.call(t)?u(t):o(r(t))}},function(t,e,n){var r=n(2),o=n(25),i=n(22)("IE_PROTO"),s=Object.prototype;t.exports=Object.getPrototypeOf||function(t){return t=o(t),r(t,i)?t[i]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?s:null}},function(t,e,n){var r=n(24),o=n(16);t.exports=function(t){return function(e,n){var i,s,u=String(o(e)),c=r(n),a=u.length;return c<0||c>=a?t?"":void 0:(i=u.charCodeAt(c),i<55296||i>56319||c+1===a||(s=u.charCodeAt(c+1))<56320||s>57343?t?u.charAt(c):i:t?u.slice(c,c+2):s-56320+(i-55296<<10)+65536)}}},function(t,e,n){var r=n(24),o=Math.max,i=Math.min;t.exports=function(t,e){return t=r(t),t<0?o(t+e,0):i(t,e)}},function(t,e,n){var r=n(24),o=Math.min;t.exports=function(t){return t>0?o(r(t),9007199254740991):0}},function(t,e,n){"use strict";var r=n(51),o=n(58),i=n(19),s=n(5);t.exports=n(33)(Array,"Array",function(t,e){this._t=s(t),this._i=0,this._k=e},function(){var t=this._t,e=this._k,n=this._i++;return!t||n>=t.length?(this._t=void 0,o(1)):"keys"==e?o(0,n):"values"==e?o(0,t[n]):o(0,[n,t[n]])},"values"),i.Arguments=i.Array,r("keys"),r("values"),r("entries")},function(t,e,n){var r=n(18);r(r.S+r.F,"Object",{assign:n(60)})},function(t,e){},function(t,e,n){"use strict";var r=n(65)(!0);n(33)(String,"String",function(t){this._t=String(t),this._i=0},function(){var t,e=this._t,n=this._i;return n>=e.length?{value:void 0,done:!0}:(t=r(e,n),this._i+=t.length,{value:t,done:!1})})},function(t,e,n){"use strict";var r=n(0),o=n(2),i=n(1),s=n(18),u=n(37),c=n(59).KEY,a=n(8),f=n(23),l=n(21),p=n(15),h=n(6),d=n(28),y=n(27),A=n(54),g=n(56),v=n(10),m=n(9),b=n(25),x=n(5),S=n(26),w=n(14),C=n(34),O=n(63),B=n(62),M=n(20),E=n(4),I=n(12),k=B.f,T=E.f,j=O.f,D=r.Symbol,P=r.JSON,L=P&&P.stringify,R=h("_hidden"),Q=h("toPrimitive"),F={}.propertyIsEnumerable,U=f("symbol-registry"),J=f("symbols"),z=f("op-symbols"),N=Object.prototype,Y="function"==typeof D&&!!M.f,V=r.QObject,G=!V||!V.prototype||!V.prototype.findChild,_=i&&a(function(){return 7!=C(T({},"a",{get:function(){return T(this,"a",{value:7}).a}})).a})?function(t,e,n){var r=k(N,e);r&&delete N[e],T(t,e,n),r&&t!==N&&T(N,e,r)}:T,H=function(t){var e=J[t]=C(D.prototype);return e._k=t,e},K=Y&&"symbol"==typeof D.iterator?function(t){return"symbol"==typeof t}:function(t){return t instanceof D},Z=function(t,e,n){return t===N&&Z(z,e,n),v(t),e=S(e,!0),v(n),o(J,e)?(n.enumerable?(o(t,R)&&t[R][e]&&(t[R][e]=!1),n=C(n,{enumerable:w(0,!1)})):(o(t,R)||T(t,R,w(1,{})),t[R][e]=!0),_(t,e,n)):T(t,e,n)},W=function(t,e){v(t);for(var n,r=A(e=x(e)),o=0,i=r.length;i>o;)Z(t,n=r[o++],e[n]);return t},q=function(t,e){return void 0===e?C(t):W(C(t),e)},X=function(t){var e=F.call(this,t=S(t,!0));return!(this===N&&o(J,t)&&!o(z,t))&&(!(e||!o(this,t)||!o(J,t)||o(this,R)&&this[R][t])||e)},$=function(t,e){if(t=x(t),e=S(e,!0),t!==N||!o(J,e)||o(z,e)){var n=k(t,e);return!n||!o(J,e)||o(t,R)&&t[R][e]||(n.enumerable=!0),n}},tt=function(t){for(var e,n=j(x(t)),r=[],i=0;n.length>i;)o(J,e=n[i++])||e==R||e==c||r.push(e);return r},et=function(t){for(var e,n=t===N,r=j(n?z:x(t)),i=[],s=0;r.length>s;)!o(J,e=r[s++])||n&&!o(N,e)||i.push(J[e]);return i};Y||(D=function(){if(this instanceof D)throw TypeError("Symbol is not a constructor!");var t=p(arguments.length>0?arguments[0]:void 0),e=function(n){this===N&&e.call(z,n),o(this,R)&&o(this[R],t)&&(this[R][t]=!1),_(this,t,w(1,n))};return i&&G&&_(N,t,{configurable:!0,set:e}),H(t)},u(D.prototype,"toString",function(){return this._k}),B.f=$,E.f=Z,n(35).f=O.f=tt,n(13).f=X,M.f=et,i&&!n(11)&&u(N,"propertyIsEnumerable",X,!0),d.f=function(t){return H(h(t))}),s(s.G+s.W+s.F*!Y,{Symbol:D});for(var nt="hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(","),rt=0;nt.length>rt;)h(nt[rt++]);for(var ot=I(h.store),it=0;ot.length>it;)y(ot[it++]);s(s.S+s.F*!Y,"Symbol",{for:function(t){return o(U,t+="")?U[t]:U[t]=D(t)},keyFor:function(t){if(!K(t))throw TypeError(t+" is not a symbol!");for(var e in U)if(U[e]===t)return e},useSetter:function(){G=!0},useSimple:function(){G=!1}}),s(s.S+s.F*!Y,"Object",{create:q,defineProperty:Z,defineProperties:W,getOwnPropertyDescriptor:$,getOwnPropertyNames:tt,getOwnPropertySymbols:et});var st=a(function(){M.f(1)});s(s.S+s.F*st,"Object",{getOwnPropertySymbols:function(t){return M.f(b(t))}}),P&&s(s.S+s.F*(!Y||a(function(){var t=D();return"[null]"!=L([t])||"{}"!=L({a:t})||"{}"!=L(Object(t))})),"JSON",{stringify:function(t){for(var e,n,r=[t],o=1;arguments.length>o;)r.push(arguments[o++]);if(n=e=r[1],(m(e)||void 0!==t)&&!K(t))return g(e)||(e=function(t,e){if("function"==typeof n&&(e=n.call(this,t,e)),!K(e))return e}),r[1]=e,L.apply(P,r)}}),D.prototype[Q]||n(3)(D.prototype,Q,D.prototype.valueOf),l(D,"Symbol"),l(Math,"Math",!0),l(r.JSON,"JSON",!0)},function(t,e,n){n(27)("asyncIterator")},function(t,e,n){n(27)("observable")},function(t,e,n){n(68);for(var r=n(0),o=n(3),i=n(19),s=n(6)("toStringTag"),u="CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,MediaList,MimeTypeArray,NamedNodeMap,NodeList,PaintRequestList,Plugin,PluginArray,SVGLengthList,SVGNumberList,SVGPathSegList,SVGPointList,SVGStringList,SVGTransformList,SourceBufferList,StyleSheetList,TextTrackCueList,TextTrackList,TouchList".split(","),c=0;c<u.length;c++){var a=u[c],f=r[a],l=f&&f.prototype;l&&!l[s]&&o(l,s,a),i[a]=i.Array}},function(t,e){t.exports="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAADJUlEQVRoQ+2a/VEVMRTFz60ArQCsQK1A6AArECrQDoQOoAKhAu0AqECoQKhAO4hzmMBk9+XjJNl9C29e/mKGZDe/3HM/cvcZNmTYhnBgC5KypHPuDYD3APYTc64B3JnZvynVMIlFnHMfAHwBcASAIMq4B/ALwKWZ3SoLcnO6QJxz3PwJgL3OjRDqxMwuW5/TBOKco2x+TAAw3jeBjs2M8qsaVSBe/98BfKt6S/3kMwCnNX4kg3iIKwD0h3UM+s2BCiOBeGf+OYOUSgdCqX1WgkERxFvi9wIQT5CE+ViyTBZkATmlLFSUWQmETve1ZP81/f/czJJBJgniQyyd+yUNOn80NOdA/lT4xQ0AWo/5RbXgOQBuiqf8STytezN7F5sbBXHOsdRgwlMGSwzOfxziWia9i2AN/2aVoIzB2qcFKRDVGgMIESa6EeecChO1ygqIzxkMt6VxY2apCjdlmShEcACUmiIzhuNBoRkDUU+GiYrVa3KMZJaF8LI8BMDEWxorESwG8lcsxbPhcCQzhD6R2mWPvAYgPgESRB3FU1YfJAaJ8HFvw2w/BqHma3NHN0wDBIEGOWUMwksSy/Ta0QzTCMH9scznfh/HVCB8VjVMB8SsIFUwnRBbEMVnNkJa1RCjPKPWdeGBZp19Y8Ivm2uvPyH6eoetzB3BKZYsUR7MbNAUjNVa6vX2xReN7FspZfy1mR1kCsDY5axUxrM8Sl4NgneVy3gvL7ZgdgV5XZjZ8XheIdmlLlaMXM83zcy7V2S1UqI0hsQBjJixx1ddFSJZPeSaD6pV+HDe7OhbvBgpp8o1vMDxYsbmgyInrolaI2kRL6+WnCKosWtKfTvIw6gRrGt34uK2Bp0HYYKkbPgpbclxR/nl+r9qE5sdCyWKzQH7wE8ZXU3sIIoxt9Ax1w1DiMNJPisEMOuWWVFOofmL0gon+y4L78lqf7dVauwL8+Oo/Am7CiSwDkMz88DUUqOUjmb/GJooRWihXiAC0ALPje1aUzZZJALEYMCMzsyuQnHzDCAscZb9wUDs1LwfESz3E47bGv0r1pnEIsqL5p6zBZn7hGuf/x/5tYxCBjNscgAAAABJRU5ErkJggg=="},function(t,e){t.exports="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAER0lEQVRoQ+2ajVEUQRCFuyNQIxAiECIQIhAjkItAiECMQIlAiACMQC4CIQLvIhAiaOtt9Zx9s71787dbhWVXXVHA3u580697enqWqZGJyB4RvSWiA/3gd3ysrYgIn3v9LJkZv1cb19xBB/+BiE6dQafeGiBfieh7DVQRiIhg1j8qQOqAU667IqLPJUBZICLykoi+jACsiejWyMcbfJDeERG9HqAD0DkzP6bQ45pkEBGBfAABGGsYPKRxmzuTKs0TIjpzoACxYGZMzE5LAhGRb44XHgDAzJi9atOJunCA8IzzXQ8YBVEp3RARZBDsiYgumBleaG4iAu8A6IW5+R0RvR+T2iCIQvzQVBruCS+c5Eool1YlB0m9Md9Fyj4eghkDAYT1xDUzI05mMxGBbJHeg90x87E3ABfEiYkiCE3T7/TBWCcwq1nmwFwyM+S3ZT0QDToEd7BSCGQjxJc16DwpC9kvOTC9+2yBaFz8Min2gZmR97NNRJA+bcDiHo/M/Cr7ZkQkIvBmiBnce9/GSwxiNYnsdFAa2CIirpaZk1J+/F1NAIAJk7OllM1NVc8/zQ2wshan2AGPPDFzvKAmO0hTMxblYPBKV3RaEOuNYkmFJ4hIsxiJ4gUDD6XNxisdiLoNsREMpUH1iq1eBhAMJUx21nIkhiXAJqPOKwEEK+kn/dKameN9RLL757hQRKxXuhAIIPBGGHxVbMwEgnUkxMqKmffZkdUmgFoMSuVFLWRl4g+TbkOhA7GaayYrnSAsiGEdQnxgIWuytY3ktQAIUix2ezB3+S/xjIigYsUe3tpgrZT7jGi1vwSIfWCT+NAK4bc3OC5cEJ3sZRPUEiA20FEmA6zahlZ2LcWrnyEiqMxRocNWALGlxHMFof8gu7Q3s7T+LY/Y5f65xsh6kvQL2c0grV76tQti0bbWi5cZQOy2o1sQbYnSFWC7Ajnl/zOA2PWvK1H6BViDemhKEHfMqudefZ8y62PXTAxiy/iu0PU2Vk3kNTFIb/802VZ3KhCn7/Z3q6vyslngnpkPa+Q1IYj1xnbzQUGwAWrZDnL7WjXVb1I7yPEKunmHpTu6EY8UbaU1U2GiQ1/Mb9ApCC5CBgvdvGKJtW7QiQggwrYZXdC9wZapwsSNtStmXuTGS8sGnXM6MN7EDoON9vH4cykMZrCqQedApB0rGJi4eVAEk+tJe70DgRcM7OHT5vJdR2+AiY+/mrV0hiCdVhIuxbHfUfbRmwl+HMzYtg6yGQ5DL2tmewQCrSmU6LZrv9Szy8Fz96SzCidmus6FAl23ABIRnBUCIO47J/XakkBMNsPqH59CFb9LohLCGSOKwBgAKfY09aguGcRIDRsxe9JqHQIoxFX46TkLwYpBh5/eNfDy2SSvcETZBAOBDIaAStUGAMRfdn84yyPx6Ha8S5IKU/wui31AFYjjJcjFvngWv/2DQdsXz9DUzp59b4b+AJFTg4IAQeQDAAAAAElFTkSuQmCC"},function(t,e){t.exports="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABiklEQVRoQ+3Y4VHDMAwF4PcmgBE6AiPABBwbMAKMwgSMwAjABh2hTABMYM53bi+kThzLlqP0nL+pXX+SHetEXMjDC3GgQ6xlsmekZ0QpAn1rKQVWPO2mMuKcuwZwD+BA8nOo3gzEOXcD4A3ALgBeSD4dMZuABMQ7AJ+R00PytH7zkCkEgC+Sx+zYLlFmEL8AbknuzW+tHITHmNxauQiTEAnCHESKMAUpQZiBlCJMQGogVofUQkQhoTDbDS8bcUk6M7Am4gzinHsE8Br+/wPAA8mf2pDaiBjke1SY+RLgriZGAxGD+OhfjTJQDaOFSG2toacYo4mYOuzDc1IFo42Y/PyODn0RpgVi9h6pgWmFSF6IJZiWiCTE/0CCaY1YBMnFrIFYDFmKWQuRBVmAeQ59p38tGwBnjYLaJU82JIGJra8JQgTJwDRDiCELME0RRZAZTHNEMSSCWQVRBRIwvlPu+7B7kgeNr1JqTpOdxtSiY+87RBI1zTE9I5rRlczdMyKJmuaYnhHN6Erm/gOnUwJCWY8N3gAAAABJRU5ErkJggg=="},function(t,e){t.exports="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAADbUlEQVRoQ+1Z0XXUMBDcqQBSAaQCkgpIKgAqIFQAVABUQFIBUAFJBSQVcFRAUgFJBcObe9Jh6yR7ZcsPXjj9OLmz7B3Nzmq0B7snA/cEh+2A/GtM7hj5rxgh+drMngfQ5wDOllqAxVKL5DczO0oCvwRwvASYRYCQfGNmHwsBvwLwuTWY5kBIPjSzn2amq8ZVuD4N11sz2wega7OxBJBTM5M2NO7M7HEAtTKzB+HzMwBirdloCoTkgZl970T3AcB7/U9S13ed7w4BCFyT0RpIV+A3AMTGZpC8NrNH4YOmwm8GhOSJmX3qxH0M4DIBoiomsHG8AHDegpImQILAlVKRgQsAcf/oxUlS4KLwxZBSbLbwWwFJ819V6ToAfBKQ/FDAJAVWVS2OjY7mMDMbSCmwIPyvHZa0+kqlVUb4a+B/G0hP4GZ2EFZeFSmyEWNcATgMTOn7ZsKfxQhJ6UCrviVekiys8F4Ams7dKg41DM0FolyPAr8CsPFWA0A2AafCB7BfE3z33slAxvLcCaS4gdYCmgQkCFzlNvqpLcvhAaJgSXYtjcqwynG18KcCkS7iPrH2U+leUAFEi6HAow/7AkCba9WoBkIy3Z2zttwLJLAy6grGUE0BUhR4YkdKVStbnRLhr8v0WPCTxZ45MBUdbIkRANnFyzD9FoD04xpuRjIHpsFcJikz+CyJoujBQorp5PgyzKk6gNUA6b4kK/AktSRizYlgLszsZMgghsWaJHwXkLm0u3Ij3FSTvtUaIak9Q5uXhlxs/LsmRve9JLs+zXUAG2XEc2ByR+i80Vvi3YzUCjyNM5jK2IjQ7u8+DSbFYlT4g4wk9kECl0V32YcMk8Lp7mkFG+TuvBSBDHVEPBlCUqsYbUeccgtgzzM/lOPsyTM3fwjIYEdkKJiQkr+yLyxsiKXneTsvpV129qGnwMgdgOiYXcQMHd4GxV7TERlhJdf/rbId8fmezssWI2MHJtcy/tnctN/ILYsF/awwqbPo6bz0gHgm1ABpee/YAqdAun7qJnZEWgY09VmZzkvPtKZAetbAzHotz6lBNJynNI0Njl6zIwWSs94N42j6qN6RIAUicYqFdCNrGkGDh8llHHWLR65qqU+lHbX3k0CDl7d6hNL/NLVKo+631duXfs4OyNIrXPv8HSO1K7b0/feGkd8QasVCy9vvvgAAAABJRU5ErkJggg=="},function(t,e){t.exports=function(t,e,n,r){var o,i=t=t||{},s=typeof t.default;"object"!==s&&"function"!==s||(o=t,i=t.default);var u="function"==typeof i?i.options:i;if(e&&(u.render=e.render,u.staticRenderFns=e.staticRenderFns),n&&(u._scopeId=n),r){var c=Object.create(u.computed||null);Object.keys(r).forEach(function(t){var e=r[t];c[t]=function(){return e}}),u.computed=c}return{esModule:o,exports:i,options:u}}},function(t,e,n){t.exports={render:function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("transition",{attrs:{"enter-active-class":t.enterActiveClass,"leave-active-class":t.leaveActiveClass},on:{"before-enter":t.beforeEnter,"after-enter":t.afterEnter,"before-leave":t.beforeLeave}},[t.show?n("div",{staticClass:"toast",class:["toast-"+t.type],style:{backgroundColor:t.toastBackgroundColor}},[t.closeButton?n("button",{staticClass:"toast-close-button",attrs:{role:"button"},on:{click:t.hideToastr}},[t._v("×")]):t._e(),t._v(" "),t.progressBar?n("div",{staticClass:"toast-progress",style:"width: "+t.progress.percent+"%"}):t._e(),t._v(" "),n("div",{staticClass:"toast-icon"},[n("img",{attrs:{src:t.iconSrc}})]),t._v(" "),n("div",{staticClass:"toast-title"},[t._v(t._s(t.title))]),t._v(" "),t.useHtml?n("div",{staticClass:"toast-message",domProps:{innerHTML:t._s(t.message)}}):n("div",{staticClass:"toast-message",domProps:{textContent:t._s(t.message)}})]):t._e()])},staticRenderFns:[]},t.exports.render._withStripped=!0}])});
+//# sourceMappingURL=cxlt-vue2-toastr.js.map
 
 /***/ }),
 
@@ -40371,30 +40403,12 @@ var render = function() {
     [
       _c("navbar"),
       _vm._v(" "),
+      _c("sidebar"),
+      _vm._v(" "),
       _c(
-        "div",
-        { staticClass: "flex flex-col md:flex-row" },
-        [
-          _c("sidebar"),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass:
-                "main-content flex-1 bg-gray-100 mt-2 md:mt-2 pb-24 md:pb-5"
-            },
-            [
-              !_vm.loggedIn
-                ? _c(
-                    "div",
-                    { staticClass: "container mx-auto" },
-                    [_c("router-view")],
-                    1
-                  )
-                : _c("div", [_c("router-view")], 1)
-            ]
-          )
-        ],
+        "main",
+        { staticClass: "container bg-davygrayn mx-auto" },
+        [_c("router-view")],
         1
       )
     ],
@@ -40428,62 +40442,51 @@ var render = function() {
       "div",
       { staticClass: "flex mb-4" },
       [
-        _c("div", { staticClass: "h-screen w-1/6 bg-blue-800 text-white" }, [
-          _c("div", { staticClass: "text-center p-2 text-2xl" }, [
-            _vm._v("Administrator")
-          ]),
+        _c("aside", { staticClass: "sidebar" }, [
+          _c("div", { staticClass: "name" }, [_vm._v("Administrator")]),
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "text-center p-2" },
+            { staticClass: "menu" },
             [
-              _c("router-link", { attrs: { to: { name: "createCategory" } } }, [
-                _vm._v("Vytvořit kategorii")
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "text-center p-2" },
-            [
-              _c("router-link", { attrs: { to: { name: "createProduct" } } }, [
-                _vm._v("Vytvořit produkt")
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "text-center p-2" },
-            [
-              _c("router-link", { attrs: { to: { name: "showUsers" } } }, [
-                _vm._v("Přehled uživatelů")
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "text-center p-2" },
-            [
-              _c("router-link", { attrs: { to: { name: "showAllOrders" } } }, [
-                _vm._v("Přehled objednávek")
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "text-center p-2" },
-            [
-              _c("router-link", { attrs: { to: { name: "logout" } } }, [
-                _vm._v("Odhlásit se se")
-              ])
+              _c(
+                "router-link",
+                {
+                  staticClass: "link",
+                  attrs: { to: { name: "createCategory" } }
+                },
+                [_vm._v("Vytvořit kategorii")]
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                {
+                  staticClass: "link",
+                  attrs: { to: { name: "createProduct" } }
+                },
+                [_vm._v("Vytvořit produkt")]
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                { staticClass: "link", attrs: { to: { name: "showUsers" } } },
+                [_vm._v("Přehled uživatelů")]
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                {
+                  staticClass: "link",
+                  attrs: { to: { name: "showAllOrders" } }
+                },
+                [_vm._v("Přehled objednávek")]
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                { staticClass: "link", attrs: { to: { name: "logout" } } },
+                [_vm._v("Odhlásit se se")]
+              )
             ],
             1
           )
@@ -40537,18 +40540,9 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "flex flex-wrap" }, [
       _c("div", { staticClass: "w-full" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3"
-          },
-          [
-            _vm._v(
-              "\n        " + _vm._s(_vm.allOrders) + "\n        cc\n      "
-            )
-          ]
-        )
+        _c("div", { staticClass: "table" }, [
+          _vm._v("\n        " + _vm._s(_vm.allOrders) + "\n      ")
+        ])
       ])
     ])
   ])
@@ -40558,18 +40552,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-5"
-      },
-      [
-        _c("h3", { staticClass: "font-bold pl-2" }, [
-          _vm._v("Přehled všech objednávek")
-        ])
-      ]
-    )
+    return _c("div", { staticClass: "header" }, [
+      _c("h3", [_vm._v("Přehled všech objednávek")])
+    ])
   }
 ]
 render._withStripped = true
@@ -40610,11 +40595,42 @@ var render = function() {
       _c("div", { staticClass: "w-full" }, [
         _c(
           "div",
-          {
-            staticClass:
-              "bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3"
-          },
-          [_vm._v("\n        " + _vm._s(_vm.allUsers) + "\n      ")]
+          { staticClass: "table" },
+          [
+            _vm._m(1),
+            _vm._v(" "),
+            _vm._l(_vm.allUsers, function(user) {
+              return _c(
+                "div",
+                {
+                  key: user.id,
+                  staticClass: "flex w-full text-center p-3 justify-between"
+                },
+                [
+                  _c("div", { staticClass: "text-bold" }, [
+                    _vm._v(_vm._s(user.invoice.nazev))
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "pl-3" }, [
+                    _vm._v(_vm._s(user.invoice.ic))
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "pl-3" }, [
+                    _vm._v(_vm._s(user.invoice.dic))
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "pl-3" }, [
+                    _vm._v(_vm._s(user.email))
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "pl-3" }, [
+                    _vm._v(_vm._s(user.phone))
+                  ])
+                ]
+              )
+            })
+          ],
+          2
         )
       ])
     ])
@@ -40625,16 +40641,27 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "header" }, [
+      _c("h3", [_vm._v("Přehled všech uživatelů")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c(
       "div",
-      {
-        staticClass:
-          "bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-5"
-      },
+      { staticClass: "flex w-full text-center p-3 justify-between" },
       [
-        _c("h3", { staticClass: "font-bold pl-2" }, [
-          _vm._v("Přehled všech uživatelů")
-        ])
+        _c("div", { staticClass: "font-bold" }, [_vm._v("Název firmy")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "font-bold pl-3" }, [_vm._v("IC")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "font-bold pl-3" }, [_vm._v("DIC")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "font-bold pl-3" }, [_vm._v("Email")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "font-bold pl-3" }, [_vm._v("Telefon")])
       ]
     )
   }
@@ -40789,7 +40816,7 @@ var render = function() {
                           {
                             staticClass:
                               " text-base font-bold flex pl-2 justify-start lg:justify-start",
-                            attrs: { for: "password" }
+                            attrs: { for: "current-password" }
                           },
                           [_vm._v("Heslo")]
                         ),
@@ -40806,7 +40833,7 @@ var render = function() {
                           staticClass:
                             "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
                           class: { "border-red-500": _vm.errors.password },
-                          attrs: { id: "password", type: "password" },
+                          attrs: { id: "current-password", type: "password" },
                           domProps: { value: _vm.password },
                           on: {
                             input: function($event) {
@@ -41227,50 +41254,44 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "flex " },
+    { staticClass: "flex w-full" },
     [
       !["zbozi"].includes(_vm.$route.name)
-        ? _c(
-            "div",
-            {
-              staticClass:
-                "flex flex-col bg-blue-800 text-white pt-14 w-1-6 pt-14"
-            },
-            [
-              _c("div", { staticClass: "text-center p-2 text-2xl" }, [
-                _vm._v("Kategorie")
-              ]),
-              _vm._v(" "),
+        ? _c("aside", { staticClass: "sidebar" }, [
+            _c("div", { staticClass: "name" }, [_vm._v("Kategorie")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "menu" },
               _vm._l(_vm.categories, function(category) {
                 return _c(
                   "router-link",
                   {
                     key: category.id,
-                    staticClass: "text-center p-2",
+                    staticClass: "link",
                     attrs: {
                       to: { name: "category_show", params: { id: category.id } }
                     }
                   },
                   [_vm._v(_vm._s(category.name))]
                 )
-              })
-            ],
-            2
-          )
+              }),
+              1
+            )
+          ])
         : _vm._e(),
       _vm._v(" "),
       ["zbozi"].includes(_vm.$route.name)
         ? _c(
             "div",
-            { staticClass: "flex flex-wrap md:w-6/6 p-5" },
+            { staticClass: "flex flex-wrap mt-5" },
             [
               _vm.successMessage
                 ? _c(
                     "div",
                     {
                       staticClass:
-                        "bg-blue-100 w-full border-t border-b border-blue-500 text-blue-700 px-4 py-3",
-                      attrs: { role: "alert" }
+                        "bg-blue-100 w-full border-t border-b border-blue-500 text-blue-700 px-4 py-3"
                     },
                     [
                       _c("p", { staticClass: "font-bold" }, [
@@ -41285,7 +41306,7 @@ var render = function() {
                   "div",
                   {
                     key: category.id,
-                    staticClass: "w-full sm:w-1/2 md:w-1/5 mb-4 m-2 pt-14"
+                    staticClass: "w-full sm:w-1/2 md:w-1/4 m-2"
                   },
                   [
                     _c(
@@ -41327,38 +41348,8 @@ var render = function() {
                         )
                       ],
                       1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "router-link",
-                      {
-                        staticClass:
-                          "inline-block bg-blue-600 hover:bg-blue-800 text-sm font-semibold  w-full text-white p-2 text-center",
-                        attrs: {
-                          to: {
-                            name: "editCategory",
-                            params: { id: category.id }
-                          }
-                        }
-                      },
-                      [_vm._v("Upravit")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass:
-                          "inline-block bg-red-600 hover:bg-red-800 text-sm font-semibold  w-full text-white p-2 text-center",
-                        on: {
-                          click: function($event) {
-                            return _vm.deleteCategory(category.id)
-                          }
-                        }
-                      },
-                      [_vm._v("Odstranit")]
                     )
-                  ],
-                  1
+                  ]
                 )
               })
             ],
@@ -41368,13 +41359,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "transition",
-        {
-          attrs: {
-            name: "",
-            "enter-active-class": "animated fadeIn",
-            "leave-active-class": "animated fadeIn"
-          }
-        },
+        { attrs: { name: "component-fade", mode: "out-in" } },
         [_c("router-view")],
         1
       )
@@ -41419,98 +41404,91 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "flex flex-wrap" }, [
       _c("div", { staticClass: "w-full" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3"
-          },
-          [
-            _c(
-              "form",
-              {
-                staticClass: "w-full max-w-lg p-5",
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.createCategory($event)
-                  }
+        _c("div", { staticClass: "table" }, [
+          _c(
+            "form",
+            {
+              staticClass: "w-full max-w-lg p-5",
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.createCategory($event)
                 }
-              },
-              [
-                _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
-                  _c("div", { staticClass: "w-full px-3" }, [
-                    _c(
-                      "label",
-                      { staticClass: "ares-label", attrs: { for: "name" } },
-                      [_vm._v("Název kategorie")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.category.name,
-                          expression: "category.name"
-                        }
-                      ],
-                      staticClass: "ares-input",
-                      class: { "border-red-500": _vm.errors.name },
-                      attrs: { id: "name", type: "text" },
-                      domProps: { value: _vm.category.name },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.category, "name", $event.target.value)
-                        }
+              }
+            },
+            [
+              _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                _c("div", { staticClass: "w-full px-3" }, [
+                  _c(
+                    "label",
+                    { staticClass: "ares-label", attrs: { for: "name" } },
+                    [_vm._v("Název kategorie")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.category.name,
+                        expression: "category.name"
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.name
-                      ? _c(
-                          "p",
-                          { staticClass: "text-red-500 text-xs italname" },
-                          [_vm._v(_vm._s(_vm.errors.name[0]))]
-                        )
-                      : _vm._e()
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
-                  _c("div", { staticClass: "w-full px-3" }, [
-                    _c(
-                      "label",
-                      { staticClass: "ares-label", attrs: { for: "name" } },
-                      [_vm._v("Obrázek kategorie")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      attrs: { type: "file" },
-                      on: {
-                        change: function($event) {
-                          return _vm.processFile($event)
+                    ],
+                    staticClass: "ares-input",
+                    class: { "border-red-500": _vm.errors.name },
+                    attrs: { id: "name", type: "text" },
+                    domProps: { value: _vm.category.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
                         }
+                        _vm.$set(_vm.category, "name", $event.target.value)
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.image
-                      ? _c(
-                          "p",
-                          { staticClass: "text-red-500 text-xs italname" },
-                          [_vm._v(_vm._s(_vm.errors.image[0]))]
-                        )
-                      : _vm._e()
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm._m(1)
-              ]
-            )
-          ]
-        )
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.name
+                    ? _c(
+                        "p",
+                        { staticClass: "text-red-500 text-xs italname" },
+                        [_vm._v(_vm._s(_vm.errors.name[0]))]
+                      )
+                    : _vm._e()
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                _c("div", { staticClass: "w-full px-3" }, [
+                  _c(
+                    "label",
+                    { staticClass: "ares-label", attrs: { for: "name" } },
+                    [_vm._v("Obrázek kategorie")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    attrs: { type: "file" },
+                    on: {
+                      change: function($event) {
+                        return _vm.processFile($event)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.image
+                    ? _c(
+                        "p",
+                        { staticClass: "text-red-500 text-xs italname" },
+                        [_vm._v(_vm._s(_vm.errors.image[0]))]
+                      )
+                    : _vm._e()
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(1)
+            ]
+          )
+        ])
       ])
     ])
   ])
@@ -41520,18 +41498,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-3"
-      },
-      [
-        _c("h3", { staticClass: "font-bold pl-2" }, [
-          _vm._v("Vytvořit kategorii")
-        ])
-      ]
-    )
+    return _c("div", { staticClass: "header" }, [
+      _c("h3", [_vm._v("Vytvořit kategorii")])
+    ])
   },
   function() {
     var _vm = this
@@ -41539,15 +41508,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "md:flex md:items-center" }, [
       _c("div", { staticClass: "md:w-2/3" }, [
-        _c(
-          "button",
-          {
-            staticClass:
-              "shadow bg-blue-800 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded",
-            attrs: { type: "submit" }
-          },
-          [_vm._v("Vytvořit kategorii")]
-        )
+        _c("button", { staticClass: "success", attrs: { type: "submit" } }, [
+          _vm._v("Vytvořit kategorii")
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "md:w-2/3" })
@@ -41575,68 +41538,42 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.loading
-      ? _c("div", { staticClass: "loader" }, [
-          _c("div", { staticClass: "inner one" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "inner two" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "inner three" })
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass:
-          "bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-5"
-      },
-      [
-        _c("h3", { staticClass: "font-bold pl-2" }, [
-          _vm._v(_vm._s(_vm.category.name))
-        ])
-      ]
-    ),
+  return _c("div", {}, [
+    _c("div", { staticClass: "header" }, [
+      _c("h3", [_vm._v(_vm._s(_vm.category.name))])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "flex flex-wrap" }, [
       _c("div", { staticClass: "w-full" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3"
-          },
-          [
-            _vm.category
-              ? _c("div", [
-                  _c("table", { staticClass: "table-fixed" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c(
-                      "tbody",
-                      _vm._l(_vm.category.products, function(product) {
-                        return _c("tr", { key: product.id }, [
-                          _c("td", { staticClass: "border px-4 py-2" }, [
-                            _vm._v(_vm._s(product.id))
-                          ]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "border px-4 py-2" }, [
-                            _vm._v(_vm._s(product.name))
-                          ]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "border px-4 py-2" }, [
-                            _vm._v(_vm._s(product.hmotnost))
-                          ])
+        _c("div", { staticClass: "table" }, [
+          _vm.category
+            ? _c("div", [
+                _c("table", { staticClass: "table-fixed" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.category.products, function(product) {
+                      return _c("tr", { key: product.id }, [
+                        _c("td", { staticClass: "border px-4 py-2" }, [
+                          _vm._v(_vm._s(product.id))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "border px-4 py-2" }, [
+                          _vm._v(_vm._s(product.name))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "border px-4 py-2" }, [
+                          _vm._v(_vm._s(product.hmotnost))
                         ])
-                      }),
-                      0
-                    )
-                  ])
+                      ])
+                    }),
+                    0
+                  )
                 ])
-              : _vm._e()
-          ]
-        )
+              ])
+            : _vm._e()
+        ])
       ])
     ])
   ])
@@ -41696,6 +41633,7 @@ var render = function() {
               "form",
               {
                 staticClass: "w-full max-w-lg p-5",
+                attrs: { enctype: "multipart/form-data" },
                 on: {
                   submit: function($event) {
                     $event.preventDefault()
@@ -41727,7 +41665,9 @@ var render = function() {
                       ],
                       staticClass:
                         "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-                      class: { "border-red-500": _vm.errors.name },
+                      class: {
+                        "border-red-500": _vm.errors.name
+                      },
                       attrs: { id: "name", type: "text", autocomplete: "name" },
                       domProps: { value: _vm.category.name },
                       on: {
@@ -41744,7 +41684,13 @@ var render = function() {
                       ? _c(
                           "p",
                           { staticClass: "text-red-500 text-xs italic" },
-                          [_vm._v(_vm._s(_vm.errors.name[0]))]
+                          [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(_vm.errors.name[0]) +
+                                "\n                            "
+                            )
+                          ]
                         )
                       : _vm._e()
                   ])
@@ -41759,10 +41705,11 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("input", {
-                      attrs: { type: "file" },
+                      ref: "file",
+                      attrs: { type: "file", id: "file" },
                       on: {
                         change: function($event) {
-                          return _vm.processFile($event)
+                          return _vm.onChangeFileUpload()
                         }
                       }
                     }),
@@ -41771,7 +41718,13 @@ var render = function() {
                       ? _c(
                           "p",
                           { staticClass: "text-red-500 text-xs italname" },
-                          [_vm._v(_vm._s(_vm.errors.image[0]))]
+                          [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(_vm.errors.image[0]) +
+                                "\n                            "
+                            )
+                          ]
                         )
                       : _vm._e()
                   ])
@@ -41799,7 +41752,7 @@ var render = function() {
                         _vm._v(" "),
                         _c("div", [
                           _vm._v(
-                            "\n                    Upravit\n                  "
+                            "\n                                    Upravit\n                                "
                           )
                         ])
                       ]
@@ -41857,12 +41810,12 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "max-w-3xl flex   flex-wrap  lg:my-0 p-5" }, [
+    _c("div", { staticClass: "max-w-3xl flex   flex-wrap  lg:my-5 p-6 " }, [
       _c(
         "div",
         {
           staticClass:
-            "w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0",
+            "w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-ivory  mx-6 lg:mx-0",
           attrs: { id: "profile" }
         },
         [
@@ -41895,7 +41848,7 @@ var render = function() {
                 _c(
                   "svg",
                   {
-                    staticClass: "h-4 fill-current text-teal-700 pr-4",
+                    staticClass: "h-4 fill-current text-darkergreen pr-4",
                     attrs: {
                       xmlns: "http://www.w3.org/2000/svg",
                       viewBox: "0 0 20 20"
@@ -41936,10 +41889,10 @@ var render = function() {
                 }
               },
               [
-                _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                _c("div", { staticClass: "flex flex-wrap -mx-3 mb-4" }, [
                   _c(
                     "div",
-                    { staticClass: "w-full md:w-1/2 px-3 mb-6 md:mb-0" },
+                    { staticClass: "w-full md:w-1/2 px-3 mb-4 md:mb-0" },
                     [
                       _c(
                         "label",
@@ -41961,7 +41914,7 @@ var render = function() {
                           }
                         ],
                         staticClass:
-                          "appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white",
+                          "appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-2 mb-3 leading-tight focus:outline-none focus:bg-white",
                         class: { "border-red-500": _vm.errors.firstname },
                         attrs: {
                           id: "grid-first-name",
@@ -41993,7 +41946,7 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _c("div", { staticClass: "w-full md:w-1/2 px-3" }, [
+                  _c("div", { staticClass: "w-full md:w-1/2 " }, [
                     _c(
                       "label",
                       {
@@ -42042,7 +41995,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                _c("div", { staticClass: "flex flex-wrap -mx-3 mb-2" }, [
                   _c("div", { staticClass: "w-full px-3" }, [
                     _c(
                       "label",
@@ -42092,7 +42045,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                _c("div", { staticClass: "flex flex-wrap -mx-3 mb-4" }, [
                   _c("div", { staticClass: "w-full px-3" }, [
                     _c(
                       "label",
@@ -42142,7 +42095,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                _c("div", { staticClass: "flex flex-wrap -mx-3 mb-4" }, [
                   _c("div", { staticClass: "w-full px-3" }, [
                     _c(
                       "label",
@@ -42213,7 +42166,7 @@ var staticRenderFns = [
           "button",
           {
             staticClass:
-              "opacity-100  shadow bg-blue-800 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded",
+              "shadow bg-junglegreen hover:bg-darkergreen focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded",
             attrs: { type: "submit" }
           },
           [_vm._v("Kontaktujte nás!!")]
@@ -42263,301 +42216,132 @@ var render = function() {
     !_vm.aresData
       ? _c("div", { staticClass: "flex flex-wrap" }, [
           _c("div", { staticClass: "w-full" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3"
-              },
-              [
-                _c(
-                  "form",
-                  {
-                    staticClass: "w-full max-w-lg p-5",
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.addInvoice($event)
-                      }
+            _c("div", { staticClass: "table" }, [
+              _c(
+                "form",
+                {
+                  staticClass: "w-full max-w-lg p-5",
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.addInvoice($event)
                     }
-                  },
-                  [
-                    _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
-                      _c("div", { staticClass: "w-full px-3" }, [
-                        _c(
-                          "label",
-                          { staticClass: "ares-label", attrs: { for: "ic" } },
-                          [_vm._v("IČ")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.user.ic,
-                              expression: "user.ic"
-                            }
-                          ],
-                          staticClass: "ares-input",
-                          class: { "border-red-500": _vm.errors.ic },
-                          attrs: { id: "ic", type: "value" },
-                          domProps: { value: _vm.user.ic },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.user, "ic", $event.target.value)
-                            }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                    _c("div", { staticClass: "w-full px-3" }, [
+                      _c(
+                        "label",
+                        { staticClass: "ares-label", attrs: { for: "ic" } },
+                        [_vm._v("IČ")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.ic,
+                            expression: "user.ic"
                           }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.ic
-                          ? _c(
-                              "p",
-                              { staticClass: "text-red-500 text-xs italic" },
-                              [_vm._v(_vm._s(_vm.errors.ic[0]))]
-                            )
-                          : _vm._e()
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(1)
-                  ]
-                )
-              ]
-            )
+                        ],
+                        staticClass: "ares-input",
+                        class: { "border-red-500": _vm.errors.ic },
+                        attrs: { id: "ic", type: "value" },
+                        domProps: { value: _vm.user.ic },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.user, "ic", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.ic
+                        ? _c(
+                            "p",
+                            { staticClass: "text-red-500 text-xs italic" },
+                            [_vm._v(_vm._s(_vm.errors.ic[0]))]
+                          )
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(1)
+                ]
+              )
+            ])
           ])
         ])
       : _c("div", { staticClass: "flex flex-wrap" }, [
           _c("div", { staticClass: "w-full" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3"
-              },
-              [
-                _c(
-                  "form",
-                  {
-                    staticClass: "w-full max-w-lg p-5",
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.createInvoice($event)
-                      }
+            _c("div", { staticClass: "table" }, [
+              _c(
+                "form",
+                {
+                  staticClass: "w-full max-w-lg p-5",
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.createInvoice($event)
                     }
-                  },
-                  [
-                    _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
-                      _c("div", { staticClass: "w-full px-3" }, [
-                        _c(
-                          "label",
-                          { staticClass: "ares-label", attrs: { for: "ic" } },
-                          [_vm._v("IČ")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.aresData.ic,
-                              expression: "aresData.ic"
-                            }
-                          ],
-                          staticClass: "ares-input",
-                          class: { "border-red-500": _vm.errors.ic },
-                          attrs: { id: "ic", type: "text" },
-                          domProps: { value: _vm.aresData.ic },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.aresData, "ic", $event.target.value)
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.ic
-                          ? _c(
-                              "p",
-                              { staticClass: "text-red-500 text-xs italic" },
-                              [_vm._v(_vm._s(_vm.errors.ic[0]))]
-                            )
-                          : _vm._e()
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _vm.aresData.dic
-                      ? _c(
-                          "div",
-                          { staticClass: "flex flex-wrap -mx-3 mb-6" },
-                          [
-                            _c("div", { staticClass: "w-full px-3" }, [
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "ares-label",
-                                  attrs: { for: "dic" }
-                                },
-                                [_vm._v("DIČ")]
-                              ),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.aresData.dic,
-                                    expression: "aresData.dic"
-                                  }
-                                ],
-                                staticClass: "ares-input",
-                                class: { "border-red-500": _vm.errors.dic },
-                                attrs: { id: "dic", type: "text" },
-                                domProps: { value: _vm.aresData.dic },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.aresData,
-                                      "dic",
-                                      $event.target.value
-                                    )
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _vm.errors.dic
-                                ? _c(
-                                    "p",
-                                    {
-                                      staticClass: "text-red-500 text-xs italic"
-                                    },
-                                    [_vm._v(_vm._s(_vm.errors.dic[0]))]
-                                  )
-                                : _vm._e()
-                            ])
-                          ]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
-                      _c("div", { staticClass: "w-full px-3" }, [
-                        _c(
-                          "label",
+                  }
+                },
+                [
+                  _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                    _c("div", { staticClass: "w-full px-3" }, [
+                      _c(
+                        "label",
+                        { staticClass: "ares-label", attrs: { for: "ic" } },
+                        [_vm._v("IČ")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
                           {
-                            staticClass: "ares-label",
-                            attrs: { for: "nazev" }
-                          },
-                          [_vm._v("Název")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.aresData.nazev,
-                              expression: "aresData.nazev"
-                            }
-                          ],
-                          staticClass: "ares-input",
-                          class: { "border-red-500": _vm.errors.nazev },
-                          attrs: { id: "nazev", type: "text" },
-                          domProps: { value: _vm.aresData.nazev },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.aresData,
-                                "nazev",
-                                $event.target.value
-                              )
-                            }
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.aresData.ic,
+                            expression: "aresData.ic"
                           }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.nazev
-                          ? _c(
-                              "p",
-                              { staticClass: "text-red-500 text-xs italic" },
-                              [_vm._v(_vm._s(_vm.errors.nazev[0]))]
-                            )
-                          : _vm._e()
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
-                      _c(
-                        "div",
-                        { staticClass: "w-full md:w-2/4 px-3 mb-6 md:mb-0" },
-                        [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "ares-label",
-                              attrs: { for: "Ulice" }
-                            },
-                            [_vm._v("Ulice")]
-                          ),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.aresData.ulice,
-                                expression: "aresData.ulice"
-                              }
-                            ],
-                            staticClass: "ares-input",
-                            class: { "border-red-500": _vm.errors.ulice },
-                            attrs: { id: "Ulice", type: "text" },
-                            domProps: { value: _vm.aresData.ulice },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.aresData,
-                                  "ulice",
-                                  $event.target.value
-                                )
-                              }
+                        ],
+                        staticClass: "ares-input",
+                        class: { "border-red-500": _vm.errors.ic },
+                        attrs: { id: "ic", type: "text" },
+                        domProps: { value: _vm.aresData.ic },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
                             }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors.ulice
-                            ? _c(
-                                "p",
-                                { staticClass: "text-red-500 text-xs italic" },
-                                [_vm._v(_vm._s(_vm.errors.ulice[0]))]
-                              )
-                            : _vm._e()
-                        ]
-                      ),
+                            _vm.$set(_vm.aresData, "ic", $event.target.value)
+                          }
+                        }
+                      }),
                       _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "w-full md:w-1/4 px-3 mb-6 md:mb-0" },
-                        [
+                      _vm.errors.ic
+                        ? _c(
+                            "p",
+                            { staticClass: "text-red-500 text-xs italic" },
+                            [_vm._v(_vm._s(_vm.errors.ic[0]))]
+                          )
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm.aresData.dic
+                    ? _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                        _c("div", { staticClass: "w-full px-3" }, [
                           _c(
                             "label",
                             {
                               staticClass: "ares-label",
-                              attrs: { for: "mesto" }
+                              attrs: { for: "dic" }
                             },
-                            [_vm._v("Město")]
+                            [_vm._v("DIČ")]
                           ),
                           _vm._v(" "),
                           _c("input", {
@@ -42565,64 +42349,14 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.aresData.mesto,
-                                expression: "aresData.mesto"
-                              }
-                            ],
-                            staticClass: "ares-input",
-                            class: { "border-red-500": _vm.errors.mesto },
-                            attrs: { id: "mesto", type: "text" },
-                            domProps: { value: _vm.aresData.mesto },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.aresData,
-                                  "mesto",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors.mesto
-                            ? _c(
-                                "p",
-                                { staticClass: "text-red-500 text-xs italic" },
-                                [_vm._v(_vm._s(_vm.errors.mesto[0]))]
-                              )
-                            : _vm._e()
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "w-full md:w-1/4 px-3 mb-6 md:mb-0" },
-                        [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "ares-label",
-                              attrs: { for: "psc" }
-                            },
-                            [_vm._v("PSČ")]
-                          ),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.aresData.psc,
-                                expression: "aresData.psc"
+                                value: _vm.aresData.dic,
+                                expression: "aresData.dic"
                               }
                             ],
                             staticClass: "ares-input",
                             class: { "border-red-500": _vm.errors.dic },
-                            attrs: { id: "psc", type: "text" },
-                            domProps: { value: _vm.aresData.psc },
+                            attrs: { id: "dic", type: "text" },
+                            domProps: { value: _vm.aresData.dic },
                             on: {
                               input: function($event) {
                                 if ($event.target.composing) {
@@ -42630,7 +42364,7 @@ var render = function() {
                                 }
                                 _vm.$set(
                                   _vm.aresData,
-                                  "psc",
+                                  "dic",
                                   $event.target.value
                                 )
                               }
@@ -42641,70 +42375,252 @@ var render = function() {
                             ? _c(
                                 "p",
                                 { staticClass: "text-red-500 text-xs italic" },
-                                [_vm._v(_vm._s(_vm.errors.psc[0]))]
+                                [_vm._v(_vm._s(_vm.errors.dic[0]))]
                               )
                             : _vm._e()
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                        ])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                    _c("div", { staticClass: "w-full px-3" }, [
                       _c(
-                        "div",
-                        { staticClass: "w-full md:w-2/4 px-3 mb-6 md:mb-0" },
-                        [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "ares-label",
-                              attrs: { for: "stat" }
-                            },
-                            [_vm._v("Stát")]
-                          ),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.aresData.zeme,
-                                expression: "aresData.zeme"
-                              }
-                            ],
-                            staticClass: "ares-input",
-                            class: { "border-red-500": _vm.errors.stat },
-                            attrs: { id: "stat", type: "text" },
-                            domProps: { value: _vm.aresData.zeme },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.aresData,
-                                  "zeme",
-                                  $event.target.value
-                                )
-                              }
+                        "label",
+                        { staticClass: "ares-label", attrs: { for: "nazev" } },
+                        [_vm._v("Název")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.aresData.nazev,
+                            expression: "aresData.nazev"
+                          }
+                        ],
+                        staticClass: "ares-input",
+                        class: { "border-red-500": _vm.errors.nazev },
+                        attrs: { id: "nazev", type: "text" },
+                        domProps: { value: _vm.aresData.nazev },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
                             }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors.zeme
-                            ? _c(
-                                "p",
-                                { staticClass: "text-red-500 text-xs italic" },
-                                [_vm._v(_vm._s(_vm.errors.zeme[0]))]
+                            _vm.$set(_vm.aresData, "nazev", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.nazev
+                        ? _c(
+                            "p",
+                            { staticClass: "text-red-500 text-xs italic" },
+                            [_vm._v(_vm._s(_vm.errors.nazev[0]))]
+                          )
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                    _c(
+                      "div",
+                      { staticClass: "w-full md:w-2/4 px-3 mb-6 md:mb-0" },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "ares-label",
+                            attrs: { for: "Ulice" }
+                          },
+                          [_vm._v("Ulice")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.aresData.ulice,
+                              expression: "aresData.ulice"
+                            }
+                          ],
+                          staticClass: "ares-input",
+                          class: { "border-red-500": _vm.errors.ulice },
+                          attrs: { id: "Ulice", type: "text" },
+                          domProps: { value: _vm.aresData.ulice },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.aresData,
+                                "ulice",
+                                $event.target.value
                               )
-                            : _vm._e()
-                        ]
-                      )
-                    ]),
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.ulice
+                          ? _c(
+                              "p",
+                              { staticClass: "text-red-500 text-xs italic" },
+                              [_vm._v(_vm._s(_vm.errors.ulice[0]))]
+                            )
+                          : _vm._e()
+                      ]
+                    ),
                     _vm._v(" "),
-                    _vm._m(2)
-                  ]
-                )
-              ]
-            )
+                    _c(
+                      "div",
+                      { staticClass: "w-full md:w-1/4 px-3 mb-6 md:mb-0" },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "ares-label",
+                            attrs: { for: "mesto" }
+                          },
+                          [_vm._v("Město")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.aresData.mesto,
+                              expression: "aresData.mesto"
+                            }
+                          ],
+                          staticClass: "ares-input",
+                          class: { "border-red-500": _vm.errors.mesto },
+                          attrs: { id: "mesto", type: "text" },
+                          domProps: { value: _vm.aresData.mesto },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.aresData,
+                                "mesto",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.mesto
+                          ? _c(
+                              "p",
+                              { staticClass: "text-red-500 text-xs italic" },
+                              [_vm._v(_vm._s(_vm.errors.mesto[0]))]
+                            )
+                          : _vm._e()
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "w-full md:w-1/4 px-3 mb-6 md:mb-0" },
+                      [
+                        _c(
+                          "label",
+                          { staticClass: "ares-label", attrs: { for: "psc" } },
+                          [_vm._v("PSČ")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.aresData.psc,
+                              expression: "aresData.psc"
+                            }
+                          ],
+                          staticClass: "ares-input",
+                          class: { "border-red-500": _vm.errors.dic },
+                          attrs: { id: "psc", type: "text" },
+                          domProps: { value: _vm.aresData.psc },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.aresData, "psc", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.dic
+                          ? _c(
+                              "p",
+                              { staticClass: "text-red-500 text-xs italic" },
+                              [_vm._v(_vm._s(_vm.errors.psc[0]))]
+                            )
+                          : _vm._e()
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                    _c(
+                      "div",
+                      { staticClass: "w-full md:w-2/4 px-3 mb-6 md:mb-0" },
+                      [
+                        _c(
+                          "label",
+                          { staticClass: "ares-label", attrs: { for: "stat" } },
+                          [_vm._v("Stát")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.aresData.zeme,
+                              expression: "aresData.zeme"
+                            }
+                          ],
+                          staticClass: "ares-input",
+                          class: { "border-red-500": _vm.errors.stat },
+                          attrs: { id: "stat", type: "text" },
+                          domProps: { value: _vm.aresData.zeme },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.aresData,
+                                "zeme",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.zeme
+                          ? _c(
+                              "p",
+                              { staticClass: "text-red-500 text-xs italic" },
+                              [_vm._v(_vm._s(_vm.errors.zeme[0]))]
+                            )
+                          : _vm._e()
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(2)
+                ]
+              )
+            ])
           ])
         ])
   ])
@@ -42714,18 +42630,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-3"
-      },
-      [
-        _c("h3", { staticClass: "font-bold pl-2" }, [
-          _vm._v("Přidat fakturačních údaje")
-        ])
-      ]
-    )
+    return _c("div", { staticClass: "header" }, [
+      _c("h3", [_vm._v("Přidat fakturačních údaje")])
+    ])
   },
   function() {
     var _vm = this
@@ -42733,15 +42640,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "md:flex md:items-center" }, [
       _c("div", { staticClass: "md:w-2/3" }, [
-        _c(
-          "button",
-          {
-            staticClass:
-              "shadow bg-blue-800 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded",
-            attrs: { type: "submit" }
-          },
-          [_vm._v("Zadejte IČ")]
-        )
+        _c("button", { staticClass: "success", attrs: { type: "submit" } }, [
+          _vm._v("Zadejte IČ")
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "md:w-2/3" })
@@ -42753,15 +42654,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "md:flex md:items-center" }, [
       _c("div", { staticClass: "md:w-2/3 flex" }, [
-        _c(
-          "button",
-          {
-            staticClass:
-              "shadow bg-blue-800 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded",
-            attrs: { type: "submit" }
-          },
-          [_vm._v("Potvrdit údaje")]
-        ),
+        _c("button", { staticClass: "success", attrs: { type: "submit" } }, [
+          _vm._v("Potvrdit údaje")
+        ]),
         _vm._v(" "),
         _c(
           "button",
@@ -42805,71 +42700,64 @@ var render = function() {
     !_vm.aresData
       ? _c("div", { staticClass: "flex flex-wrap" }, [
           _c("div", { staticClass: "w-full" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3"
-              },
-              [
-                _c(
-                  "form",
-                  {
-                    staticClass: "w-full max-w-lg p-5",
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.addInvoice($event)
-                      }
+            _c("div", { staticClass: "table" }, [
+              _c(
+                "form",
+                {
+                  staticClass: "w-full max-w-lg p-5",
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.addInvoice($event)
                     }
-                  },
-                  [
-                    _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
-                      _c("div", { staticClass: "w-full px-3" }, [
-                        _c(
-                          "label",
-                          { staticClass: "ares-label", attrs: { for: "ic" } },
-                          [_vm._v("IČ")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.user.ic,
-                              expression: "user.ic"
-                            }
-                          ],
-                          staticClass: "ares-input",
-                          class: { "border-red-500": _vm.errors.ic },
-                          attrs: { id: "ic", type: "value" },
-                          domProps: { value: _vm.user.ic },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.user, "ic", $event.target.value)
-                            }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                    _c("div", { staticClass: "w-full px-3" }, [
+                      _c(
+                        "label",
+                        { staticClass: "ares-label", attrs: { for: "ic" } },
+                        [_vm._v("IČ")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.ic,
+                            expression: "user.ic"
                           }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.ic
-                          ? _c(
-                              "p",
-                              { staticClass: "text-red-500 text-xs italic" },
-                              [_vm._v(_vm._s(_vm.errors.ic[0]))]
-                            )
-                          : _vm._e()
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(1)
-                  ]
-                )
-              ]
-            )
+                        ],
+                        staticClass: "ares-input",
+                        class: { "border-red-500": _vm.errors.ic },
+                        attrs: { id: "ic", type: "value" },
+                        domProps: { value: _vm.user.ic },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.user, "ic", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.ic
+                        ? _c(
+                            "p",
+                            { staticClass: "text-red-500 text-xs italic" },
+                            [_vm._v(_vm._s(_vm.errors.ic[0]))]
+                          )
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(1)
+                ]
+              )
+            ])
           ])
         ])
       : _c("div", { staticClass: "flex flex-wrap" }, [
@@ -43256,18 +43144,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-3"
-      },
-      [
-        _c("h3", { staticClass: "font-bold pl-2" }, [
-          _vm._v("Změna fakturačních údajů")
-        ])
-      ]
-    )
+    return _c("div", { staticClass: "header" }, [
+      _c("h3", [_vm._v("Změna fakturačních údajů")])
+    ])
   },
   function() {
     var _vm = this
@@ -43275,15 +43154,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "md:flex md:items-center" }, [
       _c("div", { staticClass: "md:w-2/3" }, [
-        _c(
-          "button",
-          {
-            staticClass:
-              "shadow bg-blue-800 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded",
-            attrs: { type: "submit" }
-          },
-          [_vm._v("Zadejte IČ")]
-        )
+        _c("button", { staticClass: "success", attrs: { type: "submit" } }, [
+          _vm._v("Zadejte IČ")
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "md:w-2/3" })
@@ -43423,7 +43296,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "w-5/6 p-5" }, [
+    return _c("div", { staticClass: "w-3/6 pt-6" }, [
       _c("div", { staticClass: "max-w-sm w-full lg:max-w-full lg:flex pt-5" }, [
         _c("div", {
           staticClass:
@@ -43866,159 +43739,123 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "div",
-      {
-        staticClass:
-          "bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-5"
-      },
-      [
-        _c("h3", { staticClass: "font-bold pl-2" }, [
-          _vm._v("Objednávka č. " + _vm._s(_vm.order.id))
-        ])
-      ]
-    ),
+    _c("div", { staticClass: "header" }, [
+      _c("h3", [_vm._v("Objednávka č. " + _vm._s(_vm.order.id))])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "flex flex-wrap" }, [
       _c("div", { staticClass: "w-full" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "bg-blue-100 border-t-4 border-b-4 border-blue-600 rounded-lg shadow-lg m-1 ml-3 mt-4"
-          },
-          [_c("userDetails")],
-          1
-        ),
+        _c("div", { staticClass: "table" }, [_c("userDetails")], 1),
         _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3 mt-4"
-          },
-          [_c("tableOrderList")],
-          1
-        ),
+        _c("div", { staticClass: "table mt-3" }, [_c("tableOrderList")], 1),
         _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3 mt-4"
-          },
-          [
-            _vm.order.status == "Rozpracovaná"
-              ? _c("div", [
-                  _c("div", { staticClass: "flex flex-wrap" }, [
-                    _c("div", { staticClass: "w-full px-3" }, [
-                      _c(
-                        "label",
+        _c("div", { staticClass: "table mt-3" }, [
+          _vm.order.status == "Rozpracovaná"
+            ? _c("div", [
+                _c("div", { staticClass: "flex flex-wrap" }, [
+                  _c("div", { staticClass: "w-full px-3" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass:
+                          "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 pt-2",
+                        attrs: { for: "message" }
+                      },
+                      [_vm._v("Podrobnosti")]
+                    ),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
                         {
-                          staticClass:
-                            "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 pt-2",
-                          attrs: { for: "message" }
-                        },
-                        [_vm._v("Podrobnosti")]
-                      ),
-                      _vm._v(" "),
-                      _c("textarea", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.description.desc,
-                            expression: "description.desc"
-                          }
-                        ],
-                        staticClass:
-                          "no-resize appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 h-24 resize-none",
-                        attrs: {
-                          id: "message",
-                          placeholder: "Místo pro vaši poznámku?"
-                        },
-                        domProps: { value: _vm.description.desc },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.description,
-                              "desc",
-                              $event.target.value
-                            )
-                          }
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.description.desc,
+                          expression: "description.desc"
                         }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "p-3" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "bg-transparent hover:bg-green-700 text-black font-semibold hover:text-white py-2 px-4 border border-green-700 hover:border-transparent rounded",
-                        on: { click: _vm.confirmOrder }
+                      ],
+                      staticClass:
+                        "no-resize appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 h-24 resize-none",
+                      attrs: {
+                        id: "message",
+                        placeholder: "Místo pro vaši poznámku?"
                       },
-                      [
-                        _vm._v(
-                          "\n                            Potvrdit Objednávku\n                        "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded",
-                        on: { click: _vm.editOrder }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            Upravit objednávku\n                        "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "bg-transparent hover:bg-red-700 text-black font-semibold hover:text-white py-2 px-4 border border-red-700 hover:border-transparent rounded",
-                        on: { click: _vm.deleteOrder }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            Zrušit objednávku\n                        "
-                        )
-                      ]
-                    )
+                      domProps: { value: _vm.description.desc },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.description, "desc", $event.target.value)
+                        }
+                      }
+                    })
                   ])
-                ])
-              : _c("div", { staticClass: "p-4" }, [
-                  _c("div", { staticClass: "text-bold uppercase font-bold" }, [
-                    _vm._v(
-                      "\n                        Objednávka je " +
-                        _vm._s(_vm.order.status) +
-                        "\n                    "
-                    )
-                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "p-3" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "bg-transparent hover:bg-green-700 text-black font-semibold hover:text-white py-2 px-4 border border-green-700 hover:border-transparent rounded",
+                      on: { click: _vm.confirmOrder }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Potvrdit Objednávku\n                        "
+                      )
+                    ]
+                  ),
                   _vm._v(" "),
-                  _vm.order.description
-                    ? _c("div", [
-                        _vm._v(
-                          "\n                        Vaše poznámka: " +
-                            _vm._s(_vm.order.description) +
-                            "\n                    "
-                        )
-                      ])
-                    : _vm._e()
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded",
+                      on: { click: _vm.editOrder }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Upravit objednávku\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "bg-transparent hover:bg-red-700 text-black font-semibold hover:text-white py-2 px-4 border border-red-700 hover:border-transparent rounded",
+                      on: { click: _vm.deleteOrder }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Zrušit objednávku\n                        "
+                      )
+                    ]
+                  )
                 ])
-          ]
-        )
+              ])
+            : _c("div", { staticClass: "p-4" }, [
+                _c("div", { staticClass: "text-bold uppercase font-bold" }, [
+                  _vm._v(
+                    "\n                        Objednávka je " +
+                      _vm._s(_vm.order.status) +
+                      "\n                    "
+                  )
+                ]),
+                _vm._v(" "),
+                _vm.order.description
+                  ? _c("div", [
+                      _vm._v(
+                        "\n                        Vaše poznámka: " +
+                          _vm._s(_vm.order.description) +
+                          "\n                    "
+                      )
+                    ])
+                  : _vm._e()
+              ])
+        ])
       ])
     ])
   ])
@@ -44046,96 +43883,84 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "flex" }, [
-    _c(
-      "div",
-      { staticClass: "h-screen bg-blue-800 text-white" },
-      [
-        _c("div", { staticClass: "text-center p-2 text-2xl" }, [
-          _vm._v("Objednávkový systém")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.search,
-              expression: "search"
-            }
-          ],
-          staticClass:
-            "pt-2 appearance-none text-black block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey",
-          attrs: { type: "text", placeholder: "Vyhledejte zboží" },
-          domProps: { value: _vm.search },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.search = $event.target.value
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "text-center pt-2 cursor-pointer",
-            on: { click: _vm.allProduct }
-          },
-          [_vm._v("\n            Všechny produkty\n        ")]
-        ),
-        _vm._v(" "),
-        _vm._l(_vm.categories, function(category) {
-          return _c("div", { key: category.id }, [
-            _c(
-              "div",
-              {
-                staticClass: "text-center pt-2 cursor-pointer",
-                on: {
-                  click: function($event) {
-                    return _vm.value(category.id, category.name)
-                  }
-                }
-              },
-              [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(category.name) +
-                    "\n            "
-                )
-              ]
-            )
-          ])
-        })
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c("div", [
+    _c("aside", { staticClass: "sidebar" }, [
+      _c("div", { staticClass: "name" }, [_vm._v("Objednávkový systém")]),
+      _vm._v(" "),
       _c(
         "div",
-        {
-          staticClass:
-            "bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-5"
-        },
+        { staticClass: "menu" },
         [
-          _c("h3", { staticClass: "font-bold pl-2" }, [
-            _vm._v(
-              "\n                " +
-                _vm._s(_vm.all ? "Všechny produkty" : _vm.categoryName) +
-                "\n            "
-            )
-          ])
-        ]
-      ),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.search,
+                expression: "search"
+              }
+            ],
+            staticClass:
+              "pt-2 appearance-none text-black block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey",
+            attrs: { type: "text", placeholder: "Vyhledejte zboží" },
+            domProps: { value: _vm.search },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.search = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "link", on: { click: _vm.allProduct } }, [
+            _vm._v("\n            Všechny produkty\n        ")
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.categories, function(category) {
+            return _c("div", { key: category.id }, [
+              _c(
+                "div",
+                {
+                  staticClass: "link",
+                  on: {
+                    click: function($event) {
+                      return _vm.value(category.id, category.name)
+                    }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(category.name) +
+                      "\n            "
+                  )
+                ]
+              )
+            ])
+          })
+        ],
+        2
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", [
+      _c("div", { staticClass: "mt-3 p-3" }, [
+        _c("h3", [
+          _vm._v(
+            "\n                " +
+              _vm._s(_vm.all ? "Všechny produkty" : _vm.categoryName) +
+              "\n            "
+          )
+        ])
+      ]),
       _vm._v(" "),
       _vm.orders
         ? _c(
             "div",
             {
               staticClass:
-                "bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3 mt-4"
+                "bg-ivory border-t-4 border-b-4 border-ivory rounded-lg shadow-lg  ml-3"
             },
             [
               _c(
@@ -44190,142 +44015,119 @@ var render = function() {
           }
         },
         [
-          _c(
-            "button",
-            {
-              staticClass:
-                "mt-3 bg-blue-800 hover:bg-blue-900 text-white font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded ml-10 t-2",
-              attrs: { type: "submit" }
-            },
-            [_vm._v("\n                Potvrdit\n            ")]
-          ),
+          _c("button", { staticClass: "success", attrs: { type: "submit" } }, [
+            _vm._v("\n                Potvrdit\n            ")
+          ]),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass:
-                "bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3 mt-4"
-            },
-            [
-              _c("div", { staticClass: "flex flex-wrap" }, [
-                _c("table", { staticClass: "table-fixed" }, [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c(
-                    "tbody",
-                    _vm._l(_vm.filteredList, function(product) {
-                      return product.category_id == _vm.val && !_vm.all
-                        ? _c("tr", { key: product.id }, [
-                            _c("td", { staticClass: "border px-4 py-2" }, [
-                              _vm._v(
-                                "\n                                    " +
-                                  _vm._s(product.name) +
-                                  "\n                                "
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "border px-4 py-2" }, [
-                              _vm._v(
-                                "\n                                    " +
-                                  _vm._s(product.hmotnost) +
-                                  "\n                                "
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "border px-4 py-2" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.orders.order[product.id],
-                                    expression: "orders.order[product.id]"
-                                  }
-                                ],
-                                staticClass:
-                                  "w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-                                attrs: {
-                                  type: "text",
-                                  placeholder: "Množství"
-                                },
-                                domProps: {
-                                  value: _vm.orders.order[product.id]
-                                },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.orders.order,
-                                      product.id,
-                                      $event.target.value
-                                    )
-                                  }
+          _c("div", { staticClass: "table mt-3" }, [
+            _c("div", { staticClass: "flex flex-wrap" }, [
+              _c("table", { staticClass: "table-fixed" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.filteredList, function(product) {
+                    return product.category_id == _vm.val && !_vm.all
+                      ? _c("tr", { key: product.id }, [
+                          _c("td", { staticClass: "border px-4 py-2" }, [
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(product.name) +
+                                "\n                                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "border px-4 py-2" }, [
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(product.hmotnost) +
+                                "\n                                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "border px-4 py-2" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.orders.order[product.id],
+                                  expression: "orders.order[product.id]"
                                 }
-                              })
-                            ])
-                          ])
-                        : _vm.all
-                        ? _c("tr", [
-                            _c("td", { staticClass: "border px-4 py-2" }, [
-                              _vm._v(
-                                "\n                                    " +
-                                  _vm._s(product.name) +
-                                  "\n                                "
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "border px-4 py-2" }, [
-                              _vm._v(
-                                "\n                                    " +
-                                  _vm._s(product.hmotnost) +
-                                  "\n                                "
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "border px-4 py-2" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.orders.order[product.id],
-                                    expression: "orders.order[product.id]"
+                              ],
+                              staticClass:
+                                "w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                              attrs: { type: "text", placeholder: "Množství" },
+                              domProps: { value: _vm.orders.order[product.id] },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
                                   }
-                                ],
-                                staticClass:
-                                  "w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-                                attrs: {
-                                  type: "text",
-                                  placeholder: "Množství"
-                                },
-                                domProps: {
-                                  value: _vm.orders.order[product.id]
-                                },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.orders.order,
-                                      product.id,
-                                      $event.target.value
-                                    )
-                                  }
+                                  _vm.$set(
+                                    _vm.orders.order,
+                                    product.id,
+                                    $event.target.value
+                                  )
                                 }
-                              })
-                            ])
+                              }
+                            })
                           ])
-                        : _vm._e()
-                    }),
-                    0
-                  )
-                ])
+                        ])
+                      : _vm.all
+                      ? _c("tr", [
+                          _c("td", { staticClass: "border px-4 py-2" }, [
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(product.name) +
+                                "\n                                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "border px-4 py-2" }, [
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(product.hmotnost) +
+                                "\n                                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "border px-4 py-2" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.orders.order[product.id],
+                                  expression: "orders.order[product.id]"
+                                }
+                              ],
+                              staticClass:
+                                "w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                              attrs: { type: "text", placeholder: "Množství" },
+                              domProps: { value: _vm.orders.order[product.id] },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.orders.order,
+                                    product.id,
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ])
+                      : _vm._e()
+                  }),
+                  0
+                )
               ])
-            ]
-          )
+            ])
+          ])
         ]
       )
     ])
@@ -44391,50 +44193,42 @@ var render = function() {
       "div",
       { staticClass: "flex mb-4" },
       [
-        _c(
-          "div",
-          { staticClass: "h-screen w-1/6 bg-blue-800 text-white" },
-          [
-            _c("div", { staticClass: "text-center p-2 text-2xl" }, [
-              _vm._v("Objednávky")
-            ]),
-            _vm._v(" "),
-            !_vm.ordersFilter
-              ? _c("div", { staticClass: "text-center p-2" }, [
-                  _vm._v("\n        Nemáte žádné objednávky\n      ")
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm._l(_vm.orders, function(order) {
-              return _vm.orders
-                ? _c(
-                    "div",
-                    { key: order.id, staticClass: "text-center p-2" },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          attrs: {
-                            to: { name: "ShowOrder", params: { id: order.id } }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "č. " +
-                              _vm._s(order.id) +
-                              " " +
-                              _vm._s(order.status)
-                          )
-                        ]
-                      )
-                    ],
-                    1
-                  )
-                : _vm._e()
-            })
-          ],
-          2
-        ),
+        _c("aside", { staticClass: "sidebar" }, [
+          _c("div", { staticClass: "name" }, [_vm._v("Objednávky")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "menu" },
+            [
+              !_vm.ordersFilter
+                ? _c("div", { staticClass: "link" }, [
+                    _vm._v("\n        Nemáte žádné objednávky\n      ")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm._l(_vm.orders, function(order) {
+                return _vm.orders
+                  ? _c(
+                      "router-link",
+                      {
+                        key: order.id,
+                        staticClass: "link",
+                        attrs: {
+                          to: { name: "ShowOrder", params: { id: order.id } }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "č. " + _vm._s(order.id) + " " + _vm._s(order.status)
+                        )
+                      ]
+                    )
+                  : _vm._e()
+              })
+            ],
+            2
+          )
+        ]),
         _vm._v(" "),
         _c(
           "transition",
@@ -44665,7 +44459,7 @@ var render = function() {
       _vm._v("\n            Kontaktí údaje\n       ")
     ]),
     _vm._v(" "),
-    _vm.user
+    _vm.user.invoice
       ? _c("div", { staticClass: "flex p-2" }, [
           _c("div", { staticClass: "font-bold" }, [
             _c("div", [_vm._v("Název: " + _vm._s(_vm.user.invoice.nazev))]),
@@ -44731,220 +44525,213 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "flex flex-wrap" }, [
       _c("div", { staticClass: "w-full" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3"
-          },
-          [
-            _c(
-              "form",
-              {
-                staticClass: "w-full max-w-lg p-5",
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.addProduct($event)
-                  }
+        _c("div", { staticClass: "table" }, [
+          _c(
+            "form",
+            {
+              staticClass: "w-full max-w-lg p-5",
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.addProduct($event)
                 }
-              },
-              [
-                _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
-                  _c("div", { staticClass: "w-full px-3" }, [
-                    _c(
-                      "label",
-                      { staticClass: "ares-label", attrs: { for: "name" } },
-                      [_vm._v("Název produktu")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
+              }
+            },
+            [
+              _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                _c("div", { staticClass: "w-full px-3" }, [
+                  _c(
+                    "label",
+                    { staticClass: "ares-label", attrs: { for: "name" } },
+                    [_vm._v("Název produktu")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.product.name,
+                        expression: "product.name"
+                      }
+                    ],
+                    staticClass: "ares-input",
+                    class: { "border-red-500": _vm.errors.name },
+                    attrs: { id: "name", type: "text" },
+                    domProps: { value: _vm.product.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.product, "name", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.name
+                    ? _c(
+                        "p",
+                        { staticClass: "text-red-500 text-xs italname" },
+                        [_vm._v(_vm._s(_vm.errors.name[0]))]
+                      )
+                    : _vm._e()
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                _c("div", { staticClass: "w-full px-3" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "ares-label",
+                      attrs: { for: "category_id" }
+                    },
+                    [_vm._v("Kategorie")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.product.name,
-                          expression: "product.name"
+                          value: _vm.product.category_id,
+                          expression: "product.category_id"
                         }
                       ],
                       staticClass: "ares-input",
-                      class: { "border-red-500": _vm.errors.name },
-                      attrs: { id: "name", type: "text" },
-                      domProps: { value: _vm.product.name },
+                      attrs: { id: "category_id" },
                       on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.product, "name", $event.target.value)
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.product,
+                            "category_id",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
                         }
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.name
-                      ? _c(
-                          "p",
-                          { staticClass: "text-red-500 text-xs italname" },
-                          [_vm._v(_vm._s(_vm.errors.name[0]))]
-                        )
-                      : _vm._e()
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
-                  _c("div", { staticClass: "w-full px-3" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "ares-label",
-                        attrs: { for: "category_id" }
-                      },
-                      [_vm._v("Kategorie")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.product.category_id,
-                            expression: "product.category_id"
-                          }
-                        ],
-                        staticClass: "ares-input",
-                        attrs: { id: "category_id" },
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.product,
-                              "category_id",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
-                          }
-                        }
-                      },
-                      [
-                        _c(
+                    },
+                    [
+                      _c(
+                        "option",
+                        {
+                          attrs: { selected: "" },
+                          domProps: { value: _vm.Vyberte }
+                        },
+                        [_vm._v("Vyberte kategorii")]
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.categories, function(category) {
+                        return _c(
                           "option",
                           {
-                            attrs: { selected: "" },
-                            domProps: { value: _vm.Vyberte }
+                            key: category.id,
+                            staticClass:
+                              "block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline",
+                            domProps: { value: category.id }
                           },
-                          [_vm._v("Vyberte kategorii")]
-                        ),
-                        _vm._v(" "),
-                        _vm._l(_vm.categories, function(category) {
-                          return _c(
-                            "option",
-                            {
-                              key: category.id,
-                              staticClass:
-                                "block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline",
-                              domProps: { value: category.id }
-                            },
-                            [_vm._v(_vm._s(category.name))]
-                          )
-                        })
-                      ],
-                      2
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-                      },
-                      [
-                        _c(
-                          "svg",
-                          {
-                            staticClass: "fill-current h-4 w-4",
-                            attrs: {
-                              xmlns: "http://www.w3.org/2000/svg",
-                              viewBox: "0 0 20 20"
-                            }
-                          },
-                          [
-                            _c("path", {
-                              attrs: {
-                                d:
-                                  "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-                              }
-                            })
-                          ]
+                          [_vm._v(_vm._s(category.name))]
                         )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _vm.errors.category_id
-                      ? _c(
-                          "p",
-                          { staticClass: "text-red-500 text-xs italname" },
-                          [_vm._v(_vm._s(_vm.errors.category_id[0]))]
-                        )
-                      : _vm._e()
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
-                  _c("div", { staticClass: "w-full px-3" }, [
-                    _c(
-                      "label",
-                      { staticClass: "ares-label", attrs: { for: "name" } },
-                      [_vm._v("Gramáž")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
+                      })
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+                    },
+                    [
+                      _c(
+                        "svg",
                         {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.product.hmotnost,
-                          expression: "product.hmotnost"
-                        }
-                      ],
-                      staticClass: "ares-input",
-                      class: { "border-red-500": _vm.errors.hmotnost },
-                      attrs: { id: "hmotnost", type: "text" },
-                      domProps: { value: _vm.product.hmotnost },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                          staticClass: "fill-current h-4 w-4",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            viewBox: "0 0 20 20"
                           }
-                          _vm.$set(_vm.product, "hmotnost", $event.target.value)
-                        }
+                        },
+                        [
+                          _c("path", {
+                            attrs: {
+                              d:
+                                "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                            }
+                          })
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm.errors.category_id
+                    ? _c(
+                        "p",
+                        { staticClass: "text-red-500 text-xs italname" },
+                        [_vm._v(_vm._s(_vm.errors.category_id[0]))]
+                      )
+                    : _vm._e()
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                _c("div", { staticClass: "w-full px-3" }, [
+                  _c(
+                    "label",
+                    { staticClass: "ares-label", attrs: { for: "hmotnost" } },
+                    [_vm._v("Gramáž")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.product.hmotnost,
+                        expression: "product.hmotnost"
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.hmotnost
-                      ? _c(
-                          "p",
-                          { staticClass: "text-red-500 text-xs italhmotnost" },
-                          [_vm._v(_vm._s(_vm.errors.hmotnost[0]))]
-                        )
-                      : _vm._e()
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm._m(1)
-              ]
-            )
-          ]
-        )
+                    ],
+                    staticClass: "ares-input",
+                    class: { "border-red-500": _vm.errors.hmotnost },
+                    attrs: { id: "hmotnost", type: "text" },
+                    domProps: { value: _vm.product.hmotnost },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.product, "hmotnost", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.hmotnost
+                    ? _c(
+                        "p",
+                        { staticClass: "text-red-500 text-xs italhmotnost" },
+                        [_vm._v(_vm._s(_vm.errors.hmotnost[0]))]
+                      )
+                    : _vm._e()
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(1)
+            ]
+          )
+        ])
       ])
     ])
   ])
@@ -44954,18 +44741,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-3"
-      },
-      [
-        _c("h3", { staticClass: "font-bold pl-2" }, [
-          _vm._v("Vytvořit produkt")
-        ])
-      ]
-    )
+    return _c("div", { staticClass: "header" }, [
+      _c("h3", [_vm._v("Vytvořit produkt")])
+    ])
   },
   function() {
     var _vm = this
@@ -44973,15 +44751,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "md:flex md:items-center" }, [
       _c("div", { staticClass: "md:w-2/3" }, [
-        _c(
-          "button",
-          {
-            staticClass:
-              "shadow bg-blue-800 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded",
-            attrs: { type: "submit" }
-          },
-          [_vm._v("Vytvořit produkt")]
-        )
+        _c("button", { staticClass: "success", attrs: { type: "submit" } }, [
+          _vm._v("Vytvořit produkt")
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "md:w-2/3" })
@@ -45030,172 +44802,144 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "w-full" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3"
-          },
-          [
-            _c(
-              "form",
-              {
-                staticClass: "w-full max-w-lg p-5",
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.changeContact($event)
-                  }
+        _c("div", { staticClass: "table" }, [
+          _c(
+            "form",
+            {
+              staticClass: "w-full max-w-lg p-5",
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.changeContact($event)
                 }
-              },
-              [
-                _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
-                  _c("div", { staticClass: "w-full px-3" }, [
-                    _c(
-                      "label",
+              }
+            },
+            [
+              _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                _c("div", { staticClass: "w-full px-3" }, [
+                  _c(
+                    "label",
+                    { staticClass: "ares-label", attrs: { for: "email" } },
+                    [_vm._v("E-mailová adresa")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
                       {
-                        staticClass:
-                          "block uppercase tracking-wide text-black text-xs font-bold mb-2",
-                        attrs: { for: "grid-password" }
-                      },
-                      [_vm._v("E-mailová adresa")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.user.email,
-                          expression: "user.email"
-                        }
-                      ],
-                      staticClass:
-                        "appearance-none block w-full bg-gray-200 text-black  border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-                      class: { "border-red-500": _vm.errors.email },
-                      attrs: { id: "email", type: "email" },
-                      domProps: { value: _vm.user.email },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.user, "email", $event.target.value)
-                        }
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.user.email,
+                        expression: "user.email"
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.email
-                      ? _c(
-                          "p",
-                          { staticClass: "text-red-500 text-xs italic" },
-                          [_vm._v(_vm._s(_vm.errors.email[0]))]
-                        )
-                      : _vm._e()
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
-                  _c("div", { staticClass: "w-full px-3" }, [
-                    _c(
-                      "label",
+                    ],
+                    staticClass: "ares-input",
+                    class: { "border-red-500": _vm.errors.email },
+                    attrs: { id: "email", type: "email" },
+                    domProps: { value: _vm.user.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.user, "email", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.email
+                    ? _c("p", { staticClass: "text-red-500 text-xs italic" }, [
+                        _vm._v(_vm._s(_vm.errors.email[0]))
+                      ])
+                    : _vm._e()
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                _c("div", { staticClass: "w-full px-3" }, [
+                  _c(
+                    "label",
+                    { staticClass: "ares-label", attrs: { for: "phone" } },
+                    [_vm._v("Telefonní číslo")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
                       {
-                        staticClass:
-                          "block uppercase tracking-wide text-black  text-xs font-bold mb-2",
-                        attrs: { for: "grid-password" }
-                      },
-                      [_vm._v("Telefonní číslo")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.user.phone,
-                          expression: "user.phone"
-                        }
-                      ],
-                      staticClass:
-                        "appearance-none block w-full bg-gray-200 text-black  border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-                      class: { "border-red-500": _vm.errors.phone },
-                      attrs: { id: "phone", type: "phone" },
-                      domProps: { value: _vm.user.phone },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.user, "phone", $event.target.value)
-                        }
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.user.phone,
+                        expression: "user.phone"
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.phone
-                      ? _c(
-                          "p",
-                          { staticClass: "text-red-500 text-xs italic" },
-                          [_vm._v(_vm._s(_vm.errors.phone[0]))]
-                        )
-                      : _vm._e()
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
-                  _c("div", { staticClass: "w-full px-3" }, [
-                    _c(
-                      "label",
+                    ],
+                    staticClass: "ares-input",
+                    class: { "border-red-500": _vm.errors.phone },
+                    attrs: { id: "phone", type: "phone" },
+                    domProps: { value: _vm.user.phone },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.user, "phone", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.phone
+                    ? _c("p", { staticClass: "text-red-500 text-xs italic" }, [
+                        _vm._v(_vm._s(_vm.errors.phone[0]))
+                      ])
+                    : _vm._e()
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                _c("div", { staticClass: "w-full px-3" }, [
+                  _c(
+                    "label",
+                    { staticClass: "ares-label", attrs: { for: "password" } },
+                    [_vm._v("Vaše heslo")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
                       {
-                        staticClass:
-                          "block uppercase tracking-wide text-black  text-xs font-bold mb-2",
-                        attrs: { for: "password" }
-                      },
-                      [_vm._v("Vaše heslo")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.user.password,
-                          expression: "user.password"
-                        }
-                      ],
-                      staticClass:
-                        "appearance-none block w-full bg-gray-200 text-black  border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-                      class: { "border-red-500": _vm.errors.password },
-                      attrs: {
-                        id: "password",
-                        type: "password",
-                        autocomplete: "password"
-                      },
-                      domProps: { value: _vm.user.password },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.user, "password", $event.target.value)
-                        }
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.user.password,
+                        expression: "user.password"
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.password
-                      ? _c(
-                          "p",
-                          { staticClass: "text-red-500 text-xs italic" },
-                          [_vm._v(_vm._s(_vm.errors.password[0]))]
-                        )
-                      : _vm._e()
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm._m(1)
-              ]
-            )
-          ]
-        )
+                    ],
+                    staticClass: "ares-input",
+                    class: { "border-red-500": _vm.errors.password },
+                    attrs: {
+                      id: "password",
+                      type: "password",
+                      autocomplete: "password"
+                    },
+                    domProps: { value: _vm.user.password },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.user, "password", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.password
+                    ? _c("p", { staticClass: "text-red-500 text-xs italic" }, [
+                        _vm._v(_vm._s(_vm.errors.password[0]))
+                      ])
+                    : _vm._e()
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(1)
+            ]
+          )
+        ])
       ])
     ])
   ])
@@ -45205,18 +44949,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-3"
-      },
-      [
-        _c("h3", { staticClass: "font-bold pl-2" }, [
-          _vm._v("Změna kontaktních údajů")
-        ])
-      ]
-    )
+    return _c("div", { staticClass: "header" }, [
+      _c("h3", [_vm._v("Změna kontaktních údajů")])
+    ])
   },
   function() {
     var _vm = this
@@ -45224,15 +44959,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "md:flex md:items-center" }, [
       _c("div", { staticClass: "md:w-2/3" }, [
-        _c(
-          "button",
-          {
-            staticClass:
-              "shadow bg-blue-800 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded",
-            attrs: { type: "submit" }
-          },
-          [_vm._v("Změnit údaje")]
-        )
+        _c("button", { staticClass: "success", attrs: { type: "submit" } }, [
+          _vm._v("Změnit údaje")
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "md:w-2/3" })
@@ -45281,198 +45010,175 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "w-full" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3"
-          },
-          [
-            _c("input", {
-              staticStyle: { display: "none" },
-              attrs: {
-                type: "text",
-                name: "email",
-                value: "...",
-                autocomplete: "username email"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "form",
-              {
-                staticClass: "w-full max-w-lg p-5",
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.changePassword($event)
-                  }
+        _c("div", { staticClass: "table" }, [
+          _c("input", {
+            staticStyle: { display: "none" },
+            attrs: {
+              type: "text",
+              name: "email",
+              value: "...",
+              autocomplete: "email"
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
+              staticClass: "w-full max-w-lg p-5",
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.changePassword($event)
                 }
-              },
-              [
-                _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
-                  _c("div", { staticClass: "w-full px-3" }, [
-                    _c(
-                      "label",
+              }
+            },
+            [
+              _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                _c("div", { staticClass: "w-full px-3" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "ares-label",
+                      attrs: { for: "old_password" }
+                    },
+                    [_vm._v("Staré heslo")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
                       {
-                        staticClass:
-                          "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
-                        attrs: { for: "old_password" }
-                      },
-                      [_vm._v("Staré heslo")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.user.old_password,
-                          expression: "user.old_password"
-                        }
-                      ],
-                      staticClass:
-                        "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-                      class: { "border-red-500": _vm.errors.old_password },
-                      attrs: {
-                        id: "old_password",
-                        type: "password",
-                        autocomplete: "old_password"
-                      },
-                      domProps: { value: _vm.user.old_password },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.user,
-                            "old_password",
-                            $event.target.value
-                          )
-                        }
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.user.old_password,
+                        expression: "user.old_password"
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.old_password
-                      ? _c(
-                          "p",
-                          { staticClass: "text-red-500 text-xs italic" },
-                          [_vm._v(_vm._s(_vm.errors.old_password[0]))]
-                        )
-                      : _vm._e()
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
-                  _c("div", { staticClass: "w-full px-3" }, [
-                    _c(
-                      "label",
+                    ],
+                    staticClass: "ares-input",
+                    class: { "border-red-500": _vm.errors.old_password },
+                    attrs: {
+                      id: "old_password",
+                      type: "password",
+                      autocomplete: "old_password"
+                    },
+                    domProps: { value: _vm.user.old_password },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.user, "old_password", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.old_password
+                    ? _c("p", { staticClass: "text-red-500 text-xs italic" }, [
+                        _vm._v(_vm._s(_vm.errors.old_password[0]))
+                      ])
+                    : _vm._e()
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                _c("div", { staticClass: "w-full px-3" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "ares-label",
+                      attrs: { for: "new-password" }
+                    },
+                    [_vm._v("Heslo")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
                       {
-                        staticClass:
-                          "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
-                        attrs: { for: "new-password" }
-                      },
-                      [_vm._v("Heslo")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.user.password,
-                          expression: "user.password"
-                        }
-                      ],
-                      staticClass:
-                        "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-                      class: { "border-red-500": _vm.errors.password },
-                      attrs: {
-                        id: "new-password",
-                        type: "password",
-                        autocomplete: "new-password"
-                      },
-                      domProps: { value: _vm.user.password },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.user, "password", $event.target.value)
-                        }
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.user.password,
+                        expression: "user.password"
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.password
-                      ? _c(
-                          "p",
-                          { staticClass: "text-red-500 text-xs italic" },
-                          [_vm._v(_vm._s(_vm.errors.password[0]))]
-                        )
-                      : _vm._e()
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
-                  _c("div", { staticClass: "w-full px-3" }, [
-                    _c(
-                      "label",
+                    ],
+                    staticClass: "ares-input",
+                    class: { "border-red-500": _vm.errors.password },
+                    attrs: {
+                      id: "new-password",
+                      type: "password",
+                      autocomplete: "new-password"
+                    },
+                    domProps: { value: _vm.user.password },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.user, "password", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.password
+                    ? _c("p", { staticClass: "text-red-500 text-xs italic" }, [
+                        _vm._v(_vm._s(_vm.errors.password[0]))
+                      ])
+                    : _vm._e()
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+                _c("div", { staticClass: "w-full px-3" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "ares-label",
+                      attrs: { for: "password-confirm" }
+                    },
+                    [_vm._v("Potvrďte heslo")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
                       {
-                        staticClass:
-                          "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
-                        attrs: { for: "password-confirm" }
-                      },
-                      [_vm._v("Potvrďte heslo")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.user.confirm_password,
-                          expression: "user.confirm_password"
-                        }
-                      ],
-                      staticClass:
-                        "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-                      class: { "border-red-500": _vm.errors.confirm_password },
-                      attrs: {
-                        id: "password-confirm",
-                        type: "password",
-                        autocomplete: "new-password"
-                      },
-                      domProps: { value: _vm.user.confirm_password },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.user,
-                            "confirm_password",
-                            $event.target.value
-                          )
-                        }
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.user.confirm_password,
+                        expression: "user.confirm_password"
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.confirm_password
-                      ? _c(
-                          "p",
-                          { staticClass: "text-red-500 text-xs italic" },
-                          [_vm._v(_vm._s(_vm.errors.confirm_password[0]))]
+                    ],
+                    staticClass: "ares-input",
+                    class: { "border-red-500": _vm.errors.confirm_password },
+                    attrs: {
+                      id: "password-confirm",
+                      type: "password",
+                      autocomplete: "new-password"
+                    },
+                    domProps: { value: _vm.user.confirm_password },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.user,
+                          "confirm_password",
+                          $event.target.value
                         )
-                      : _vm._e()
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm._m(1)
-              ]
-            )
-          ]
-        )
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.confirm_password
+                    ? _c("p", { staticClass: "text-red-500 text-xs italic" }, [
+                        _vm._v(_vm._s(_vm.errors.confirm_password[0]))
+                      ])
+                    : _vm._e()
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(1)
+            ]
+          )
+        ])
       ])
     ])
   ])
@@ -45482,14 +45188,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-3"
-      },
-      [_c("h3", { staticClass: "font-bold pl-2" }, [_vm._v("Změna heslo")])]
-    )
+    return _c("div", { staticClass: "header" }, [
+      _c("h3", [_vm._v("Změna heslo")])
+    ])
   },
   function() {
     var _vm = this
@@ -45497,15 +45198,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "md:flex md:items-center" }, [
       _c("div", { staticClass: "md:w-2/3" }, [
-        _c(
-          "button",
-          {
-            staticClass:
-              "shadow bg-blue-800 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded",
-            attrs: { type: "submit" }
-          },
-          [_vm._v("Změnit údaje")]
-        )
+        _c("button", { staticClass: "success", attrs: { type: "submit" } }, [
+          _vm._v("Změnit údaje")
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "md:w-2/3" })
@@ -45536,42 +45231,38 @@ var render = function() {
   return _c("div", [
     _c(
       "div",
-      { staticClass: "flex mb-4" },
+      { staticClass: "flex  mb-4" },
       [
-        _c("div", { staticClass: "h-screen w-1/6 bg-blue-800 text-white" }, [
-          _c("div", { staticClass: "text-center p-2 text-2xl" }, [
-            _vm._v("Nastavení")
-          ]),
+        _c("aside", { staticClass: "sidebar" }, [
+          _c("div", { staticClass: "name" }, [_vm._v("Nastavení")]),
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "text-center p-2" },
+            { staticClass: "menu" },
             [
-              _c("router-link", { attrs: { to: { name: "ChangeContact" } } }, [
-                _vm._v("Změnit kontaktní údaje")
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "text-center p-2" },
-            [
-              _c("router-link", { attrs: { to: { name: "ChangePassword" } } }, [
-                _vm._v("Změnit heslo")
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "text-center p-2" },
-            [
-              _c("router-link", { attrs: { to: { name: "logout" } } }, [
-                _vm._v("Odhlásit se se")
-              ])
+              _c(
+                "router-link",
+                {
+                  staticClass: "link",
+                  attrs: { to: { name: "ChangeContact" } }
+                },
+                [_vm._v("Změnit kontaktní údaje")]
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                {
+                  staticClass: "link",
+                  attrs: { to: { name: "ChangePassword" } }
+                },
+                [_vm._v("Změnit heslo")]
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                { staticClass: "link", attrs: { to: { name: "logout" } } },
+                [_vm._v("Odhlásit se se")]
+              )
             ],
             1
           )
@@ -45613,96 +45304,110 @@ var render = function() {
   return _c(
     "nav",
     {
-      staticClass: "bg-gray-900 md:pt-1 pb-1 px-1 mt-0 h-auto w-full z-20 top-0"
+      staticClass:
+        "bg-junglegreen px-1 mt-0 h-auto w-full z-20 top-0 text-white"
     },
     [
-      _c("div", { staticClass: "flex flex-wrap items-center" }, [
+      _c("div", { staticClass: "flex items-baseline container mx-auto" }, [
         _c(
           "div",
-          {
-            staticClass:
-              "flex flex-shrink md:w-1/3 justify-center md:justify-center text-white"
-          },
+          { staticClass: "m-4 pl-3" },
           [
-            _c("router-link", { attrs: { to: { name: "home" } } }, [
-              _vm._v("Šotola Miroslav")
-            ])
+            _c(
+              "router-link",
+              {
+                staticClass: "flex items-center",
+                attrs: { to: { name: "home" } }
+              },
+              [
+                _c("img", {
+                  staticClass: "w-32 h-32 ",
+                  attrs: {
+                    src: "/storage/src/bile.png",
+                    alt: "Miroslav Šotola"
+                  }
+                }),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "border-l-4 border-white  ml-5 h-32"
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "ml-2 pl-2  text-2xl font-bold" }, [
+                  _vm._v("Šotola Miroslav")
+                ])
+              ]
+            )
           ],
           1
         ),
         _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "flex w-full pt-2 content-center justify-between md:w-1/3 md:justify-end"
-          },
-          [
-            _c(
-              "ul",
-              {
-                staticClass:
-                  "list-reset flex justify-between flex-1 md:flex-none items-center"
-              },
-              _vm._l(_vm.loogedInlinks, function(link, index) {
-                return _vm.loggedIn
-                  ? _c(
-                      "li",
-                      {
-                        key: index,
-                        staticClass: "flex-1 md:flex-none md:mr-3 text-white"
-                      },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            staticClass:
-                              "inline-block text-gray-600 no-underline hover:text-gray-200 hover:text-underline py-2 px-4",
-                            attrs: { to: { name: link.route } }
-                          },
-                          [_vm._v(" " + _vm._s(link.name))]
-                        )
-                      ],
-                      1
-                    )
-                  : _vm._e()
-              }),
-              0
-            ),
-            _vm._v(" "),
-            _c(
-              "ul",
-              {
-                staticClass:
-                  "list-reset flex justify-between flex-1 md:flex-none items-center"
-              },
-              _vm._l(_vm.links, function(link, index) {
-                return !_vm.loggedIn
-                  ? _c(
-                      "li",
-                      {
-                        key: index,
-                        staticClass: "flex-1 md:flex-none md:mr-3 text-white"
-                      },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            staticClass:
-                              "inline-block text-gray-600 no-underline hover:text-gray-200 hover:text-underline py-2 px-4",
-                            attrs: { to: { name: link.route } }
-                          },
-                          [_vm._v(" " + _vm._s(link.name))]
-                        )
-                      ],
-                      1
-                    )
-                  : _vm._e()
-              }),
-              0
-            )
-          ]
-        )
+        _c("div", { staticClass: "flex md:justify-end -mb-20 " }, [
+          _c(
+            "ul",
+            {
+              staticClass:
+                "list-reset flex justify-between flex-1 md:flex-none "
+            },
+            _vm._l(_vm.loogedInlinks, function(link, index) {
+              return _vm.loggedIn
+                ? _c(
+                    "li",
+                    {
+                      key: index,
+                      staticClass:
+                        "flex-1 md:flex-none font-bold bg-darkergreen hover:bg-junglegreen text-center h-full"
+                    },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass:
+                            "inline-block no-underline hover:text-underline px-2 py-2",
+                          attrs: { to: { name: link.route } }
+                        },
+                        [_vm._v(" " + _vm._s(link.name))]
+                      )
+                    ],
+                    1
+                  )
+                : _vm._e()
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c(
+            "ul",
+            {
+              staticClass:
+                "list-reset flex justify-between flex-1 md:flex-none items-center"
+            },
+            _vm._l(_vm.links, function(link, index) {
+              return !_vm.loggedIn
+                ? _c(
+                    "li",
+                    {
+                      key: index,
+                      staticClass:
+                        "flex-1 md:flex-none font-bold  hover:bg-darkergreen text-center h-full"
+                    },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass:
+                            "inline-block no-underline hover:text-underline py-2 px-4",
+                          attrs: { to: { name: link.route } }
+                        },
+                        [_vm._v(" " + _vm._s(link.name))]
+                      )
+                    ],
+                    1
+                  )
+                : _vm._e()
+            }),
+            0
+          )
+        ])
       ])
     ]
   )
@@ -45741,14 +45446,14 @@ var render = function() {
         }
       ],
       staticClass:
-        "bg-gray-900 shadow-lg h-16 fixed bottom-0 mt-12 md:relative md:h-auto z-10 w-full md:w-48"
+        "bg-darkergreen md:bg-ivory shadow-lg h-16 fixed md:top-auto md:mb-0 md:fixed md:h-auto z-10 w-full md:w-48"
     },
     [
       _c(
         "div",
         {
           staticClass:
-            "md:mt-12 md:w-48 md:fixed md:left-0 md:top-0 content-center md:content-start text-left justify-between"
+            "md:w-48  md:left-0 md:top-0 content-center md:content-start text-left justify-between"
         },
         [
           _c(
@@ -45766,7 +45471,7 @@ var render = function() {
                     "router-link",
                     {
                       staticClass:
-                        "block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-pink-500",
+                        "block py-1 md:py-3 pl-1 align-middle text-black no-underline hover:text-black border-b-2 border-gray-800 hover:border-pink-500",
                       attrs: { to: { name: link.route } }
                     },
                     [
@@ -45776,7 +45481,7 @@ var render = function() {
                         "span",
                         {
                           staticClass:
-                            "pb-1 md:pb-0 text-xs md:text-base text-gray-600 md:text-gray-400 block md:inline-block"
+                            "pb-1 md:pb-0 text-xs md:text-base text-black md:text-black block md:inline-block"
                         },
                         [_vm._v(_vm._s(link.name))]
                       )
@@ -62038,8 +61743,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store */ "./resources/js/store.js");
+/* harmony import */ var cxlt_vue2_toastr__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! cxlt-vue2-toastr */ "./node_modules/cxlt-vue2-toastr/dist/js/cxlt-vue2-toastr.js");
+/* harmony import */ var cxlt_vue2_toastr__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(cxlt_vue2_toastr__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store */ "./resources/js/store.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
@@ -62049,26 +61756,40 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 
 
+
+var toastrConfigs = {
+  position: "top right",
+  showDuration: 2000,
+  timeOut: 5000,
+  progressBar: true
+};
 Vue.config.productionTip = false;
 Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 Vue.use(vue_axios__WEBPACK_IMPORTED_MODULE_2___default.a, axios__WEBPACK_IMPORTED_MODULE_3___default.a);
+Vue.use(cxlt_vue2_toastr__WEBPACK_IMPORTED_MODULE_4___default.a, toastrConfigs);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: "history",
-  routes: _routes__WEBPACK_IMPORTED_MODULE_4__["routes"]
+  routes: _routes__WEBPACK_IMPORTED_MODULE_5__["routes"]
 });
 router.beforeEach(function (to, from, next) {
   if (to.matched.some(function (record) {
     return record.meta.requiresAuth;
   })) {
-    if (!_store__WEBPACK_IMPORTED_MODULE_5__["store"].getters.loggedIn) {
+    if (!_store__WEBPACK_IMPORTED_MODULE_6__["store"].getters.loggedIn) {
       next({
         name: "login"
       });
     } else {
-      if (_store__WEBPACK_IMPORTED_MODULE_5__["store"].getters.invoice) {
-        next({
-          name: "invoice"
-        });
+      if (to.matched.some(function (record) {
+        return record.meta.requiredInvoice;
+      })) {
+        if (!_store__WEBPACK_IMPORTED_MODULE_6__["store"].getters.invoice) {
+          next({
+            name: "invoice"
+          });
+        } else {
+          next();
+        }
       } else {
         next();
       }
@@ -62080,7 +61801,7 @@ router.beforeEach(function (to, from, next) {
 var app = new Vue({
   el: "#app",
   router: router,
-  store: _store__WEBPACK_IMPORTED_MODULE_5__["store"],
+  store: _store__WEBPACK_IMPORTED_MODULE_6__["store"],
   render: function render(h) {
     return h(_App_vue__WEBPACK_IMPORTED_MODULE_0__["default"]);
   }
@@ -64025,14 +63746,16 @@ var routes = [{
   path: "/objednat-zbozi",
   component: _components_order_addOrder__WEBPACK_IMPORTED_MODULE_6__["default"],
   meta: {
-    requiresAuth: true
+    requiresAuth: true,
+    requiredInvoice: true
   }
 }, {
   name: "Orders",
   path: "/objednavky",
   component: _components_order_indexOrder__WEBPACK_IMPORTED_MODULE_9__["default"],
   meta: {
-    requiresAuth: true
+    requiresAuth: true,
+    requiredInvoice: true
   },
   children: [{
     name: "ShowOrder",
@@ -64050,7 +63773,8 @@ var routes = [{
   path: "/nastaveni",
   component: _components_settings_Settings__WEBPACK_IMPORTED_MODULE_14__["default"],
   meta: {
-    requiresAuth: true
+    requiresAuth: true,
+    requiredInvoice: true
   },
   children: [{
     name: "ChangePassword",
@@ -64060,21 +63784,18 @@ var routes = [{
     name: "ChangeContact",
     path: "zmena-kontaktni-udaju",
     component: _components_settings_ChangeContact__WEBPACK_IMPORTED_MODULE_16__["default"]
-  }, {
-    name: "ChangeInvoice",
-    path: "zmena-fakturacnich-udaju",
-    component: _components_invoice_ChangeInvoice__WEBPACK_IMPORTED_MODULE_17__["default"]
   }]
 }, {
   name: "invoice",
-  path: "fakturacni-udaje",
+  path: "/fakturacni-udaje",
   component: _components_invoice_AddInvoice__WEBPACK_IMPORTED_MODULE_13__["default"]
 }, {
   name: "admin",
   path: "/administrator",
   component: _components_admin_admin__WEBPACK_IMPORTED_MODULE_20__["default"],
   meta: {
-    requiresAuth: true
+    requiresAuth: true,
+    requiredInvoice: true
   },
   children: [{
     name: "createCategory",
@@ -64204,7 +63925,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     orders: [],
     order: [],
     allOrders: []
-  }, _defineProperty(_state, "categories", []), _defineProperty(_state, "category", []), _defineProperty(_state, "products", []), _defineProperty(_state, "navbarlinks", [{
+  }, _defineProperty(_state, "categories", []), _defineProperty(_state, "category", []), _defineProperty(_state, "orderItems", []), _defineProperty(_state, "products", []), _defineProperty(_state, "navbarlinks", [{
     name: "Domů",
     route: "home"
   }, {
@@ -64217,11 +63938,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     name: "Kontakt",
     route: "kontakt"
   }, {
-    name: "Přihlásit se",
+    name: "Přihlásit",
     route: "login"
-  }, {
-    name: "Registrovat",
-    route: "register"
   }]), _defineProperty(_state, "loogedInlinks", [{
     name: "Zboží",
     route: "zbozi"
@@ -64253,7 +63971,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       return state.token !== null;
     },
     invoice: function invoice(state) {
-      return state.user.invoice === null;
+      return state.user.invoice !== null;
     },
     ordersFilter: function ordersFilter(state) {
       return Array.isArray(state.orders) && state.orders.length;
@@ -64263,6 +63981,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     order: function order(state) {
       return state.order;
+    },
+    orderItems: function orderItems(state) {
+      return state.orderItems;
     },
     categories: function categories(state) {
       return state.categories;
@@ -64312,6 +64033,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       });
       state.orders.splice(index, 1);
       state.order = [];
+    },
+    orderItems: function orderItems(state, item) {
+      console.log(item);
     },
     deleteCategory: function deleteCategory(state, id) {
       var index = state.categories.findIndex(function (item) {

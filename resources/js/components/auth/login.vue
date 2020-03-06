@@ -32,11 +32,11 @@
       <div class="w-full px-3">
         <label
            class=" text-base font-bold flex pl-2 justify-start lg:justify-start"
-          for="password"
+          for="current-password"
         >Heslo</label>
         <input
           class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          id="password"
+          id="current-password"
           type="password"
           v-bind:class="{ 'border-red-500': errors.password }"
           v-model="password"
@@ -111,6 +111,7 @@ export default {
         })
         .then(response => {
           this.loading = false;
+          this.$store.dispatch("getUser");
           this.$router.push({ name: "objednat" });
         })
         .catch(error => {

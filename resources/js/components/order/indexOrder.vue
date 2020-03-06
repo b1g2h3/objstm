@@ -1,18 +1,18 @@
 <template>
   <div>
     <div class="flex mb-4">
-      <div class="h-screen w-1/6 bg-blue-800 text-white">
-        <div class="text-center p-2 text-2xl">Objednávky</div>
-        <div v-if="!ordersFilter" class="text-center p-2">
+      <aside class="sidebar">
+        <div class="name">Objednávky</div>
+        <div class="menu">
+        <div v-if="!ordersFilter" class="link">
           Nemáte žádné objednávky
         </div>
-        <div v-if="orders" class="text-center p-2" v-for="order in orders" v-bind:key="order.id">
-          <router-link
+          <router-link v-if="orders" class="link" v-for="order in orders" v-bind:key="order.id"
             :to="{ name: 'ShowOrder', params: {id: order.id} }"
           >č. {{order.id}} {{order.status}}</router-link>
         </div>
-      </div>
-            <transition name="component-fade" mode="out-in">
+      </aside>
+      <transition name="component-fade" mode="out-in">
         <router-view />
       </transition>
     </div>

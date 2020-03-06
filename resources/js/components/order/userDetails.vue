@@ -3,7 +3,7 @@
        <div class="text-xl font-bold font-sans px-2">
              Kontaktí údaje
         </div>
-        <div v-if="user" class="flex p-2">
+        <div v-if="user.invoice" class="flex p-2">
             <div class="font-bold">
             <div>Název: {{ user.invoice.nazev }}</div>
             <div>Email: {{ user.email }}</div>

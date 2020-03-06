@@ -14,6 +14,7 @@ class UserController extends Controller
     public function index()
     {
          $users = User::all();
+         $users->load('invoice');
          return UserResource::collection($users);
     }
     public function changeContact()

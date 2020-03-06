@@ -16,14 +16,14 @@ export const store = new Vuex.Store({
         allOrders: [],
         categories: [],
         category: [],
+        orderItems: [],
         products: [],
         navbarlinks: [
             { name: "Domů", route: "home" },
             { name: "Zboží", route: "zbozi" },
             { name: "Ke stažení", route: "kestazeni" },
             { name: "Kontakt", route: "kontakt" },
-            { name: "Přihlásit se", route: "login" },
-            { name: "Registrovat", route: "register" }
+            { name: "Přihlásit", route: "login" }
         ],
         loogedInlinks: [
             { name: "Zboží", route: "zbozi" },
@@ -44,7 +44,7 @@ export const store = new Vuex.Store({
             return state.token !== null;
         },
         invoice(state) {
-            return state.user.invoice === null;
+            return state.user.invoice !== null;
         },
         ordersFilter(state) {
             return Array.isArray(state.orders) && state.orders.length;
@@ -54,6 +54,9 @@ export const store = new Vuex.Store({
         },
         order(state) {
             return state.order;
+        },
+        orderItems(state) {
+            return state.orderItems;
         },
         categories(state) {
             return state.categories;
@@ -99,6 +102,9 @@ export const store = new Vuex.Store({
             const index = state.orders.findIndex(item => item.id == id);
             state.orders.splice(index, 1);
             state.order = [];
+        },
+        orderItems(state, item) {
+            console.log(item);
         },
         deleteCategory(state, id) {
             const index = state.categories.findIndex(item => item.id == id);

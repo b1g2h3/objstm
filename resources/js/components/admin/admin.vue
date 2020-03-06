@@ -1,24 +1,16 @@
 <template>
   <div>
     <div class="flex mb-4">
-      <div class="h-screen w-1/6 bg-blue-800 text-white">
-        <div class="text-center p-2 text-2xl">Administrator</div>
-        <div class="text-center p-2">
-          <router-link :to="{ name: 'createCategory'}">Vytvořit kategorii</router-link>
+      <aside  class="sidebar">
+        <div class="name">Administrator</div>
+        <div class="menu">
+          <router-link class="link" :to="{ name: 'createCategory'}">Vytvořit kategorii</router-link>
+          <router-link class="link" :to="{ name: 'createProduct'} ">Vytvořit produkt</router-link>
+          <router-link class="link" :to="{ name: 'showUsers'} ">Přehled uživatelů</router-link>
+          <router-link class="link" :to="{ name: 'showAllOrders'} ">Přehled objednávek</router-link>
+          <router-link class="link" :to="{ name: 'logout'}">Odhlásit se se</router-link>
         </div>
-        <div class="text-center p-2">
-          <router-link :to="{ name: 'createProduct'} ">Vytvořit produkt</router-link>
-        </div>
-        <div class="text-center p-2">
-          <router-link :to="{ name: 'showUsers'} ">Přehled uživatelů</router-link>
-        </div>
-        <div class="text-center p-2">
-          <router-link :to="{ name: 'showAllOrders'} ">Přehled objednávek</router-link>
-        </div>
-        <div class="text-center p-2">
-          <router-link :to="{ name: 'logout'}">Odhlásit se se</router-link>
-        </div>
-      </div>
+      </aside >
       <transition name="component-fade" mode="out-in">
         <router-view />
       </transition>

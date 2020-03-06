@@ -73,14 +73,15 @@ export const routes = [
         name: "objednat",
         path: "/objednat-zbozi",
         component: AddOrder,
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true, requiredInvoice: true }
     },
     {
         name: "Orders",
         path: "/objednavky",
         component: IndexOrder,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            requiredInvoice: true
         },
         children: [
             {
@@ -102,7 +103,8 @@ export const routes = [
         path: "/nastaveni",
         component: Settings,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            requiredInvoice: true
         },
         children: [
             {
@@ -114,17 +116,12 @@ export const routes = [
                 name: "ChangeContact",
                 path: "zmena-kontaktni-udaju",
                 component: ChangeContact
-            },
-            {
-                name: "ChangeInvoice",
-                path: "zmena-fakturacnich-udaju",
-                component: ChangeInvoice
             }
         ]
     },
     {
         name: "invoice",
-        path: "fakturacni-udaje",
+        path: "/fakturacni-udaje",
         component: AddInvoice
     },
     {
@@ -132,7 +129,8 @@ export const routes = [
         path: "/administrator",
         component: admin,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            requiredInvoice: true
         },
         children: [
             {

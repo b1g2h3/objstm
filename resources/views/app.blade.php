@@ -15,7 +15,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-900 font-sans leading-normal tracking-normal ">
+<body class="font-sans leading-normal tracking-normal bg-davygrayn">
 <div id="app">
 </div>
 <div>
