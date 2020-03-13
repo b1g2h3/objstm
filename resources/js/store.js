@@ -18,6 +18,7 @@ export const store = new Vuex.Store({
         category: [],
         orderItems: [],
         products: [],
+        theme: "theme-light",
         navbarlinks: [
             { name: "Domů", route: "home" },
             { name: "Zboží", route: "zbozi" },
@@ -28,8 +29,7 @@ export const store = new Vuex.Store({
         loogedInlinks: [
             { name: "Zboží", route: "zbozi" },
             { name: "Ke stažení", route: "kestazeni" },
-            { name: "Kontakt", route: "kontakt" },
-            { name: "Odhlásit", route: "logout" }
+            { name: "Kontakt", route: "kontakt" }
         ],
         sidebarlinks: [
             // { name: "Zboží", route: "zbozi" },
@@ -40,6 +40,12 @@ export const store = new Vuex.Store({
         ]
     },
     getters: {
+        theme(state) {
+            return state.theme;
+        },
+        loggedIn(state) {
+            return state.token !== null;
+        },
         loggedIn(state) {
             return state.token !== null;
         },
@@ -78,6 +84,9 @@ export const store = new Vuex.Store({
         }
     },
     mutations: {
+        getTheme(state, theme) {
+            state.theme = theme;
+        },
         retrieveOrders(state, orders) {
             state.orders = orders;
         },

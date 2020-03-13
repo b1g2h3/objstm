@@ -1920,6 +1920,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1930,10 +1932,13 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     loggedIn: function loggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    theme: function theme() {
+      return this.$store.getters.theme;
     }
   },
   created: function created() {
-    this.loggedIn ? this.$store.dispatch("getUser") : "";
+    this.loggedIn ? this.$store.dispatch('getUser') : '';
   }
 });
 
@@ -1990,10 +1995,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -2117,8 +2118,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -2455,6 +2454,27 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3191,6 +3211,73 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AddInvoice",
   data: function data() {
@@ -3526,25 +3613,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      book: {}
-    };
-  },
-  methods: {
-    addBook: function addBook() {
-      var _this = this;
-
-      this.axios.post("http://localhost:8000/api/book/add", this.book).then(function (response) {
-        return _this.$router.push({
-          name: "home"
-        });
-      } //   console.log(response.data)
-      )["catch"](function (error) {
-        return console.log(error);
-      })["finally"](function () {
-        return _this.loading = false;
-      });
+  name: 'Domu',
+  computed: {
+    theme: function theme() {
+      return this.$store.getters.theme;
     }
   }
 });
@@ -4932,8 +5004,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "navbar",
+  name: 'navbar',
+  data: function data() {
+    return {
+      theme: 'theme-light'
+    };
+  },
+  created: function created() {
+    this.theme = localStorage.getItem('theme');
+    this.$store.commit('getTheme', this.theme);
+  },
   computed: {
     links: function links() {
       return this.$store.state.navbarlinks;
@@ -4943,6 +5039,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     loggedIn: function loggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    user: function user() {
+      return this.$store.getters.user;
+    }
+  },
+  methods: {
+    toggleTheme: function toggleTheme() {
+      this.theme = this.theme == 'theme-light' ? 'theme-dark' : 'theme-light';
+      localStorage.setItem('theme', this.theme);
+      this.$store.commit('getTheme', this.theme);
     }
   }
 });
@@ -4985,7 +5091,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "sidebar",
+  name: 'sidebar',
   props: {
     user: {
       invoice: false
@@ -4997,6 +5103,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     loggedIn: function loggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    theme: function theme() {
+      return this.$store.getters.theme;
     }
   }
 });
@@ -40406,10 +40515,19 @@ var render = function() {
       _c("sidebar"),
       _vm._v(" "),
       _c(
-        "main",
-        { staticClass: "container bg-davygrayn mx-auto" },
-        [_c("router-view")],
-        1
+        "div",
+        {
+          staticClass: "w-full h-full content-wrapper bg-darkergreen",
+          class: _vm.theme
+        },
+        [
+          _c(
+            "main",
+            { staticClass: "container mx-auto" },
+            [_c("router-view")],
+            1
+          )
+        ]
       )
     ],
     1
@@ -40541,7 +40659,9 @@ var render = function() {
     _c("div", { staticClass: "flex flex-wrap" }, [
       _c("div", { staticClass: "w-full" }, [
         _c("div", { staticClass: "table" }, [
-          _vm._v("\n        " + _vm._s(_vm.allOrders) + "\n      ")
+          _vm._v(
+            "\n                " + _vm._s(_vm.allOrders) + "\n            "
+          )
         ])
       ])
     ])
@@ -41342,7 +41462,13 @@ var render = function() {
                                 staticClass:
                                   "text-xl text-white pl-2   absolute -mt-10"
                               },
-                              [_vm._v(_vm._s(category.name))]
+                              [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(category.name) +
+                                    "\n                    "
+                                )
+                              ]
                             )
                           ]
                         )
@@ -42247,7 +42373,9 @@ var render = function() {
                           }
                         ],
                         staticClass: "ares-input",
-                        class: { "border-red-500": _vm.errors.ic },
+                        class: {
+                          "border-red-500": _vm.errors.ic
+                        },
                         attrs: { id: "ic", type: "value" },
                         domProps: { value: _vm.user.ic },
                         on: {
@@ -42264,7 +42392,13 @@ var render = function() {
                         ? _c(
                             "p",
                             { staticClass: "text-red-500 text-xs italic" },
-                            [_vm._v(_vm._s(_vm.errors.ic[0]))]
+                            [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(_vm.errors.ic[0]) +
+                                  "\n                            "
+                              )
+                            ]
                           )
                         : _vm._e()
                     ])
@@ -42309,7 +42443,9 @@ var render = function() {
                           }
                         ],
                         staticClass: "ares-input",
-                        class: { "border-red-500": _vm.errors.ic },
+                        class: {
+                          "border-red-500": _vm.errors.ic
+                        },
                         attrs: { id: "ic", type: "text" },
                         domProps: { value: _vm.aresData.ic },
                         on: {
@@ -42326,7 +42462,13 @@ var render = function() {
                         ? _c(
                             "p",
                             { staticClass: "text-red-500 text-xs italic" },
-                            [_vm._v(_vm._s(_vm.errors.ic[0]))]
+                            [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(_vm.errors.ic[0]) +
+                                  "\n                            "
+                              )
+                            ]
                           )
                         : _vm._e()
                     ])
@@ -42354,7 +42496,9 @@ var render = function() {
                               }
                             ],
                             staticClass: "ares-input",
-                            class: { "border-red-500": _vm.errors.dic },
+                            class: {
+                              "border-red-500": _vm.errors.dic
+                            },
                             attrs: { id: "dic", type: "text" },
                             domProps: { value: _vm.aresData.dic },
                             on: {
@@ -42375,7 +42519,13 @@ var render = function() {
                             ? _c(
                                 "p",
                                 { staticClass: "text-red-500 text-xs italic" },
-                                [_vm._v(_vm._s(_vm.errors.dic[0]))]
+                                [
+                                  _vm._v(
+                                    "\n                                " +
+                                      _vm._s(_vm.errors.dic[0]) +
+                                      "\n                            "
+                                  )
+                                ]
                               )
                             : _vm._e()
                         ])
@@ -42400,7 +42550,9 @@ var render = function() {
                           }
                         ],
                         staticClass: "ares-input",
-                        class: { "border-red-500": _vm.errors.nazev },
+                        class: {
+                          "border-red-500": _vm.errors.nazev
+                        },
                         attrs: { id: "nazev", type: "text" },
                         domProps: { value: _vm.aresData.nazev },
                         on: {
@@ -42417,7 +42569,13 @@ var render = function() {
                         ? _c(
                             "p",
                             { staticClass: "text-red-500 text-xs italic" },
-                            [_vm._v(_vm._s(_vm.errors.nazev[0]))]
+                            [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(_vm.errors.nazev[0]) +
+                                  "\n                            "
+                              )
+                            ]
                           )
                         : _vm._e()
                     ])
@@ -42447,7 +42605,9 @@ var render = function() {
                             }
                           ],
                           staticClass: "ares-input",
-                          class: { "border-red-500": _vm.errors.ulice },
+                          class: {
+                            "border-red-500": _vm.errors.ulice
+                          },
                           attrs: { id: "Ulice", type: "text" },
                           domProps: { value: _vm.aresData.ulice },
                           on: {
@@ -42468,7 +42628,13 @@ var render = function() {
                           ? _c(
                               "p",
                               { staticClass: "text-red-500 text-xs italic" },
-                              [_vm._v(_vm._s(_vm.errors.ulice[0]))]
+                              [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(_vm.errors.ulice[0]) +
+                                    "\n                            "
+                                )
+                              ]
                             )
                           : _vm._e()
                       ]
@@ -42497,7 +42663,9 @@ var render = function() {
                             }
                           ],
                           staticClass: "ares-input",
-                          class: { "border-red-500": _vm.errors.mesto },
+                          class: {
+                            "border-red-500": _vm.errors.mesto
+                          },
                           attrs: { id: "mesto", type: "text" },
                           domProps: { value: _vm.aresData.mesto },
                           on: {
@@ -42518,7 +42686,13 @@ var render = function() {
                           ? _c(
                               "p",
                               { staticClass: "text-red-500 text-xs italic" },
-                              [_vm._v(_vm._s(_vm.errors.mesto[0]))]
+                              [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(_vm.errors.mesto[0]) +
+                                    "\n                            "
+                                )
+                              ]
                             )
                           : _vm._e()
                       ]
@@ -42544,7 +42718,9 @@ var render = function() {
                             }
                           ],
                           staticClass: "ares-input",
-                          class: { "border-red-500": _vm.errors.dic },
+                          class: {
+                            "border-red-500": _vm.errors.dic
+                          },
                           attrs: { id: "psc", type: "text" },
                           domProps: { value: _vm.aresData.psc },
                           on: {
@@ -42561,7 +42737,13 @@ var render = function() {
                           ? _c(
                               "p",
                               { staticClass: "text-red-500 text-xs italic" },
-                              [_vm._v(_vm._s(_vm.errors.psc[0]))]
+                              [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(_vm.errors.psc[0]) +
+                                    "\n                            "
+                                )
+                              ]
                             )
                           : _vm._e()
                       ]
@@ -42589,7 +42771,9 @@ var render = function() {
                             }
                           ],
                           staticClass: "ares-input",
-                          class: { "border-red-500": _vm.errors.stat },
+                          class: {
+                            "border-red-500": _vm.errors.stat
+                          },
                           attrs: { id: "stat", type: "text" },
                           domProps: { value: _vm.aresData.zeme },
                           on: {
@@ -42610,7 +42794,13 @@ var render = function() {
                           ? _c(
                               "p",
                               { staticClass: "text-red-500 text-xs italic" },
-                              [_vm._v(_vm._s(_vm.errors.zeme[0]))]
+                              [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(_vm.errors.zeme[0]) +
+                                    "\n                            "
+                                )
+                              ]
                             )
                           : _vm._e()
                       ]
@@ -42641,7 +42831,9 @@ var staticRenderFns = [
     return _c("div", { staticClass: "md:flex md:items-center" }, [
       _c("div", { staticClass: "md:w-2/3" }, [
         _c("button", { staticClass: "success", attrs: { type: "submit" } }, [
-          _vm._v("Zadejte IČ")
+          _vm._v(
+            "\n                                Zadejte IČ\n                            "
+          )
         ])
       ]),
       _vm._v(" "),
@@ -42655,7 +42847,9 @@ var staticRenderFns = [
     return _c("div", { staticClass: "md:flex md:items-center" }, [
       _c("div", { staticClass: "md:w-2/3 flex" }, [
         _c("button", { staticClass: "success", attrs: { type: "submit" } }, [
-          _vm._v("Potvrdit údaje")
+          _vm._v(
+            "\n                                Potvrdit údaje\n                            "
+          )
         ]),
         _vm._v(" "),
         _c(
@@ -42665,7 +42859,11 @@ var staticRenderFns = [
               "ml-2 shadow bg-red-800 hover:bg-red-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded",
             attrs: { type: "menu" }
           },
-          [_vm._v("Zrušit")]
+          [
+            _vm._v(
+              "\n                                Zrušit\n                            "
+            )
+          ]
         )
       ]),
       _vm._v(" "),
@@ -44456,7 +44654,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "text-xl font-bold font-sans px-2" }, [
-      _vm._v("\n            Kontaktí údaje\n       ")
+      _vm._v("\n        Kontaktí údaje\n    ")
     ]),
     _vm._v(" "),
     _vm.user.invoice
@@ -45305,7 +45503,8 @@ var render = function() {
     "nav",
     {
       staticClass:
-        "bg-junglegreen px-1 mt-0 h-auto w-full z-20 top-0 text-white"
+        "content-wrapper bg-junglegreen px-1 mt-0 h-auto w-full z-20 top-0 text-primary",
+      class: _vm.theme
     },
     [
       _c("div", { staticClass: "flex items-baseline container mx-auto" }, [
@@ -45313,35 +45512,56 @@ var render = function() {
           "div",
           { staticClass: "m-4 pl-3" },
           [
-            _c(
-              "router-link",
-              {
-                staticClass: "flex items-center",
-                attrs: { to: { name: "home" } }
-              },
-              [
-                _c("img", {
-                  staticClass: "w-32 h-32 ",
-                  attrs: {
-                    src: "/storage/src/bile.png",
-                    alt: "Miroslav Šotola"
-                  }
-                }),
-                _vm._v(" "),
-                _c("div", {
-                  staticClass: "border-l-4 border-white  ml-5 h-32"
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "ml-2 pl-2  text-2xl font-bold" }, [
-                  _vm._v("Šotola Miroslav")
-                ])
-              ]
-            )
+            _c("router-link", { attrs: { to: { name: "home" } } }, [
+              _c("div", { staticClass: "flex justify-center align-middle" }, [
+                _c(
+                  "svg",
+                  {
+                    staticClass:
+                      "content-wrapper w-20 h-20 stroke-current text-primary inline-block",
+                    attrs: {
+                      width: "326",
+                      height: "234",
+                      viewBox: "0 0 326 234",
+                      fill: "none",
+                      xmlns: "http://www.w3.org/2000/svg"
+                    }
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "M66.0001 227H265V126C306 126 325.143 105 316 65C306.857 25 251 4 205 41.0001L225 30.0001C225 30.0001 200 7 159 7C118 7 90.0001 41.0001 90.0001 41.0001L100 30.0001C100 30.0001 32.0001 -7.00001 11.0001 57C-9.99987 121 66.0001 126 66.0001 126V227Z",
+                        "stroke-width": "14"
+                      }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    " flex justify-center align-middle text-2xl font-bold"
+                },
+                [_vm._v("Šotola")]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    " flex justify-center align-middle text-2xl font-bold"
+                },
+                [_vm._v("Miroslav")]
+              )
+            ])
           ],
           1
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "flex md:justify-end -mb-20 " }, [
+        _c("div", { staticClass: "flex md:justify-end" }, [
           _c(
             "ul",
             {
@@ -45381,31 +45601,86 @@ var render = function() {
               staticClass:
                 "list-reset flex justify-between flex-1 md:flex-none items-center"
             },
-            _vm._l(_vm.links, function(link, index) {
-              return !_vm.loggedIn
-                ? _c(
-                    "li",
+            [
+              _vm._l(_vm.links, function(link, index) {
+                return !_vm.loggedIn
+                  ? _c(
+                      "li",
+                      {
+                        key: index,
+                        staticClass:
+                          "flex-1 md:flex-none font-bold  hover:bg-darkergreen text-center h-full"
+                      },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass:
+                              "inline-block no-underline hover:text-underline py-2 px-4",
+                            attrs: { to: { name: link.route } }
+                          },
+                          [_vm._v(" " + _vm._s(link.name))]
+                        )
+                      ],
+                      1
+                    )
+                  : _vm._e()
+              }),
+              _vm._v(" "),
+              _c(
+                "li",
+                {
+                  staticClass:
+                    "flex-1 md:flex-none font-bold bg-darkergreen   text-center h-full"
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "inline-block cursor-pointer py-2 px-4" },
+                    [_vm._v(_vm._s(_vm.user.invoice.nazev))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
                     {
-                      key: index,
-                      staticClass:
-                        "flex-1 md:flex-none font-bold  hover:bg-darkergreen text-center h-full"
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.toggleTheme($event)
+                        }
+                      }
                     },
                     [
                       _c(
-                        "router-link",
+                        "svg",
                         {
                           staticClass:
-                            "inline-block no-underline hover:text-underline py-2 px-4",
-                          attrs: { to: { name: link.route } }
+                            "content-wrapper w-10 h-10 stroke-current text-primary inline-block",
+                          attrs: {
+                            width: "345",
+                            height: "381",
+                            viewBox: "0 0 345 381",
+                            fill: "none",
+                            xmlns: "http://www.w3.org/2000/svg"
+                          }
                         },
-                        [_vm._v(" " + _vm._s(link.name))]
-                      )
-                    ],
-                    1
+                        [
+                          _c("path", {
+                            attrs: {
+                              d:
+                                "M44 279C140 451 306 308 306 308C306 308 186.008 286.159 146 209C104 128 146 31 146 31C146 31 -52 107 44 279Z",
+                              "stroke-width": "34"
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v("\n            Dark mode\n          ")
+                    ]
                   )
-                : _vm._e()
-            }),
-            0
+                ]
+              )
+            ],
+            2
           )
         ])
       ])
@@ -63907,7 +64182,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-var _state;
+var _state, _getters;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -63925,7 +64200,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     orders: [],
     order: [],
     allOrders: []
-  }, _defineProperty(_state, "categories", []), _defineProperty(_state, "category", []), _defineProperty(_state, "orderItems", []), _defineProperty(_state, "products", []), _defineProperty(_state, "navbarlinks", [{
+  }, _defineProperty(_state, "categories", []), _defineProperty(_state, "category", []), _defineProperty(_state, "orderItems", []), _defineProperty(_state, "products", []), _defineProperty(_state, "theme", "theme-light"), _defineProperty(_state, "navbarlinks", [{
     name: "Domů",
     route: "home"
   }, {
@@ -63949,9 +64224,6 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   }, {
     name: "Kontakt",
     route: "kontakt"
-  }, {
-    name: "Odhlásit",
-    route: "logout"
   }]), _defineProperty(_state, "sidebarlinks", [// { name: "Zboží", route: "zbozi" },
   {
     name: "Objednat zboží",
@@ -63966,45 +64238,42 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     name: "Administrátor",
     route: "admin"
   }]), _state),
-  getters: {
+  getters: (_getters = {
+    theme: function theme(state) {
+      return state.theme;
+    },
     loggedIn: function loggedIn(state) {
       return state.token !== null;
-    },
-    invoice: function invoice(state) {
-      return state.user.invoice !== null;
-    },
-    ordersFilter: function ordersFilter(state) {
-      return Array.isArray(state.orders) && state.orders.length;
-    },
-    orders: function orders(state) {
-      return state.orders;
-    },
-    order: function order(state) {
-      return state.order;
-    },
-    orderItems: function orderItems(state) {
-      return state.orderItems;
-    },
-    categories: function categories(state) {
-      return state.categories;
-    },
-    category: function category(state) {
-      return state.category;
-    },
-    products: function products(state) {
-      return state.products;
-    },
-    user: function user(state) {
-      return state.user;
-    },
-    allOrders: function allOrders(state) {
-      return state.allOrders;
-    },
-    allUsers: function allUsers(state) {
-      return state.allUsers;
     }
-  },
+  }, _defineProperty(_getters, "loggedIn", function loggedIn(state) {
+    return state.token !== null;
+  }), _defineProperty(_getters, "invoice", function invoice(state) {
+    return state.user.invoice !== null;
+  }), _defineProperty(_getters, "ordersFilter", function ordersFilter(state) {
+    return Array.isArray(state.orders) && state.orders.length;
+  }), _defineProperty(_getters, "orders", function orders(state) {
+    return state.orders;
+  }), _defineProperty(_getters, "order", function order(state) {
+    return state.order;
+  }), _defineProperty(_getters, "orderItems", function orderItems(state) {
+    return state.orderItems;
+  }), _defineProperty(_getters, "categories", function categories(state) {
+    return state.categories;
+  }), _defineProperty(_getters, "category", function category(state) {
+    return state.category;
+  }), _defineProperty(_getters, "products", function products(state) {
+    return state.products;
+  }), _defineProperty(_getters, "user", function user(state) {
+    return state.user;
+  }), _defineProperty(_getters, "allOrders", function allOrders(state) {
+    return state.allOrders;
+  }), _defineProperty(_getters, "allUsers", function allUsers(state) {
+    return state.allUsers;
+  }), _getters),
   mutations: {
+    getTheme: function getTheme(state, theme) {
+      state.theme = theme;
+    },
     retrieveOrders: function retrieveOrders(state, orders) {
       state.orders = orders;
     },

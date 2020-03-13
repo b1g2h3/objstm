@@ -14,11 +14,7 @@ use Illuminate\Http\Request;
 
 class OrderrController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
 
@@ -28,12 +24,6 @@ class OrderrController extends Controller
         return new UserResource($orders);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
 
@@ -64,13 +54,6 @@ class OrderrController extends Controller
         return new OrderResource($order);
     }
 
-    /** 
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function confirm( Order $order)
     {
         $user = auth()->user();
@@ -86,12 +69,6 @@ class OrderrController extends Controller
         return response()->json('true');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Order $order)
     {
         $order->delete();

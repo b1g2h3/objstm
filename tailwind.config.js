@@ -15,10 +15,11 @@ module.exports = {
         extend: {
             colors: {
                 davygrayn: "#B9BDBD",
+                primary: "var(--bg-background-primary)",
                 ivory: "#fffff0",
                 lightyellow: "#FFFBDF",
-                junglegreen: "#29A04B",
-                darkergreen: "#22833E"
+                junglegreen: "var(--bg-background-junglegreen)",
+                darkergreen: "var(--bg-background-darkergreen)"
             },
             spacing: {
                 "96": "24rem",

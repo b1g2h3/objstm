@@ -26,7 +26,7 @@
 </template>
 <script>
 export default {
-  name: "sidebar",
+  name: 'sidebar',
   props: {
     user: {
       invoice: false
@@ -38,6 +38,9 @@ export default {
     },
     loggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    theme() {
+      return this.$store.getters.theme;
     }
   }
 };

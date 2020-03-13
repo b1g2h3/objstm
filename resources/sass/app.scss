@@ -4,37 +4,52 @@
 
 @tailwind utilities;
 
+.theme-light {
+    --bg-background-primary: white;
+    --bg-background-junglegreen: black;
+    --bg-background-darkergreen: #727a6a;
+}
+
+.theme-dark {
+    --bg-background-primary: black;
+    --bg-background-junglegreen: #29a04b;
+    --bg-background-darkergreen: #22833e;
+}
+
+.content-wrapper {
+    transition: background-color 0.25s;
+}
 .ares {
     @apply .appearance-none .bg-transparent .border-none .w-full .text-gray-700 .mr-3 .py-1 .px-2 .leading-tight;
 }
 
 .sidebar {
-    @apply .flex .flex-col .text-black .font-bold;
+    @apply .flex .flex-col .text-primary .font-bold;
 }
 .sidebar .name {
-    @apply .text-center .mt-6 .mb-3 .text-xl .bg-davygrayn;
+    @apply .text-center .mt-6 .mb-3 .text-xl .bg-transparent;
 }
 .sidebar .menu {
-    @apply .flex .flex-col .border-t-4 .border-b-4 .border-junglegreen .rounded-lg .shadow-lg .p-1 .bg-junglegreen;
+    @apply .flex .flex-col .border-t-4 .text-primary .border-b-4 .border-junglegreen .rounded-lg .shadow-lg .p-1 .bg-junglegreen;
 }
 
 .table {
-    @apply .border-t-4 .border-b-4 .border-ivory .rounded-lg .shadow-lg  .bg-ivory  .p-3 .ml-3;
+    @apply .border-t-4 .border-b-4 .border-primary .rounded-lg .shadow-lg  .bg-primary .text-junglegreen  .p-3 .ml-3;
 }
 .link {
-    @apply .text-left .text-ivory .bg-junglegreen .p-2 .cursor-pointer;
+    @apply .text-left .text-primary .bg-junglegreen .p-2 .cursor-pointer;
 }
 .link:hover {
     @apply .text-gray-200 .bg-darkergreen .font-bold;
 }
 .success {
-    @apply .mt-3 .bg-junglegreen .text-white .font-semibold .py-2 .px-4 .border .border-junglegreen .rounded .ml-10 .w-auto;
+    @apply .mt-3 .bg-junglegreen .text-primary .font-semibold .py-2 .px-4 .border .border-junglegreen .rounded .ml-10 .w-auto;
 }
 .success:hover {
     @apply .bg-darkergreen;
 }
 h3 {
-    @apply .font-bold .text-black .pl-2 .text-xl;
+    @apply .font-bold .text-primary .pl-2 .text-xl;
 }
 .header {
     @apply .mt-3 .p-3;
@@ -74,7 +89,7 @@ html {
 }
 
 .btn-blue {
-    @apply .bg-blue-500 .text-white .font-bold;
+    @apply .bg-blue-500 .text-primary .font-bold;
 }
 .btn-blue:hover {
     @apply .bg-blue-700;

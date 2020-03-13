@@ -40,21 +40,10 @@
 
 <script>
 export default {
-  data() {
-    return {
-      book: {}
-    };
-  },
-  methods: {
-    addBook() {
-      this.axios
-        .post("http://localhost:8000/api/book/add", this.book)
-        .then(
-          response => this.$router.push({ name: "home" })
-          //   console.log(response.data)
-        )
-        .catch(error => console.log(error))
-        .finally(() => (this.loading = false));
+  name: 'Domu',
+  computed: {
+    theme() {
+      return this.$store.getters.theme;
     }
   }
 };
