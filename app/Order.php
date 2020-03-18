@@ -16,8 +16,8 @@ class Order extends Model
     public function getstatusAttribute($attribute)
     {
         return [
-            0 => 'Rozpracovaná',
-            1 => 'Potvrzena',
+            0 => 'rozpracovaná',
+            1 => 'potvrzena',
         ][$attribute];
     }
 

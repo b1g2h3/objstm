@@ -1,36 +1,41 @@
 <template>
     <div class="flex">
-        <div class="h-screen bg-blue-800 text-white">
-            <div class="text-center p-2 text-2xl">Objednávkový systém</div>
+           <aside class="sidebar">
+            <div class="name">Objednávkový systém</div>
+            <div class="menu">
             <input
-                class="appearance-none text-black block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+                class="pt-2 appearance-none text-black block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
                 type="text"
                 v-model="search"
                 placeholder="Vyhledejte zboží"
             />
-            <div class="text-center cursor-pointer" v-on:click="allProduct">
+             <div
+                class="link"
+                v-on:click="allProduct"
+            >
                 Všechny produkty
             </div>
             <div v-for="category in categories" v-bind:key="category.id">
                 <div
-                    class="text-center pt-2 cursor-pointer"
+                    class="link"
                     v-on:click="value(category.id, category.name)"
                 >
                     {{ category.name }}
                 </div>
             </div>
-        </div>
+            </div>
+        </aside>
         <div>
             <div
-                class="bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-5"
+                class="mt-3 p-3"
             >
-                <h3 class="font-bold pl-2">
+                <h3>
                     {{ all ? "Všechny produkty" : categoryName }}
                 </h3>
             </div>
             <div
                 v-if="orders"
-                class="bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3 mt-4"
+                class="bg-ivory border-t-4 border-b-4 border-ivory rounded-lg shadow-lg  ml-3"
             >
                 {{ orders.length }}
                 <div class="flex flex-col p-10">
@@ -49,15 +54,15 @@
                     </div>
                 </div>
             </div>
-            <form @submit.prevent="addOrder">
+            <form @submit.prevent="editOrder">
                 <button
-                    class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded ml-10 t-2"
+                    class="success mb-3"
                     type="submit"
                 >
-                    Potvrdit
+                    Upravit objednávku
                 </button>
                 <div
-                    class="bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3 mt-4"
+                    class="table"
                 >
                     <div class="flex flex-wrap">
                         <table class="table-fixed">
@@ -124,13 +129,11 @@ export default {
     },
     data() {
         return {
-            products: [],
             orders: {
                 order: null
             },
             search: "",
             val: 1,
-            categories: [],
             all: true,
             data: {},
             categoryName: "",
@@ -159,16 +162,25 @@ export default {
                     .toLowerCase()
                     .includes(this.search.toLowerCase());
             });
+        },
+        user() {
+            return this.$store.getters.user;
+        },
+        categories() {
+      return this.$store.getters.categories;
+        },
+        products() {
+        return this.$store.getters.products;
         }
     },
     created() {
-        this.fetchProducts();
+        this.$store.dispatch("fetchCategories");
+        this.$store.dispatch("fetchProducts");
         const order = {};
         this.products.forEach(item => {
             order[item[1]] = null;
         });
         this.orders.order = order;
-        this.fetchCategories();
         this.fetchOrderDetails();
     },
     methods: {
@@ -181,23 +193,17 @@ export default {
             this.search = "";
             this.all = false;
         },
-        fetchProducts(page_url) {
-            page_url = "/api/product";
-            fetch(page_url)
-                .then(res => res.json())
-                .then(res => {
-                    this.products = res.data;
-                })
-                .catch(error => console.log(error));
-        },
         fetchOrderDetails() {
-            fetch("/api/order/" + this.$userId + "/" + this.id, {
-                method: "POST",
-                body: JSON.stringify()
-            })
-                .then(res => res.json())
+            this.axios
+            .get(`/order/${this.id}`, {
+                    headers: {
+                        Authorization:
+                            "Bearer " + localStorage.getItem("access_token")
+                    }
+                })
                 .then(res => {
-                    this.ordeDetail = res.data["1"]["0"];
+                    this.ordeDetail = res.data.data;
+                    console.log(this.ordeDetail)
                     this.addDetailOrder(this.ordeDetail.amounts);
                 });
         },
@@ -208,28 +214,24 @@ export default {
                 this.$set(this.orders.order, prodId, amount); // This is the vuejs-way of setting array values
             }
         },
-        addOrder() {
+        editOrder() {
+            delete this.orders.order[undefined]
             this.axios
-                .post("/api/order/" + this.$userId, this.orders)
+                .put(`/order/${this.id}`, this.orders,
+                 {
+                    headers: {
+                        Authorization:
+                            "Bearer " + localStorage.getItem("access_token")
+                    }
+                })
                 .then(res => {
                     this.$router.push({
                         name: "ShowOrder",
-                        params: { id: res.data }
+                        params: { id: this.id }
                     });
                 })
                 .catch(error => console.log(error));
         },
-
-        fetchCategories(page_url) {
-            let vm = this;
-            page_url = page_url || "/api/categories";
-            fetch(page_url)
-                .then(res => res.json())
-                .then(res => {
-                    this.categories = res.data;
-                })
-                .catch(error => console.log(error));
-        }
     }
 };
 </script>

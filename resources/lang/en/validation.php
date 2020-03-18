@@ -96,7 +96,7 @@ return [
     'password' => ' Heslo je nesprávné.',
     'present' => ' :attribute field musí být present.',
     'regex' => ' :attribute format is invalid.',
-    'required' => ' :attribute je vyžadováno.',
+    'required' => ' :attribute je nutné vyplnit.',
     'required_if' => ' :attribute field is required when :other is :value.',
     'required_unless' => ' :attribute field is required unless :other is in :values.',
     'required_with' => ' :attribute field is required when :values is present.',

@@ -6,15 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Amount extends Model
 {
-    protected $fillable = ['product_id', 'mnozstvi'];
-
-    public function geteditAttribute($attribute)
-    {
-        return [
-            0 => False,
-            1 => True,
-        ][$attribute];
-    }
+    protected $fillable = ['product_id', 'mnozstvi', 'order_id'];
 
     public function orders()
     {

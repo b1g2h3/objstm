@@ -1,6 +1,6 @@
 <template>
   <div>
-     <div class="max-w-3xl flex   flex-wrap  lg:my-5 p-6 ">
+     <div class="max-w-3xl flex   flex-wrap p-6 ">
     
 	<!--Main Col-->
 	<div id="profile" class="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-ivory  mx-6 lg:mx-0">
@@ -134,7 +134,7 @@ export default {
     sendEmail() {
       this.errors = [];
       this.axios
-        .post("api/contact/", this.contact)
+        .post("/contact", this.contact)
         .then(res => {
           // this.$router.push({ name: "ShowOrder", params: { id: res.data } });
         })

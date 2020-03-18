@@ -1,5 +1,5 @@
 <template>
-    <div class="flex w-full">
+    <div class="flex">
         <aside v-if="!['zbozi'].includes($route.name)" class="sidebar">
             <div class="name">Kategorie</div>
             <div class="menu">
@@ -12,12 +12,12 @@
                 >
             </div>
         </aside>
-        <div v-if="['zbozi'].includes($route.name)" class="flex flex-wrap mt-5">
+        <div v-if="['zbozi'].includes($route.name)" class="container justify-center flex flex-wrap mt-5">
             <div
                 v-if="successMessage"
-                class="bg-blue-100 w-full border-t border-b border-blue-500 text-blue-700 px-4 py-3"
+                class="bg-primary w-full border-t border-b text-center border-junglegreen text-success px-4 py-3"
             >
-                <p class="font-bold">{{ successMessage }}</p>
+                <p class="font-bold ">{{ successMessage }}</p>
             </div>
             <div
                 v-for="category in categories"
@@ -33,18 +33,18 @@
                         }"
                     >
                         <div
-                            class="w-full h-full absolute bg-black opacity-25 hover:opacity-0  cursor-pointer"
+                            class="w-full h-full absolute bg-black opacity-0 hover:opacity-0  cursor-pointer"
                         ></div>
-                        <img
-                            src="https://www.mundo.cz/sites/default/files/images/srbsko/srbsko-jidlo-raznjici.jpg"
-                        />
-                        <div class="text-xl text-white pl-2   absolute -mt-10">
+                        <div class="text-xl text-junglegreen pl-2 font-bold">
                             {{ category.name }}
                         </div>
+                        <img
+                            :src="category.imagePath"
+                        />
                     </router-link>
                 </div>
-                <!-- <router-link  :to="{ name: 'editCategory', params: {id: category.id} }" class="inline-block bg-blue-600 hover:bg-blue-800 text-sm font-semibold  w-full text-white p-2 text-center">Upravit</router-link>
-            <a  @click="deleteCategory(category.id)" class="inline-block bg-red-600 hover:bg-red-800 text-sm font-semibold  w-full text-white p-2 text-center">Odstranit</a> -->
+                <router-link  :to="{ name: 'editCategory', params: {id: category.id} }" class="inline-block bg-blue-600 hover:bg-blue-800 text-sm font-semibold  w-full text-white p-2 text-center">Upravit</router-link>
+            <a  @click="deleteCategory(category.id)" class="inline-block bg-red-600 hover:bg-red-800 text-sm font-semibold  w-full text-white p-2 text-center">Odstranit</a>
             </div>
         </div>
         <transition name="component-fade" mode="out-in">
@@ -74,7 +74,7 @@ export default {
     computed: {
         categories() {
             return this.$store.getters.categories;
-        }
+        },
     },
     methods: {
         deleteCategory(id) {

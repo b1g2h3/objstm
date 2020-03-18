@@ -46,10 +46,10 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', 'nicework'),
+            'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'sql_hr'),
-            'username' => env('DB_USERNAME', 'root'),
+            'database' => env('DB_DATABASE', 'sotolamira'),
+            'username' => env('DB_USERNAME', 'admin'),
             'password' => env('DB_PASSWORD', '1seremE2,'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',

@@ -12,7 +12,7 @@ export const store = new Vuex.Store({
         user: {},
         allUsers: {},
         orders: [],
-        order: [],
+        order: { id: 0 },
         allOrders: [],
         categories: [],
         category: [],
@@ -20,26 +20,25 @@ export const store = new Vuex.Store({
         products: [],
         theme: "theme-light",
         navbarlinks: [
-            { name: "Domů", route: "home" },
             { name: "Zboží", route: "zbozi" },
-            { name: "Ke stažení", route: "kestazeni" },
             { name: "Kontakt", route: "kontakt" },
             { name: "Přihlásit", route: "login" }
         ],
         loogedInlinks: [
             { name: "Zboží", route: "zbozi" },
-            { name: "Ke stažení", route: "kestazeni" },
             { name: "Kontakt", route: "kontakt" }
         ],
         sidebarlinks: [
             // { name: "Zboží", route: "zbozi" },
-            { name: "Objednat zboží", route: "objednat" },
-            { name: "Objednávky", route: "Orders" },
-            { name: "Nastavení", route: "settings" },
-            { name: "Administrátor", route: "admin" }
+            { name: "Objednat zboží", route: "objednat", fa: "fa-plus-circle" },
+            { name: "Objednávky", route: "Orders", fa: "fa-tasks" },
+            { name: "Nastavení", route: "settings", fa: "fa-cogs" },
         ]
     },
     getters: {
+        loogedInlinks(state) {
+            return state.navbarlinks
+        },
         theme(state) {
             return state.theme;
         },
@@ -99,14 +98,12 @@ export const store = new Vuex.Store({
         addOrder(state, order) {
             state.order = order;
         },
-        confirmOrder(state, id) {
-            state.order.status = "Potvrzena";
-            const index = state.orders.findIndex(item => item.id == id);
-            state.orders.splice(index, 1, state.order);
+        confirmOrder(state, data) {
+            state.order.status = "Potvrzena"
+            state.order.description = data.description
+            const index = state.orders.findIndex(item => item.id == data.id)
+            state.orders.splice(index, 1, state.order)
         },
-        // updateOrder(state) {
-        //     state.order = null;
-        // },
         deleteOrder(state, id) {
             const index = state.orders.findIndex(item => item.id == id);
             state.orders.splice(index, 1);
@@ -315,27 +312,13 @@ export const store = new Vuex.Store({
                     console.log(error);
                 });
         },
-        addOrder(context, order) {
+        confirmOrder(context, data) {
             axios.defaults.headers.common["Authorization"] =
                 "Bearer " + context.state.token;
-
             axios
-                .post(`order`, order)
+                .post(`order/${data.id}/confirm`, data)
                 .then(response => {
-                    context.commit("addOrder", response.data.data);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        },
-        confirmOrder(context, id, description) {
-            axios.defaults.headers.common["Authorization"] =
-                "Bearer " + context.state.token;
-
-            axios
-                .post(`order/${id}/confirm`, description)
-                .then(response => {
-                    context.commit("confirmOrder", id);
+                    context.commit("confirmOrder", data);
                 })
                 .catch(error => {
                     console.log(error);

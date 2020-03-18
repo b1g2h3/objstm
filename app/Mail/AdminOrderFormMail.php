@@ -11,15 +11,17 @@ class AdminOrderFormMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public $user;
+    public $order;
+    public $url;
+
+    public function __construct($user, $order, $url)
     {
-        //
+        $this->user = $user;
+        $this->order = $order;
+        $this->url = $url;
     }
+
 
     /**
      * Build the message.
@@ -29,5 +31,10 @@ class AdminOrderFormMail extends Mailable
     public function build()
     {
         return $this->markdown('emails.order.Admin-order-form');
+
+        $this->withSwiftMessage(function ($message) {
+            $message->getHeaders()
+                    ->addTextHeader('Custom-Header', 'HeaderValue');
+        });
     }
 }

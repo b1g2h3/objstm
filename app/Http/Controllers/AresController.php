@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\Ares as AresResource;
-use App\User;
-use App\Invoice;
-use Illuminate\Http\Request;
 class AresController extends Controller
 {
  
     public function check()
     {
-        $data = request()->validate($this->rules());
+       $data = request()->validate($this->rules());
        $ares = new ARES($data['ic']);
        $aresData = $ares->getData();
        if($aresData){

@@ -2,7 +2,7 @@
   <div>
      <div>
      <div class="max-w-3xl flex   flex-wrap  lg:my-0 p-5">
-	<div id="login" class="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
+	<div id="login" class="w-full shadow-2xl bg-white mx-6 lg:mx-0">
 	
 
 		<div class="p-4 md:p-12  text-center lg:text-left">
@@ -46,7 +46,7 @@
     </div>
 
     <div class="md:flex md:items-center">
-      <div class="md:w-2/3">
+      <div class="w-full">
         <button
           class="shadow bg-blue-800 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded flex"
           type="submit" :disabled="loading"
@@ -60,7 +60,14 @@
             Přihlásit se
           </div>
           </button>
-
+          <router-link
+            :to="{ name: 'register' }"
+            class="mt-4 w-full  focus:shadow-outline focus:outline-none text-secondary font-bold flex"
+          > Zapomněli jste heslo?</router-link>
+          <router-link
+            :to="{ name: 'register' }"
+            class="mt-4 w-full  focus:shadow-outline focus:outline-none text-secondary font-bold flex"
+          > Registrovat se</router-link>
           
       </div>
     </div>
@@ -68,15 +75,6 @@
 
 		</div>
 
-	</div>
-	
-	<div class="w-full lg:w-1/5">
-		<div class=" bg-white rounded-none lg:rounded-lg shadow-2xl hidden lg:block text-center">
-           <router-link
-                  :to="{ name: 'register' }"
-                  class=" w-full  shadow bg-green-800 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded flex"
-                > Registrovat se</router-link>
-    </div>
 	</div>
 </div>
   </div>

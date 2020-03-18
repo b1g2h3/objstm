@@ -15,9 +15,12 @@ module.exports = {
         extend: {
             colors: {
                 davygrayn: "#B9BDBD",
-                primary: "var(--bg-background-primary)",
+                primary: "var(--bg-primary)",
+                secondary: "var(--bg-secondary)",
                 ivory: "#fffff0",
                 lightyellow: "#FFFBDF",
+                lightblue: "var(--bg-background-lightblue)",
+                button: "var(--bg-background-button)",
                 junglegreen: "var(--bg-background-junglegreen)",
                 darkergreen: "var(--bg-background-darkergreen)"
             },

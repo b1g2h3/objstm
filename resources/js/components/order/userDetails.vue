@@ -4,18 +4,18 @@
             Kontaktí údaje
         </div>
         <div v-if="user.invoice" class="flex p-2">
-            <div class="font-bold">
-                <div>Název: {{ user.invoice.nazev }}</div>
-                <div>Email: {{ user.email }}</div>
-                <div>Telefon: {{ user.phone }}</div>
-                <div>IC {{ user.invoice.ic }}</div>
-                <div v-if="user.invoice.dic">DIC {{ user.invoice.dic }}</div>
+            <div>
+                <div><span class="font-bold">Název:</span> <span class="text-junglegreen font-semibold">{{ user.invoice.nazev }}</span></span></div>
+                <div><span class="font-bold">Email:</span>{{ user.email }}</div>
+                <div><span class="font-bold">Telefon:</span>{{ user.phone }}</div>
+                <div><span class="font-bold">IC:</span> <span class="text-junglegreen font-semibold">{{ user.invoice.ic }}</span></div>
+                <div v-if="user.invoice.dic"><span class="font-bold">DIC:</span> <span class="text-junglegreen font-semibold">{{ user.invoice.dic }}</span></div>
             </div>
-            <div class="pl-2 font-bold">
-                <div>Ulice: {{ user.invoice.ulice }}</div>
-                <div>Město: {{ user.invoice.mesto }}</div>
-                <div>PSČ: {{ user.invoice.psc }}</div>
-                <div>Země: {{ user.invoice.zeme }}</div>
+            <div class="pl-2">
+                <div><span class="font-bold">Ulice:</span> {{ user.invoice.ulice }}</div>
+                <div><span class="font-bold">Město:</span> {{ user.invoice.mesto }}</div>
+                <div><span class="font-bold">PSČ:</span> {{ user.invoice.psc }}</div>
+                <div><span class="font-bold">Země:</span> {{ user.invoice.zeme }}</div>
             </div>
         </div>
     </div>

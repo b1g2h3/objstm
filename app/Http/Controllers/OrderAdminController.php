@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Order;
-use App\User;
 use App\Amount;
-use App\Http\Resources\User as UserResource;
 use App\Http\Resources\Order as OrderResource;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderFormMail;
-use App\Mail\AdminOrderFor ;
 use Illuminate\Http\Request;
 
 class OrderAdminController extends Controller

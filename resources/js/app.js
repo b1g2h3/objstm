@@ -8,7 +8,14 @@ import axios from "axios";
 import CxltToastr from "cxlt-vue2-toastr";
 import { routes } from "./routes";
 import { store } from "./store";
+import moment from 'moment';
+import VueCollapse from 'vue2-collapse'
 
+Vue.filter('formatDate', function(value) {
+    if (value) {
+        return moment(String(value)).format('DD.MM')
+    }
+});
 const toastrConfigs = {
     position: "top right",
     showDuration: 2000,
@@ -20,6 +27,7 @@ Vue.config.productionTip = false;
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 Vue.use(CxltToastr, toastrConfigs);
+Vue.use(VueCollapse)
 
 const router = new VueRouter({
     mode: "history",

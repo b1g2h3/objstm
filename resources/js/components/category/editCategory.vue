@@ -1,15 +1,15 @@
 <template>
     <div>
         <div
-            class="bg-blue-800 p-2 shadow text-xl text-white border-l-8 border-green-600 shadow-lg p-3"
+            class="header"
         >
-            <h3 class="font-bold pl-2">Upravit kategorii</h3>
+            <h3>Upravit kategorii</h3>
         </div>
 
         <div class="flex flex-wrap">
             <div class="w-full">
                 <div
-                    class="bg-green-100 border-t-4 border-b-4 border-green-600 rounded-lg shadow-lg m-1 ml-3"
+                    class="table"
                 >
                     <form
                         @submit.prevent="editCategory"
@@ -19,12 +19,12 @@
                         <div class="flex flex-wrap -mx-3 mb-6">
                             <div class="w-full px-3">
                                 <label
-                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                    class="ares-label"
                                     for="name"
                                     >Název kategorie</label
                                 >
                                 <input
-                                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    class="ares-input"
                                     id="name"
                                     type="text"
                                     v-bind:class="{
@@ -46,12 +46,7 @@
                                 <label class="ares-label" for="name"
                                     >Obrázek kategorie</label
                                 >
-                                <input
-                                    type="file"
-                                    id="file"
-                                    ref="file"
-                                    v-on:change="onChangeFileUpload()"
-                                />
+                                 <input type="file" v-on:change="onImageChange" class="form-control">
                                 <p
                                     v-if="errors.image"
                                     class="text-red-500 text-xs italname"
@@ -60,6 +55,9 @@
                                 </p>
                             </div>
                         </div>
+                         <div class="col-md-3" v-if="image">
+                              <img :src="image" class="img-responsive" height="70" width="90">
+                           </div>
                         <div class="md:flex md:items-center">
                             <div class="md:w-2/3">
                                 <button
@@ -67,6 +65,7 @@
                                     type="submit"
                                     :disabled="loading"
                                 >
+                                
                                     <div v-if="loading" class="loader">
                                         <div class="inner one"></div>
                                         <div class="inner two"></div>
@@ -95,7 +94,7 @@ export default {
   data() {
     return {
       loading: false,
-      imagePath: "",
+      image: "",
       errors: "",
       successMessage: ""
     };
@@ -114,33 +113,21 @@ export default {
   },
   methods: {
     editCategory() {
-      this.errors = [];
-      this.loading = true;
-      let formData = new FormData();
-      formData.append("file", this.imagePath);
-      formData.append("_method", "PUT");
-      this.axios
-        .put(
-          `category/${this.category.id}`,
-          {
-            _method: "PUT",
-            name: this.category.name,
-            imagePath: formData
-          },
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("access_token")
-            }
-          }
+     this.loading = true;
+      axios.post( '/category/'+this.id,
+       {
+         name: this.category.name,
+         image: this.image,
+         headers: {'Content-Type': 'multipart/form-data' }
+        },
         )
         .then(response => {
           this.loading = false;
-          // this.successMessage = "Úspěšně jste upravili kategorii";
-          // this.$router.push({
-          //   name: "zbozi",
-          //   params: { dataSuccessMessage: this.successMessage }
-          // });
+          this.successMessage = "Úspěšně jste upravili kategorii";
+          this.$router.push({
+            name: "zbozi",
+            params: { dataSuccessMessage: this.successMessage }
+          });
         })
         .catch(error => {
           if (error.response.status == 422) {
@@ -148,9 +135,21 @@ export default {
           }
         });
     },
-    onChangeFileUpload() {
-      this.imagePath = this.$refs.file.files[0];
-    }
+    onImageChange(e) {
+        let files = e.target.files || e.dataTransfer.files;
+        if (!files.length)
+            return;
+            this.createImage(files[0]);
+        },
+    createImage(file) {
+        let reader = new FileReader();
+        let vm = this;
+        reader.onload = (e) => {
+            vm.image = e.target.result;
+        };
+        reader.readAsDataURL(file);
+        },
+ 
   }
 };
 </script>

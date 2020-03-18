@@ -6,7 +6,6 @@ use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Resources\Category as CategoryResource;
 use Intervention\Image\Facades\Image;
-//need to add policies
 
 class CategoryController extends Controller
 {
@@ -19,9 +18,9 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $data = request()->validate($this->rules());           
-            
-        if(request('image')){
+        $data = request()->validate($this->rules());   
+        if(request('image'))
+            {
                 $imagePath =  request('image')->store('category', 'public');
                 $image = Image::make(public_path("storage/{$imagePath}"));
                 $image->save();
@@ -45,22 +44,20 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         //need to add policies
-        dd(request());
-            // $data = request()->validate($this->rules());        
-            // if(request('image')){
-            //     $imagePath =  request('image')->store('category', 'public');
-                
-            //     $image = Image::make(public_path("storage/{$imagePath}"))->fit(1000, 1000);
-            //     $image->save();
-                
-            //     $imageArray = ['image' => $imagePath];
-            // }
+            $data = request()->validate($this->rules());        
+            if(request('image')){
+                $image = $request->get('image');
+                $imageName = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];                
+                Image::make($request->get('image'))->save(public_path('images/').$imageName)->fit(1000,1000);
+                $imagePath = "/images/".$imageName;
+                $imageArray = ['imagePath' => $imagePath];
+            }
 
-            // $category->update(array_merge(
-            //     $data, 
-            //     $imageArray ?? []
-            // ));
-            // return response('success');
+            $category->update(array_merge(
+                $data, 
+                $imageArray ?? []
+            ));
+            return response('success');
     }
 
     public function destroy(Category $category)
@@ -73,7 +70,7 @@ class CategoryController extends Controller
     {
         return [
             'name' => 'required',
-            'image' => 'max:1000000',
+            'image' => 'max:10000000000',
         ];
     }
 

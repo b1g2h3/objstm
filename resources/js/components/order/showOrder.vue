@@ -3,7 +3,7 @@
         <div
             class="header"
         >
-            <h3>Objednávka č. {{ order.id }}</h3>
+            <h3>Objednávka č. <span class="text-junglegreen">{{ order.id }}</span></h3>
         </div>
 
         <div class="flex flex-wrap">
@@ -33,7 +33,7 @@
                                     class="no-resize appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 h-24 resize-none"
                                     id="message"
                                     placeholder="Místo pro vaši poznámku?"
-                                    v-model="description.desc"
+                                    v-model="description"
                                 ></textarea>
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                                 class="bg-transparent hover:bg-green-700 text-black font-semibold hover:text-white py-2 px-4 border border-green-700 hover:border-transparent rounded"
                                 v-on:click="confirmOrder"
                             >
-                                Potvrdit Objednávku
+                                Potvrdit objednávku
                             </button>
                             <button
                                 class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
@@ -63,7 +63,7 @@
                             Objednávka je {{ order.status }}
                         </div>
                         <div v-if="order.description">
-                            Vaše poznámka: {{ order.description }}
+                            <span class="font-bold">Vaše poznámka:</span> {{ order.description }}
                         </div>
                     </div>
                 </div>
@@ -87,9 +87,7 @@ export default {
   data() {
     return {
       loading: false,
-      description: {
-        desc: ""
-      },
+      description: null,
       successMessage: ""
     };
   },
@@ -110,7 +108,8 @@ export default {
   },
   methods: {
     confirmOrder() {
-      this.$store.dispatch("confirmOrder", this.id, this.description);
+      let data = {"id": this.id, "description": this.description}
+      this.$store.dispatch("confirmOrder", data)
     },
     deleteOrder() {
       this.$store.dispatch("deleteOrder", this.id);

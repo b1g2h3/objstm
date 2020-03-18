@@ -1,11 +1,5 @@
 @component('mail::message')
-# Vaše objednávka {{$order->id}}
-
-
-
-
-{{$user->email}}
-{{$user->phone}}
+# Vaše objednávka č.{{$order->id}} bude zpracována.
 
 Vaše poznámka
 {{$order->description}}

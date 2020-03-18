@@ -20,17 +20,18 @@
                         <div class="font-bold pl-3">Email</div>
                         <div class="font-bold pl-3">Telefon</div>
                     </div>
-                    <div
-                        class="flex w-full text-center p-3 justify-between"
+                    <router-link 
                         v-bind:key="user.id"
                         v-for="user in allUsers"
-                    >
+                        class="flex w-full text-center pt-1 justify-between" 
+                        :to="{ name: 'user', params: {id: user.id} }"
+                        >
                         <div class="text-bold">{{ user.invoice.nazev }}</div>
                         <div class="pl-3">{{ user.invoice.ic }}</div>
                         <div class="pl-3">{{ user.invoice.dic }}</div>
                         <div class="pl-3">{{ user.email }}</div>
                         <div class="pl-3">{{ user.phone }}</div>
-                    </div>
+                    </router-link>
                 </div>
             </div>
         </div>

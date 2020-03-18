@@ -1,5 +1,5 @@
 <template>
-    <div class="w-1/2">
+    <div class="full">
         <div class="header">
             <h3>Přidat fakturačních údaje</h3>
         </div>
@@ -31,12 +31,11 @@
                             </div>
                         </div>
                         <div class="md:flex md:items-center">
-                            <div class="md:w-2/3">
+                            <div class="w-full">
                                 <button class="success" type="submit">
                                     Zadejte IČ
                                 </button>
                             </div>
-                            <div class="md:w-2/3"></div>
                         </div>
                     </form>
                 </div>
@@ -49,7 +48,7 @@
                         @submit.prevent="createInvoice"
                         class="w-full max-w-lg p-5"
                     >
-                        <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class=" flex flex-wrap -mx-3 mb-6">
                             <div class="w-full px-3">
                                 <label class="ares-label" for="ic">IČ</label>
                                 <input
@@ -198,7 +197,7 @@
                             </div>
                         </div>
                         <div class="md:flex md:items-center">
-                            <div class="md:w-2/3 flex">
+                            <div class="">
                                 <button class="success" type="submit">
                                     Potvrdit údaje
                                 </button>
@@ -209,7 +208,6 @@
                                     Zrušit
                                 </button>
                             </div>
-                            <div class="md:w-2/3"></div>
                         </div>
                     </form>
                 </div>
@@ -247,6 +245,9 @@ export default {
                         }
                     })
                     .then(res => {
+                        this.$store.dispatch('getUser');
+                    })
+                    .then(func=> {
                         this.$router.push({ name: "objednat" });
                     })
                     .catch(error => {
@@ -259,7 +260,6 @@ export default {
         createInvoice() {
             this.edit = true;
             this.addInvoice();
-            this.aresData.user_id = this.$userId;
         },
         sendData(url, data) {
             this.axios

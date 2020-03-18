@@ -15,7 +15,7 @@ class Category extends Model
 
         return '/storage/' . $image;
     }
-
+    
     public function products()
     {
         return $this->hasMany(Product::class);

@@ -58,13 +58,12 @@
               </div>
             </div>
             <div class="md:flex md:items-center">
-              <div class="md:w-2/3">
+              <div class="w-full">
                 <button
                   class="success"
                   type="submit"
                 >Vytvořit produkt</button>
               </div>
-              <div class="md:w-2/3"></div>
             </div>
           </form>
         </div>

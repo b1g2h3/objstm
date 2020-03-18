@@ -35,15 +35,16 @@
             </div>
             <div
                 v-if="orders"
-                class="bg-ivory border-t-4 border-b-4 border-ivory rounded-lg shadow-lg  ml-3"
+                class="bg-ivory border-t-2 border-b-4 border-ivory rounded-lg shadow-lg  ml-3"
             >
-                <div class="flex flex-col p-4">
-                      <div class="flex  font-bold text-center">
-                          <div class="w-3/6 h-12 text-left pl-2">Název produktu</div>
-                          <div class="w-2/6 h-12 ">Balení</div>
+                <div class="flex flex-col p-2">
+                    <h4 class="text-xl font-semibold cursor-pointer text-junglegreen" v-on:click="collapsed = !collapsed">Zvolené produkty</h4>
+                      <div v-show="!collapsed" class="flex  font-bold text-center">
+                          <div class="w-3/6 h-6 text-left pl-2">Název produktu</div>
+                          <div class="w-2/6 h-6 ">Balení</div>
                           <div class="w-2/6 h-6 ">Množství</div>
                       </div>
-                    <div v-for="product in products" v-bind:key="product.id">
+                    <div v-show="!collapsed" v-for="product in products" v-bind:key="product.id">
                         <div v-for="(value, index) in orders.order" v-bind:key=(index)>
                             <div
                                 v-if="index == product.id"
@@ -80,7 +81,7 @@
                             </thead>
                             <tbody>
                                 <tr
-                                    v-for="product in filteredList"
+                                    v-for="(product, index) in filteredList"
                                     v-bind:key="product.id"
                                     v-if="product.category_id == val && !all"
                                 >
@@ -90,8 +91,9 @@
                                     <td class="border px-4 py-2">
                                         {{ product.hmotnost }}
                                     </td>
-                                    <td class="border px-4 py-2">
+                                    <td class="border excel px-4 py-2">
                                         <input
+                                            :id="index"
                                             class="w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                             type="text"
                                             v-model="orders.order[product.id]"
@@ -108,6 +110,7 @@
                                     </td>
                                     <td class="border px-4 py-2">
                                         <input
+                                            :id="index"
                                             class="w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                             type="text"
                                             v-model="orders.order[product.id]"
@@ -120,6 +123,7 @@
                     </div>
                 </div>
             </form>
+            
         </div>
     </div>
 </template>
@@ -129,6 +133,7 @@ export default {
   name: "AddOrder",
   data() {
     return {
+        collapsed: false,
       orders: {
         order: null
       },
@@ -136,7 +141,7 @@ export default {
       val: "",
       all: true,
       data: {},
-      categoryName: ""
+      categoryName: "",
     };
   },
   computed: {
@@ -184,11 +189,25 @@ export default {
       this.all = false;
     },
     addOrder() {
-      this.$store.dispatch("addOrder", this.orders);
-      this.$router.push({
-        name: "ShowOrder",
-        params: { id: this.$store.getters.order.id }
-      });
+        delete this.orders.order[undefined];
+        this.axios
+            .post(`order`, this.orders,
+            {
+                headers: {
+                    Authorization:
+                    "Bearer " + localStorage.getItem("access_token")
+                }
+            })
+            .then(res => {
+                this.$router.push({
+                name: "ShowOrder",
+                params: { id: res.data.data.id }
+                 });
+                this.$store.commit("addOrder", res.data.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
   }
 };

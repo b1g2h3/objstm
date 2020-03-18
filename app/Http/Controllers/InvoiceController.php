@@ -1,10 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use DB;
+
 use App\Invoice;
-use App\User;
-use Illuminate\Http\Request;
 use App\Http\Resources\User as UserResource;
 
 class InvoiceController extends Controller
@@ -14,12 +12,6 @@ class InvoiceController extends Controller
         $user =auth()->user()->load('invoice');
         return new UserResource($user);
     }
-
-    public function index()
-    {
-        //
-    }
-
 
     public function store()
     {

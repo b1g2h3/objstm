@@ -11,7 +11,7 @@
     },
     "devDependencies": {
         "axios": "^0.19",
-        "bootstrap": "^4.0.0",
+        "bootstrap": "^4.4.1",
         "cross-env": "^7.0",
         "jquery": "^3.2",
         "laravel-mix": "^5.0.1",
@@ -22,14 +22,20 @@
         "sass": "^1.20.1",
         "sass-loader": "7.*",
         "vue": "^2.5.17",
-        "vue-template-compiler": "^2.6.10"
+        "vue-template-compiler": "^2.6.10",
+        "vue2-collapse": "^1.0.15"
     },
     "dependencies": {
         "cxlt-vue2-toastr": "^1.1.1",
+        "loglevel": "^1.6.6",
+        "moment": "^2.24.0",
         "tailwindcss": "^1.2.0",
+        "vendors": "^1.0.4",
         "vue-axios": "^2.1.5",
+        "vue-clickaway": "^2.2.2",
         "vue-global-var": "^1.0.0",
         "vue-router": "^3.1.5",
-        "webpack": "^4.41.6"
+        "webpack": "^4.41.6",
+        "yarn": "^1.22.4"
     }
 }

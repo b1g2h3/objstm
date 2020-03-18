@@ -15,6 +15,7 @@ Route::middleware('auth:api')->group(function() {
     //Admin
     Route::get('allorders', 'OrderAdminController@index');
     Route::get('allusers', 'UserController@index');
+    Route::get('userprofile/{id}', 'UserController@show');
     //Ares
     Route::post('ares', 'AresController@check');
     //Invoice
@@ -24,12 +25,12 @@ Route::middleware('auth:api')->group(function() {
     Route::post('product', 'ProductController@store');
     //Category
     Route::post('category', 'CategoryController@store');
-    Route::put('category/{category}', 'CategoryController@update');
     Route::delete('category/{category}', 'CategoryController@destroy');
     //Orders
     Route::get('orders', 'OrderrController@index');
     Route::get('order/{order}', 'OrderrController@show');
     Route::post('order', 'OrderrController@store');
+    Route::put('order/{order}', 'OrderrController@update');
     Route::post('order/{order}/confirm', 'OrderrController@confirm');
     Route::delete('order/{order}', 'OrderrController@destroy');
     //Amount
@@ -37,6 +38,8 @@ Route::middleware('auth:api')->group(function() {
     Route::delete('amount/{amount}', 'AmountController@destroy');
 });
 
+
+Route::post('category/{category}', 'CategoryController@update');
 Route::post('/login', 'AuthController@login');
 Route::post('/register', 'AuthController@register');
 Route::post('contact', 'ContactController@store');
@@ -50,17 +53,4 @@ Route::get('category/{category}', 'CategoryController@show');
 Route::get('products', 'ProductController@index');
 
 
-
-
-
-//Orders
-// Route::post('order', 'OrderrController@store');
-// Route::post('order/{order}', 'AmountController@update');
-// Route::post('order/{order}/confirm', 'OrderrController@confirm');
-// Route::post('order/{order}', 'OrderrController@show');
-// Route::delete('order/{order}', 'OrderrController@destroy');
-// Route::put('amount/{amount}', 'AmountController@update');
-// Route::delete('amount/{amount}', 'AmountController@destroy');
-
-//ContactForm
 

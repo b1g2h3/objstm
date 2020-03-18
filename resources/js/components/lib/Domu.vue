@@ -3,7 +3,7 @@
     <div class="row d-flex">
 
       <div class="col-lg-12">
-        <h1 class="pl-3 my-4">Úvod</h1>
+        <h1 class="pl-3 pt-3">Úvod</h1>
       </div>
 
 

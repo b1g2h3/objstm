@@ -1,12 +1,23 @@
 <template>
-    <table class="table-fixed">
+     <div>
+        <div
+            class="header"
+        >
+            <h3>Objednávka č. <span class="text-junglegreen">{{ order.id }}</span> je {{ order.status }}</h3>
+        </div>
+
+        <div class="flex flex-wrap">
+            <div class="w-full">
+                <div
+                    class="table mt-3"
+                >
+                <table class="table-fixed">
                     <thead>
                         <tr>
                             <th class="px-4 py-2">Produkt</th>
                             <th class="px-4 py-2">Hmotnost</th>
                             <th class="px-4 py-2">Množství</th>
                             <th
-                                v-if="order.status == 'Rozpracovaná'"
                                 class="px-4 py-2"
                             >
                                 Možnosti
@@ -46,7 +57,6 @@
                                 />
                             </td>
                             <td
-                                v-if="order.status == 'Rozpracovaná'"
                                 class="border px-4 py-2 flex justify-between"
                             >
                                 <button
@@ -88,42 +98,96 @@
                         </tr>
                     </tbody>
                 </table>
+                </div>
+                <div
+                    class="table mt-3"
+                >
+                    <div>
+                        <div class="flex flex-wrap">
+                            <div class="w-full px-3">
+                                <label
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 pt-2"
+                                    for="message"
+                                    >Podrobnosti</label
+                                >
+                                <textarea
+                                    class="no-resize appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 h-24 resize-none"
+                                    id="message"
+                                    placeholder="Místo pro poznámku?"
+                                    v-model="description"
+                                ></textarea>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <button
+                                class="bg-transparent hover:bg-green-700 text-black font-semibold hover:text-white py-2 px-4 border border-green-700 hover:border-transparent rounded"
+                                v-on:click="confirmOrder"
+                            >
+                                Potvrdit objednávku
+                            </button>
+                            <button
+                                class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                                v-on:click="editOrder"
+                            >
+                                Upravit objednávku
+                            </button>
+                            <button
+                                class="bg-transparent hover:bg-red-700 text-black font-semibold hover:text-white py-2 px-4 border border-red-700 hover:border-transparent rounded"
+                                v-on:click="deleteOrder"
+                            >
+                                Zrušit objednávku
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <div v-if="order.description">
+                            <span class="font-bold">Vaše poznámka:</span> {{ order.description }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
-  name: "orderTable",
-  data() {
-    return {
-      description: {
-        desc: ""
-      },
-      mnozstvi: "",
-      amounts: {}
-    };
-  },
-  computed: {
-    order() {
-      return this.$store.getters.order;
-    }
-  },
-  methods: {
-    _updateProduct: function($event, amount) {
-      let product = parseInt($event.target.value);
-      this.amounts[amount.pivot.amount_id] = product;
+    name: "showOrderAdmin",
+    props: {
+        idc: ""
     },
-    deleteOrderItem(id) {
-      this.$store.dispatch("deleteOrderItem", id);
+    data() {
+        return {
+            loading: false,
+            order: null,
+        };
     },
-    editProduct(amount, cond) {
-      amount.edit = cond;
-      this.amounts[amount.pivot.amount_id] === undefined
-        ? ""
-        : this.updateProduct(this.amounts[amount.pivot.amount_id], amount);
+    created() {
+        this.fetchOrder();
     },
-    updateProduct(value, amount) {
-      amount.mnozstvi = value;
-      this.$store.dispatch("updateOrderItem", amount);
+    methods: {
+        fetchOrder(){
+            this.axios
+            .get(`order/${this.idc}`,
+            {
+                headers: {
+                    Authorization:
+                    "Bearer " + localStorage.getItem("access_token")
+                }
+            })
+            .then(res => {
+                this.order =res.data.data
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        }
+    },
+    watch: {
+    $route(to, from) {
+      if (from.params.idc !== to.params.idc) {
+        this.fetchOrder();
+      }
     }
   }
 };

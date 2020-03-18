@@ -14,12 +14,10 @@ class CreateAmountsTable extends Migration
     public function up()
     {
         Schema::create('amounts', function (Blueprint $table) {
-
-            $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
             $table->unsignedInteger('product_id');
             $table->string('mnozstvi');
-            $table->boolean('edit');
+            $table->boolean('edit')->default(0);
             $table->timestamps();
         });
 

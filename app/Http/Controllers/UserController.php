@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\User;
 use App\Http\Resources\User as UserResource;
-use Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Foundation\Exceptions\Handler;
 
 class UserController extends Controller
 {
@@ -17,6 +14,15 @@ class UserController extends Controller
          $users->load('invoice');
          return UserResource::collection($users);
     }
+    
+    public function show($id) 
+    {
+        $user = User::find($id);
+        $user->load('orders.amounts.product', 'invoice');
+        return new UserResource($user);
+        
+    }
+
     public function changeContact()
     {
             $user =auth()->user();
@@ -30,7 +36,8 @@ class UserController extends Controller
                 $user->push();
             }
     }
-    public function changePassword() {
+    public function changePassword() 
+    {
 
         $user = auth()->user();
         $data = request()->validate($this->password());

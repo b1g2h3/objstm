@@ -1,5 +1,5 @@
 <template>
-  <div class="w-1/2">
+  <div class="w-full">
     <div
       class="header"
     >
@@ -79,14 +79,12 @@
               </div>
             </div>
             <div class="md:flex md:items-center">
-              <div class="md:w-2/3">
+              <div class="w-full">
                 <button
                   class="success"
                   type="submit"
                 >Změnit údaje</button>
               </div>
-
-              <div class="md:w-2/3"></div>
             </div>
           </form>
         </div>

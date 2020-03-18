@@ -9,7 +9,11 @@
         </div>
           <router-link v-if="orders" class="link" v-for="order in orders" v-bind:key="order.id"
             :to="{ name: 'ShowOrder', params: {id: order.id} }"
-          >č. {{order.id}} {{order.status}}</router-link>
+            :class="order.id == activeOrder.id ? 'font-bold text-junglegreen font-base' : ''"
+          >č. {{order.id}} 
+            <i :class="order.status == 'Rozpracovaná' ? 'fa-pen' : 'fa-check'" class="fas"></i>
+              {{order.created_at | formatDate }}
+          </router-link>
         </div>
       </aside>
       <transition name="component-fade" mode="out-in">
@@ -31,7 +35,10 @@ export default {
     },
     ordersFilter() {
       return this.$store.getters.ordersFilter;
-    }
+    },
+    activeOrder() {
+      return this.$store.getters.order;
+    },
   }
 };
 </script>

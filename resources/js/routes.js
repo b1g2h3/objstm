@@ -20,10 +20,11 @@ import KeStazeni from "./components/lib/kestazeni";
 import Kontakt from "./components/contact/sendEmail";
 import admin from "./components/admin/admin";
 import showUsers from "./components/admin/user/showUsers";
+import userProfile from "./components/admin/user/userProfile";
 import showAllOrders from "./components/admin/order/showAllOrders";
+import showOrder from "./components/admin/order/showOrder";
 
-export const routes = [
-    {
+export const routes = [{
         name: "home",
         path: "/",
         component: Domu
@@ -33,14 +34,12 @@ export const routes = [
         path: "/zbozi",
         component: AllCategories,
         props: true,
-        children: [
-            {
-                name: "category_show",
-                path: ":id",
-                component: ShowCategory,
-                props: true
-            }
-        ]
+        children: [{
+            name: "category_show",
+            path: ":id",
+            component: ShowCategory,
+            props: true
+        }]
     },
     {
         name: "kontakt",
@@ -83,20 +82,22 @@ export const routes = [
             requiresAuth: true,
             requiredInvoice: true
         },
-        children: [
-            {
-                name: "ShowOrder",
-                path: ":id",
-                component: ShowOrder,
-                props: true
-            },
-            {
-                name: "EditOrder",
-                path: ":id/upravit",
-                component: EditOrder,
-                props: true
-            }
-        ]
+        children: [{
+            name: "ShowOrder",
+            path: ":id",
+            component: ShowOrder,
+            props: true
+        }]
+    },
+    {
+        name: "EditOrder",
+        path: "/objednavka/:id/upravit",
+        component: EditOrder,
+        props: true,
+        meta: {
+            requiresAuth: true,
+            requiredInvoice: true
+        },
     },
     {
         name: "settings",
@@ -106,8 +107,7 @@ export const routes = [
             requiresAuth: true,
             requiredInvoice: true
         },
-        children: [
-            {
+        children: [{
                 name: "ChangePassword",
                 path: "zmenit-heslo",
                 component: ChangePassword
@@ -126,14 +126,13 @@ export const routes = [
     },
     {
         name: "admin",
-        path: "/administrator",
+        path: "/upravy",
         component: admin,
         meta: {
             requiresAuth: true,
             requiredInvoice: true
         },
-        children: [
-            {
+        children: [{
                 name: "createCategory",
                 path: "vytvorit-kategorii",
                 component: createCategory
@@ -149,16 +148,28 @@ export const routes = [
                 path: "vytvorit-produkt",
                 component: createProduct
             },
-            {
-                name: "showAllOrders",
-                path: "prehled-objednavek",
-                component: showAllOrders
-            },
-            {
-                name: "showUsers",
-                path: "prehled-zakazniku",
-                component: showUsers
-            }
-        ]
+        ],
+    },
+    {
+        name: "showAllOrders",
+        path: "/prehled-objednavek",
+        component: showAllOrders,
+    },
+    {
+        name: "user",
+        path: "/uzivatel/:id",
+        component: userProfile,
+        props: true,
+        children: [{
+            name: "showOrder",
+            path: "objednavka/:idc",
+            component: showOrder,
+            props: true
+        }]
+    },
+    {
+        name: "showUsers",
+        path: "/prehled-zakazniku",
+        component: showUsers
     }
 ];
