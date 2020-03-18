@@ -11,7 +11,7 @@
             :to="{ name: 'ShowOrder', params: {id: order.id} }"
             :class="order.id == activeOrder.id ? 'font-bold text-junglegreen font-base' : ''"
           >č. {{order.id}} 
-            <i :class="order.status == 'Rozpracovaná' ? 'fa-pen' : 'fa-check'" class="fas"></i>
+            <i :class="order.status == 'rozpracovaná' ? 'fa-pen' : 'fa-check'" class="fas"></i>
               {{order.created_at | formatDate }}
           </router-link>
         </div>

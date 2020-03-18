@@ -6,7 +6,7 @@
                             <th class="px-4 py-2">Hmotnost</th>
                             <th class="px-4 py-2">Množství</th>
                             <th
-                                v-if="order.status == 'Rozpracovaná'"
+                                v-if="order.status == 'rozpracovaná'"
                                 class="px-4 py-2"
                             >
                                 Možnosti
@@ -46,7 +46,7 @@
                                 />
                             </td>
                             <td
-                                v-if="order.status == 'Rozpracovaná'"
+                                v-if="order.status == 'rozpracovaná'"
                                 class="border px-4 py-2 flex justify-between"
                             >
                                 <button

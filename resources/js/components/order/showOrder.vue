@@ -21,7 +21,7 @@
                 <div
                     class="table mt-3"
                 >
-                    <div v-if="order.status == 'Rozpracovaná'">
+                    <div v-if="order.status == 'rozpracovaná'">
                         <div class="flex flex-wrap">
                             <div class="w-full px-3">
                                 <label

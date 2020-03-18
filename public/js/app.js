@@ -62456,7 +62456,7 @@ var render = function() {
         _c("div", { staticClass: "table mt-3" }, [_c("tableOrderList")], 1),
         _vm._v(" "),
         _c("div", { staticClass: "table mt-3" }, [
-          _vm.order.status == "Rozpracovaná"
+          _vm.order.status == "rozpracovaná"
             ? _c("div", [
                 _c("div", { staticClass: "flex flex-wrap" }, [
                   _c("div", { staticClass: "w-full px-3" }, [
@@ -62979,7 +62979,7 @@ var render = function() {
                         _c("i", {
                           staticClass: "fas",
                           class:
-                            order.status == "Rozpracovaná"
+                            order.status == "rozpracovaná"
                               ? "fa-pen"
                               : "fa-check"
                         }),
@@ -63039,7 +63039,7 @@ var render = function() {
         _vm._v(" "),
         _c("th", { staticClass: "px-4 py-2" }, [_vm._v("Množství")]),
         _vm._v(" "),
-        _vm.order.status == "Rozpracovaná"
+        _vm.order.status == "rozpracovaná"
           ? _c("th", { staticClass: "px-4 py-2" }, [
               _vm._v(
                 "\n                            Možnosti\n                        "
@@ -63127,7 +63127,7 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _vm.order.status == "Rozpracovaná"
+          _vm.order.status == "rozpracovaná"
             ? _c(
                 "td",
                 { staticClass: "border px-4 py-2 flex justify-between" },
