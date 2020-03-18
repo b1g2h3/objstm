@@ -8,13 +8,6 @@ use Illuminate\Support\Str;
 class Category extends Model
 {
     protected $fillable = ['name', 'id', 'imagePath'];
-
-    public function categoryImage()
-    {
-        $image = ($this->imagePath) ?  $this->imagePath : 'category/58x4SYCJN6R0F5UESNBXSxjQdfE36lEPDh3uAY6D.jpeg';
-
-        return '/storage/' . $image;
-    }
     
     public function products()
     {
