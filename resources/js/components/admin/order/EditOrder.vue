@@ -1,6 +1,6 @@
 <template>
-    <div class="flex">
-        <aside class="sidebar">
+    <div class="flex ml-3">
+           <aside class="sidebar">
             <div class="name">Objednávkový systém</div>
             <div class="menu">
             <input
@@ -58,15 +58,15 @@
                     </div>
                 </div>
             </div>
-            <form @submit.prevent="addOrder">
+            <form @submit.prevent="editOrder">
                 <button
-                    class="success"
+                    class="success mb-3"
                     type="submit"
                 >
-                    Potvrdit
+                    Upravit objednávku
                 </button>
                 <div
-                    class="table mt-3"
+                    class="table"
                 >
                     <div class="flex flex-wrap">
                         <table class="table-fixed">
@@ -81,7 +81,7 @@
                             </thead>
                             <tbody>
                                 <tr
-                                    v-for="(product, index) in filteredList"
+                                    v-for="product in filteredList"
                                     v-bind:key="product.id"
                                     v-if="product.category_id == val && !all"
                                 >
@@ -91,9 +91,8 @@
                                     <td class="border px-4 py-2">
                                         {{ product.hmotnost }}
                                     </td>
-                                    <td class="border excel px-4 py-2">
+                                    <td class="border px-4 py-2">
                                         <input
-                                            :id="index"
                                             class="w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                             type="text"
                                             v-model="orders.order[product.id]"
@@ -110,7 +109,6 @@
                                     </td>
                                     <td class="border px-4 py-2">
                                         <input
-                                            :id="index"
                                             class="w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                             type="text"
                                             v-model="orders.order[product.id]"
@@ -123,92 +121,122 @@
                     </div>
                 </div>
             </form>
-            
         </div>
     </div>
 </template>
 
 <script>
 export default {
-  name: "AddOrder",
-  data() {
-    return {
-      collapsed: false,
-      orders: {
-        order: null
-      },
-      search: "",
-      val: "",
-      all: true,
-      data: {},
-      categoryName: "",
-    };
-  },
-  computed: {
-    grnItemsArr() {
-      return Object.keys(this.orders.order).reduce((acc, itemKey) => {
-        let row = [itemKey, this.order[itemKey]];
-        acc.push(row);
-        return acc;
-      }, []);
+    name: "EditOrder",
+    props: {
+        idc: "",
+        id: ""
     },
-    filteredList() {
-      return this.products.filter(product => {
-        return product.name.toLowerCase().includes(this.search.toLowerCase());
-      });
+    data() {
+        return {
+            collapsed: false,
+            orders: {
+                order: null
+            },
+            search: "",
+            val: 1,
+            all: true,
+            data: {},
+            categoryName: "",
+            ordeDetail: {}
+        };
     },
-    filterOrders() {
-      return this.products.filter(product => {
-        return product.name.toLowerCase().includes(this.search.toLowerCase());
-      });
-    },
-    categories() {
-      return this.$store.getters.categories;
-    },
-    products() {
-      return this.$store.getters.products;
-    }
-  },
-  created() {
-    this.$store.dispatch("fetchCategories");
-    this.$store.dispatch("fetchProducts");
-    const order = {};
-    this.products.forEach(item => {
-      order[item[1]] = null;
-    });
-    this.orders.order = order;
-  },
-  methods: {
-    allProduct() {
-      this.all = true;
-    },
-    value(id, name) {
-      this.val = id;
-      this.categoryName = name;
-      this.search = "";
-      this.all = false;
-    },
-    addOrder() {
-        delete this.orders.order[undefined];
-        this.axios
-            .post(`order`, this.orders,
-            {
-                headers: {
-                    Authorization:
-                    "Bearer " + localStorage.getItem("access_token")
-                }
-            })
-            .then(res => {
-                this.$router.push({
-                name: "ShowOrder",
-                params: { id: res.data.data.id }
-                 });
-                this.$store.commit("addOrder", res.data.data);
-            })
-            .catch(error => {
-                console.log(error);
+    computed: {
+        grnItemsArr() {
+            return Object.keys(this.orders.order).reduce((acc, itemKey) => {
+                let row = [itemKey, this.order[itemKey]];
+                acc.push(row);
+                return acc;
+            }, []);
+        },
+
+        filteredList() {
+            return this.products.filter(product => {
+                return product.name
+                    .toLowerCase()
+                    .includes(this.search.toLowerCase());
             });
+        },
+        filterOrders() {
+            return this.products.filter(product => {
+                return product.name
+                    .toLowerCase()
+                    .includes(this.search.toLowerCase());
+            });
+        },
+        user() {
+            return this.$store.getters.user;
+        },
+        categories() {
+            return this.$store.getters.categories;
+        },
+        products() {
+            return this.$store.getters.products;
+        }
+    },
+    created() {
+        this.$store.dispatch("fetchCategories");
+        this.$store.dispatch("fetchProducts");
+        const order = {};
+        this.products.forEach(item => {
+            order[item[1]] = null;
+        });
+        this.orders.order = order;
+        this.fetchOrderDetails();
+    },
+    methods: {
+        allProduct() {
+            this.all = true;
+        },
+        value(id, name) {
+            this.val = id;
+            this.categoryName = name;
+            this.search = "";
+            this.all = false;
+        },
+        fetchOrderDetails() {
+            this.axios
+            .get(`/order/${this.idc}`, {
+                    headers: {
+                        Authorization:
+                            "Bearer " + localStorage.getItem("access_token")
+                    }
+                })
+                .then(res => {
+                    this.ordeDetail = res.data.data;
+                    this.addDetailOrder(this.ordeDetail.amounts);
+                });
+        },
+        addDetailOrder(order) {
+            for (let ord in order) {
+                let prodId = order[ord].product_id;
+                let amount = order[ord].mnozstvi;
+                this.$set(this.orders.order, prodId, amount); // This is the vuejs-way of setting array values
+            }
+        },
+        editOrder() {
+            delete this.orders.order[undefined]
+            this.axios
+                .put(`/order/${this.idc}`, this.orders,
+                 {
+                    headers: {
+                        Authorization:
+                            "Bearer " + localStorage.getItem("access_token")
+                    }
+                })
+                .then(res => {
+                    this.$router.push({
+                        name: "showOrder",
+                        params: { id: this.idc }
+                    });
+                })
+                .catch(error => console.log(error));
+        },
     }
-  }
 };
 </script>

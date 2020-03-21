@@ -12,16 +12,19 @@ import Login from "./components/auth/login";
 import Register from "./components/auth/register";
 import Logout from "./components/auth/Logout";
 import AddInvoice from "./components/invoice/AddInvoice";
+import addInvoice from "./components/admin/user/addInvoice";
 import Settings from "./components/settings/Settings";
 import ChangePassword from "./components/settings/ChangePassword";
 import ChangeContact from "./components/settings/ChangeContact";
-import ChangeInvoice from "./components/invoice/ChangeInvoice";
+// import ChangeInvoice from "./components/invoice/ChangeInvoice";
 import KeStazeni from "./components/lib/kestazeni";
 import Kontakt from "./components/contact/sendEmail";
 import admin from "./components/admin/admin";
 import showUsers from "./components/admin/user/showUsers";
 import userProfile from "./components/admin/user/userProfile";
 import showAllOrders from "./components/admin/order/showAllOrders";
+import addOrderToUser from "./components/admin/order/addOrder";
+import editOrderUser from "./components/admin/order/EditOrder";
 import showOrder from "./components/admin/order/showOrder";
 
 export const routes = [{
@@ -122,15 +125,18 @@ export const routes = [{
     {
         name: "invoice",
         path: "/fakturacni-udaje",
-        component: AddInvoice
+        component: AddInvoice,
+        meta: {
+            requiresAuth: true,
+        },
     },
     {
         name: "admin",
         path: "/upravy",
         component: admin,
         meta: {
-            requiresAuth: true,
-            requiredInvoice: true
+            requiresAdmin: true,
+            requiresAuth: true
         },
         children: [{
                 name: "createCategory",
@@ -154,22 +160,53 @@ export const routes = [{
         name: "showAllOrders",
         path: "/prehled-objednavek",
         component: showAllOrders,
+        meta: {
+            requiresAdmin: true,
+            requiresAuth: true
+        },
     },
     {
         name: "user",
         path: "/uzivatel/:id",
         component: userProfile,
         props: true,
+        meta: {
+            requiresAdmin: true,
+            requiresAuth: true
+        },
         children: [{
-            name: "showOrder",
-            path: "objednavka/:idc",
-            component: showOrder,
-            props: true
-        }]
+                name: "showOrder",
+                path: "objednavka/:idc",
+                component: showOrder,
+                props: true
+            },
+            {
+                name: "addInvoice",
+                path: "pridat-fakturacni-udaje",
+                component: addInvoice,
+                props: true
+            },
+            {
+                name: "addOrder",
+                path: "pridat-objednavku",
+                component: addOrderToUser,
+                props: true
+            },
+            {
+                name: "editOrderUser",
+                path: "upravit-objednavku",
+                component: editOrderUser,
+                props: true
+            },
+        ]
     },
     {
         name: "showUsers",
         path: "/prehled-zakazniku",
-        component: showUsers
+        component: showUsers,
+        meta: {
+            requiresAdmin: true,
+            requiresAuth: true
+        },
     }
 ];

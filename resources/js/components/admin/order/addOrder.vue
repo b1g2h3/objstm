@@ -130,10 +130,13 @@
 
 <script>
 export default {
-  name: "AddOrder",
+  name: "addOrderToUser",  
+    props: {
+        id: ""
+    },
   data() {
     return {
-      collapsed: false,
+        collapsed: false,
       orders: {
         order: null
       },
@@ -191,7 +194,7 @@ export default {
     addOrder() {
         delete this.orders.order[undefined];
         this.axios
-            .post(`order`, this.orders,
+            .post(`order/${this.id}`, this.orders,
             {
                 headers: {
                     Authorization:
@@ -200,8 +203,8 @@ export default {
             })
             .then(res => {
                 this.$router.push({
-                name: "ShowOrder",
-                params: { id: res.data.data.id }
+                name: "showOrder",
+                params: { idc: res.data.data.id }
                  });
                 this.$store.commit("addOrder", res.data.data);
             })

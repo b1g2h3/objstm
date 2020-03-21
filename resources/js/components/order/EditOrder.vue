@@ -35,20 +35,24 @@
             </div>
             <div
                 v-if="orders"
-                class="bg-ivory border-t-4 border-b-4 border-ivory rounded-lg shadow-lg  ml-3"
+                class="bg-ivory border-t-2 border-b-4 border-ivory rounded-lg shadow-lg  ml-3"
             >
-                {{ orders.length }}
-                <div class="flex flex-col p-10">
-                    <h3 class="font-bold pl-2">Zvolili jste</h3>
-                    <div v-for="product in products" v-bind:key="product.id">
-                        <div v-for="(value, index) in orders.order">
+                <div class="flex flex-col p-2">
+                    <h4 class="text-xl font-semibold cursor-pointer text-junglegreen" v-on:click="collapsed = !collapsed">Zvolené produkty</h4>
+                      <div v-show="!collapsed" class="flex  font-bold text-center">
+                          <div class="w-3/6 h-6 text-left pl-2">Název produktu</div>
+                          <div class="w-2/6 h-6 ">Balení</div>
+                          <div class="w-2/6 h-6 ">Množství</div>
+                      </div>
+                    <div v-show="!collapsed" v-for="product in products" v-bind:key="product.id">
+                        <div v-for="(value, index) in orders.order" v-bind:key=(index)>
                             <div
                                 v-if="index == product.id"
-                                class="flex justify-between"
+                                class="flex text-center"
                             >
-                                <div>{{ product.name }}</div>
-                                <div>{{ product.hmotnost }}</div>
-                                <div>{{ value }}</div>
+                                <div class="w-3/6  text-left pl-2">{{ product.name }}</div>
+                                <div class="w-2/6 h-6">{{ product.hmotnost }}</div>
+                                <div class="w-2/6 h-6 ">{{ value }}</div>
                             </div>
                         </div>
                     </div>
@@ -128,7 +132,8 @@ export default {
         id: ""
     },
     data() {
-        return {
+        return {            
+            collapsed: false,
             orders: {
                 order: null
             },
@@ -203,7 +208,6 @@ export default {
                 })
                 .then(res => {
                     this.ordeDetail = res.data.data;
-                    console.log(this.ordeDetail)
                     this.addDetailOrder(this.ordeDetail.amounts);
                 });
         },
@@ -217,7 +221,7 @@ export default {
         editOrder() {
             delete this.orders.order[undefined]
             this.axios
-                .put(`/order/${this.id}`, this.orders,
+                .put(`/order/${this.idc}`, this.orders,
                  {
                     headers: {
                         Authorization:

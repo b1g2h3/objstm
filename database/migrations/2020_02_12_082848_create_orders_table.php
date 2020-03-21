@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->increments('id')->unsigned();
             $table->unsignedInteger('user_id');
             $table->string('description')->nullable();
-            $table->string('status');
+            $table->string('status')->default(0);
             $table->timestamps();
             
         });

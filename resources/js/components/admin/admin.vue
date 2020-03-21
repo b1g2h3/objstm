@@ -2,7 +2,7 @@
   <div>
     <div class="flex mb-4">
       <aside  class="sidebar">
-        <div class="name">Administrator</div>
+        <div class="name">Úpravy</div>
         <div class="menu">
           <router-link class="link" :to="{ name: 'createCategory'}">Vytvořit kategorii</router-link>
           <router-link class="link" :to="{ name: 'createProduct'} ">Vytvořit produkt</router-link>

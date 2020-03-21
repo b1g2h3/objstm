@@ -11,8 +11,7 @@
         <div
           class="table"
         >
-          <div v-if="category">
-            
+          <div v-if="category">            
             <table class="table-fixed">
               <thead>
                 <tr>

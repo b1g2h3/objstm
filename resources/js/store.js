@@ -18,6 +18,8 @@ export const store = new Vuex.Store({
         category: [],
         orderItems: [],
         products: [],
+        filter: 'all',
+        userProfile: [],
         theme: "theme-light",
         navbarlinks: [
             { name: "Zboží", route: "zbozi" },
@@ -39,11 +41,11 @@ export const store = new Vuex.Store({
         loogedInlinks(state) {
             return state.navbarlinks
         },
+        isAdmin(state) {
+            return state.user.email == 'b1g2h3@seznam.cz'
+        },
         theme(state) {
             return state.theme;
-        },
-        loggedIn(state) {
-            return state.token !== null;
         },
         loggedIn(state) {
             return state.token !== null;
@@ -72,6 +74,9 @@ export const store = new Vuex.Store({
         products(state) {
             return state.products;
         },
+        userProfile(state) {
+            return state.userProfile;
+        },
         user(state) {
             return state.user;
         },
@@ -80,11 +85,25 @@ export const store = new Vuex.Store({
         },
         allUsers(state) {
             return state.allUsers;
-        }
+        },
+        allUsersFiltered(state) {
+            if (state.filter == 'all') {
+                return state.allUsers
+            } else if (state.filter == 'withinvoice') {
+                return state.allUsers.filter(user => user.invoice)
+            } else if (state.filter == 'withoutinvoice') {
+                return state.allUsers.filter(user => !user.invoice)
+            }
+            return state.todos
+        },
+
     },
     mutations: {
         getTheme(state, theme) {
             state.theme = theme;
+        },
+        getUserProfile(state, userProfile) {
+            state.userProfile = userProfile;
         },
         retrieveOrders(state, orders) {
             state.orders = orders;
@@ -97,9 +116,16 @@ export const store = new Vuex.Store({
         },
         addOrder(state, order) {
             state.order = order;
+            state.orders.unshift({
+                id: order.id,
+                created_at: order.created_at,
+                amounts: order.amounts,
+                user_id: order.user_id,
+                status: 'rozpracovaná',
+            })
         },
         confirmOrder(state, data) {
-            state.order.status = "Potvrzena"
+            state.order.status = "potvrzena"
             state.order.description = data.description
             const index = state.orders.findIndex(item => item.id == data.id)
             state.orders.splice(index, 1, state.order)
@@ -140,6 +166,9 @@ export const store = new Vuex.Store({
         },
         allUsers(state, allUsers) {
             state.allUsers = allUsers;
+        },
+        updateFilter(state, filter) {
+            state.filter = filter
         },
         retrieveToken(state, token) {
             state.token = token;
@@ -235,6 +264,22 @@ export const store = new Vuex.Store({
                     console.log(error);
                 });
         },
+        fetchUserProfile(context, id) {
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common["Authorization"] =
+                    "Bearer " + context.state.token;
+
+                axios.get(`userprofile/${id}`)
+                    .then(response => {
+                        resolve(response);
+                        context.commit("getUserProfile", response.data.data);
+                        context.commit("retrieveOrders", response.data.data.orders);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            });
+        },
         getUser(context) {
             axios.defaults.headers.common["Authorization"] =
                 "Bearer " + context.state.token;
@@ -249,17 +294,20 @@ export const store = new Vuex.Store({
                 });
         },
         fetchOrder(context, id) {
-            axios.defaults.headers.common["Authorization"] =
-                "Bearer " + context.state.token;
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common["Authorization"] =
+                    "Bearer " + context.state.token;
 
-            axios
-                .get(`order/${id}`)
-                .then(response => {
-                    context.commit("fetchOrder", response.data.data);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+                axios
+                    .get(`order/${id}`)
+                    .then(response => {
+                        context.commit("fetchOrder", response.data.data);
+                        resolve(response);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            });
         },
         deleteOrder(context, id) {
             axios.defaults.headers.common["Authorization"] =
@@ -355,24 +403,31 @@ export const store = new Vuex.Store({
                 });
         },
         allOrders(context) {
-            axios
-                .get(`allorders`)
-                .then(response => {
-                    context.commit("allOrders", response.data.data);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+            return new Promise((resolve, reject) => {
+                axios
+                    .get(`allorders`)
+                    .then(response => {
+                        context.commit("allOrders", response.data.data);
+                        resolve(response);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        reject(error)
+                    })
+            })
         },
         allUsers(context) {
-            axios
-                .get(`allusers`)
-                .then(response => {
-                    context.commit("allUsers", response.data.data);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        }
+            return new Promise((resolve, reject) => {
+                axios.get(`allusers`)
+                    .then(response => {
+                        context.commit("allUsers", response.data.data);
+                        resolve(response)
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        reject(error)
+                    })
+            })
+        },
     }
 });

@@ -3,40 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\User;
 use App\Amount;
 use App\Http\Resources\Order as OrderResource;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderFormMail;
-use Illuminate\Http\Request;
 
 class OrderAdminController extends Controller
 {
 
     public function index()
     {
-
+        $this->isAdmin();
         $orders = Order::all();
+        $orders->load('user.invoice');
         return OrderResource::collection($orders);
     }
 
-    public function store(Request $request)
+    public function store($id)
     {
-
-      
-        // $this->authorize('update', auth()->user()->invoice);
+        $this->isAdmin();
+        $user = User::find($id);        
         $data = request()->validate($this->rules());
-
-        $order = new Order;
-        $order->user_id = auth()->user()->id;
-        $order->status = '0';
-        $order->save();
+        $order = $user->orders()->create();
         foreach ($data['order'] as $prodId => $value) { 
-                $mnozstvi = new Amount;
-                $mnozstvi->product_id = $prodId;
-                $mnozstvi->edit = false;
-                $mnozstvi->mnozstvi = $value;
-                $mnozstvi->save();
-                $order->amounts()->attach($mnozstvi->id); 
+            $mnozstvi = Amount::create(['product_id' => $prodId, 'mnozstvi' => $value]);
+            $order->amounts()->attach($mnozstvi->id); 
         }   
         $order->load('amounts.product');
         return new OrderResource($order);
@@ -45,13 +37,15 @@ class OrderAdminController extends Controller
 
     public function show(Order $order)
     {
+        $this->isAdmin();
         $order->load('amounts.product');
         return new OrderResource($order);
     }
 
-    public function confirm( Order $order)
+    public function confirm( Order $order, $userId)
     {
-        $user = auth()->user();
+        $this->isAdmin();
+        $user = User::find($userId);   
         $data = request()->validate([
             'desc' => ''
         ]);
@@ -66,6 +60,7 @@ class OrderAdminController extends Controller
 
     public function destroy(Order $order)
     {
+        $this->isAdmin();
         $order->delete();
     }
 
@@ -75,6 +70,13 @@ class OrderAdminController extends Controller
             'order' => 'required',
             'order.*' => 'numeric',
         ];
+    }
+
+    protected function isAdmin()
+    {
+        if(auth()->user()->email != env('ADMIN_EMAIL')){
+            return response()->json( 'Unauthorized', 400);
+        }
     }
 
 }

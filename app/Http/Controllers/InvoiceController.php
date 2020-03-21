@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Invoice;
+use App\User;
 use App\Http\Resources\User as UserResource;
 
 class InvoiceController extends Controller
@@ -17,6 +18,13 @@ class InvoiceController extends Controller
     {
         $data = request()->validate($this->rules());      
         auth()->user()->invoice()->create($data);
+    }
+
+    public function add($id)
+    {
+        $user = User::find($id);
+        $data = request()->validate($this->rules());      
+        $user->invoice()->create($data);
     }
 
     public function show(Invoice $invoice)

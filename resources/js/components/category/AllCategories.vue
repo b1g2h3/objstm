@@ -43,8 +43,10 @@
                         />
                     </router-link>
                 </div>
-                <router-link  :to="{ name: 'editCategory', params: {id: category.id} }" class="inline-block bg-blue-600 hover:bg-blue-800 text-sm font-semibold  w-full text-white p-2 text-center">Upravit</router-link>
-            <a  @click="deleteCategory(category.id)" class="inline-block bg-red-600 hover:bg-red-800 text-sm font-semibold  w-full text-white p-2 text-center">Odstranit</a>
+                <div v-if="isAdmin">
+                    <router-link  :to="{ name: 'editCategory', params: {id: category.id} }" class="inline-block bg-blue-600 hover:bg-blue-800 text-sm font-semibold  w-full text-white p-2 text-center">Upravit</router-link>
+                    <a  @click="deleteCategory(category.id)" class="inline-block bg-red-600 hover:bg-red-800 text-sm font-semibold  w-full text-white p-2 text-center">Odstranit</a>
+                </div>
             </div>
         </div>
         <transition name="component-fade" mode="out-in">
@@ -72,6 +74,9 @@ export default {
         this.$store.dispatch("fetchCategories");
     },
     computed: {
+        isAdmin() {
+            return this.$store.getters.isAdmin;
+        },    
         categories() {
             return this.$store.getters.categories;
         },

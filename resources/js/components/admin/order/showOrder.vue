@@ -2,108 +2,29 @@
      <div>
         <div
             class="header"
+            v-if="!loading" 
         >
             <h3>Objednávka č. <span class="text-junglegreen">{{ order.id }}</span> je {{ order.status }}</h3>
         </div>
+        <div>
+            <div v-if="loading" class="loading"></div>
+        </div>
 
-        <div class="flex flex-wrap">
+        <div class="flex flex-wrap" 
+            v-if="!loading" >
             <div class="w-full">
                 <div
                     class="table mt-3"
                 >
-                <table class="table-fixed">
-                    <thead>
-                        <tr>
-                            <th class="px-4 py-2">Produkt</th>
-                            <th class="px-4 py-2">Hmotnost</th>
-                            <th class="px-4 py-2">Množství</th>
-                            <th
-                                class="px-4 py-2"
-                            >
-                                Možnosti
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr
-                            v-bind:key="amount.id"
-                            v-for="amount in order.amounts"
-                        >
-                            <td class="border px-4 py-2">
-                                {{ amount.product.name }}
-                            </td>
-                            <td class="border px-4 py-2 text-center">
-                                {{ amount.product.hmotnost }}
-                            </td>
-                            <td class="border px-4 py-2">
-                                <div
-                                    class="text-center w-20"
-                                    v-show="amount.edit == false"
-                                        v-on:click="
-                                        editProduct(amount, true)
-                                    "
-                                >
-                                    {{ amount.mnozstvi }}
-                                </div>
-                                <input
-                                    class="w-20 p-1 text-center appearance-none block bg-white text-gray-700 border border-blue-700 rounded border-blue-900 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    v-show="amount.edit == true"
-                                    :value="amount.mnozstvi"
-                                    @input="
-                                        _updateProduct($event, amount)
-                                    "
-                                    v-on:keyup.enter="editProduct(amount, false)"
-                                    type="number"
-                                />
-                            </td>
-                            <td
-                                class="border px-4 py-2 flex justify-between"
-                            >
-                                <button
-                                    class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-                                    v-if="!amount.edit"
-                                    v-on:click="
-                                        editProduct(amount, true)
-                                    "
-                                >
-                                    <i
-                                        class="fas fa-edit text-blue-800"
-                                    ></i>
-                                    Upravit
-                                </button>
-                                <button
-                                    v-else
-                                    class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-                                    v-on:click="
-                                        editProduct(amount, false)
-                                    "
-                                >
-                                    Aktualizovat
-                                </button>
-
-                                <button
-                                    class="bg-transparent hover:bg-red-700 text-black font-semibold hover:text-white py-2 px-4 border border-red-700 hover:border-transparent rounded"
-                                    v-on:click="
-                                        deleteOrderItem(
-                                            amount.pivot.amount_id
-                                        )
-                                    "
-                                >
-                                    <i
-                                        class="far fa-trash-alt text-blackhover:text-white"
-                                    ></i>
-                                    Odstranit
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <tableOrderList  />
                 </div>
                 <div
                     class="table mt-3"
                 >
                     <div>
-                        <div class="flex flex-wrap">
+                        <div
+                          v-if="order.status != 'potvrzena'"
+                         class="flex flex-wrap">
                             <div class="w-full px-3">
                                 <label
                                     class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 pt-2"
@@ -120,6 +41,7 @@
                         </div>
                         <div class="p-3">
                             <button
+                                v-if="order.status != 'potvrzena'"
                                 class="bg-transparent hover:bg-green-700 text-black font-semibold hover:text-white py-2 px-4 border border-green-700 hover:border-transparent rounded"
                                 v-on:click="confirmOrder"
                             >
@@ -151,44 +73,60 @@
 </template>
 
 <script>
+import tableOrderList from "../../order/tableOrderList";
 export default {
+components: {
+    tableOrderList,
+},
     name: "showOrderAdmin",
     props: {
-        idc: ""
-    },
-    data() {
-        return {
-            loading: false,
-            order: null,
-        };
-    },
-    created() {
-        this.fetchOrder();
-    },
-    methods: {
-        fetchOrder(){
-            this.axios
-            .get(`order/${this.idc}`,
-            {
-                headers: {
-                    Authorization:
-                    "Bearer " + localStorage.getItem("access_token")
-                }
+    idc: "",
+    id: ""
+  },
+  data() {
+    return {
+      loading: true,
+      description: null,
+      successMessage: ""
+    };
+  },
+  created() {    
+    this.loading =true
+    this.$store.dispatch("fetchOrder", this.idc)    
+            .then(response => {
+            this.loading =false;
             })
-            .then(res => {
-                this.order =res.data.data
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        }
-    },
-    watch: {
+  },
+  computed: {
+    order() {
+      return this.$store.getters.order;
+    }
+  },
+  watch: {
     $route(to, from) {
       if (from.params.idc !== to.params.idc) {
-        this.fetchOrder();
+        this.$store.dispatch("fetchOrder", this.idc);
       }
     }
-  }
-};
+  },
+  methods: {
+    confirmOrder() {
+      let data = {"id": this.idc, "description": this.description}
+      this.$store.dispatch("confirmOrder", data)
+    },
+    deleteOrder() {
+      this.$store.dispatch("deleteOrder", this.idc);
+      this.$router.push({
+        name: "user",        
+        params: { id: this.id }
+      });
+    },
+    editOrder() {
+      this.$router.push({
+        name: "editOrderUser",
+        params: { idc: this.idc }
+      });
+    }
+ }
+}
 </script>

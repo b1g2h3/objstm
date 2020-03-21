@@ -26,7 +26,7 @@ class OrderrController extends Controller
     {
         // $this->authorize('update', auth()->user()->invoice);
         $data = request()->validate($this->rules());
-        $order =auth()->user()->orders()->create(['status' => 0]);
+        $order =auth()->user()->orders()->create();
         foreach ($data['order'] as $prodId => $value) { 
             $mnozstvi = Amount::create(['product_id' => $prodId, 'mnozstvi' => $value]);
             $order->amounts()->attach($mnozstvi->id); 

@@ -3,12 +3,10 @@
 namespace App\Policies;
 
 use App\Order;
-use App\Invoice;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class OrderPolicy
-{
+class OrderPolicy{
     use HandlesAuthorization;
 
     /**
@@ -29,21 +27,21 @@ class OrderPolicy
      * @param  \App\Order  $order
      * @return mixed
      */
-    public function view(User $user, Invoice $invoice)
+    public function view(User $user, Order $order)
     {
-        return $user->id == $invoice->user_id;
+        //
     }
 
     /**
      * Determine whether the user can create orders.
      *
-     * @param  \App\User  $user 
+     * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create()
     {
-      //
-    
+        return auth()->user()->email == 'b1g2h3@seznam.cz';
+        
     }
 
     /**
@@ -53,11 +51,10 @@ class OrderPolicy
      * @param  \App\Order  $order
      * @return mixed
      */
-    public function update(User $user, Invoice $invoice)
+    public function update(User $user, Order $order)
     {
-        return $user->id == $invoice->user_id;
+        //
     }
-
 
     /**
      * Determine whether the user can delete the order.

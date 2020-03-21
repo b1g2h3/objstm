@@ -23,6 +23,13 @@ class UserController extends Controller
         
     }
 
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        $user->orders()->delete();
+        $user->delete();
+    }
+
     public function changeContact()
     {
             $user =auth()->user();

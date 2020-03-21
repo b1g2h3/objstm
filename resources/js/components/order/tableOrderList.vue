@@ -28,9 +28,7 @@
                                 <div
                                     class="text-center w-20"
                                     v-show="amount.edit == false"
-                                        v-on:click="
-                                        editProduct(amount, true)
-                                    "
+                                    v-on:click="editProduct(amount, true)"
                                 >
                                     {{ amount.mnozstvi }}
                                 </div>

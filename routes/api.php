@@ -16,6 +16,10 @@ Route::middleware('auth:api')->group(function() {
     Route::get('allorders', 'OrderAdminController@index');
     Route::get('allusers', 'UserController@index');
     Route::get('userprofile/{id}', 'UserController@show');
+    Route::delete('deleteuser/{id}', 'UserController@destroy');       
+    Route::post('invoice/{id}', 'InvoiceController@add'); 
+    Route::post('order/{id}', 'OrderAdminController@store');    
+    Route::put('order/{user}/{order}', 'OrderrController@update');
     //Ares
     Route::post('ares', 'AresController@check');
     //Invoice
